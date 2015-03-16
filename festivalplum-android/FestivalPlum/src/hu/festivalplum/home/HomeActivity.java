@@ -1,6 +1,7 @@
 package hu.festivalplum.home;
 
 import android.os.Bundle;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -8,40 +9,23 @@ import android.view.View;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 
+import com.astuetz.PagerSlidingTabStrip;
+
 import hu.festivalplum.R;
 
 public class HomeActivity extends ActionBarActivity {
-    private TabHost tabHost;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.home);
+        setContentView(R.layout.activity_home);
 
-        tabHost = (TabHost) findViewById(R.id.tabhost);
-        tabHost.setup();
+        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
 
-        final TabWidget tabWidget = tabHost.getTabWidget();
-        tabWidget.removeAllViews();
+        ViewPager p = (ViewPager) findViewById(R.id.pager);
+        p.setAdapter(adapter);
 
-        addTab(new NameView(this));
-        addTab(new TimeView(this));
-        addTab(new SettlementView(this));
-        addTab(new ArtistView(this));
-
-        tabHost.setCurrentTab(1);
-    }
-
-    private void addTab(final HomeViewTab tab) {
-        TabHost.TabSpec tabSpec = tabHost.newTabSpec(tab.getName());
-        tabSpec.setContent(new TabHost.TabContentFactory() {
-            @Override
-            public View createTabContent(String tag) {
-                return (View) tab;
-            }
-        });
-
-        tabSpec.setIndicator(tab.getName());
-        tabHost.addTab(tabSpec);
+        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs.setViewPager(p);
     }
 
     @Override
@@ -53,9 +37,17 @@ public class HomeActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        
+        switch (id){
+            case R.id.action_settings:
 
-        if (id == R.id.action_settings) {
-            return true;
+                break;
+            case R.id.action_search:
+
+                break;
+            case R.id.action_favourite:
+
+                break;
         }
 
         return super.onOptionsItemSelected(item);
