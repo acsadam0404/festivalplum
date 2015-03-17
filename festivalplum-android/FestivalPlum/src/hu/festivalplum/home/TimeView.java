@@ -7,7 +7,14 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.Toast;
 
+import com.parse.FindCallback;
+import com.parse.ParseException;
+import com.parse.ParseObject;
+import com.parse.ParseQuery;
+
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -40,11 +47,49 @@ public class TimeView extends ExpandableListView implements HomeViewTab {
     }
 
     private void prepareListData() {
+
+        headerTitles = new ArrayList<String>();
+        childTitles = new HashMap<String,List<String>>();
+        //Map<String,List<TimeObject>> timeMap = new HashMap<String,List<TimeObject>>();
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.include("place");
+        query.include("place.address");
+
+        try {
+            List<ParseObject> result = query.find();
+            for(int i = 0; i < result.size(); i++) {
+                ParseObject event = result.get(i);
+                ParseObject place = event.getParseObject("place");
+                ParseObject city = place.getParseObject("address");
+
+                Date startDate = event.getDate("startDate");
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                String title = year + " - " + month;
+
+                if(!childTitles.containsKey(title)){
+                    headerTitles.add(title);
+                    List<String> list = new ArrayList<String>();
+                    list.add(title);
+                    childTitles.put(title,list);
+                }else{
+                    childTitles.get(title).add(title);
+                }
+
+            }
+        } catch (ParseException e){
+
+        }
+
+        /*
         headerTitles = new ArrayList<String>();
         childTitles = new HashMap<String, List<String>>();
 
         // Adding child data
         headerTitles.add("Top 250");
+
         headerTitles.add("Now Showing");
         headerTitles.add("Coming Soon..");
 
@@ -76,6 +121,7 @@ public class TimeView extends ExpandableListView implements HomeViewTab {
         childTitles.put(headerTitles.get(0), top250); // Header, Child data
         childTitles.put(headerTitles.get(1), nowShowing);
         childTitles.put(headerTitles.get(2), comingSoon);
+        */
     }
 
     @Override
