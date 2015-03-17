@@ -1,19 +1,18 @@
 package hu.festivalplum.home;
 
+import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.TabHost;
-import android.widget.TabWidget;
 
 import com.astuetz.PagerSlidingTabStrip;
 
 import hu.festivalplum.R;
 
-public class HomeActivity extends ActionBarActivity {
+public class HomeActivity extends FragmentActivity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

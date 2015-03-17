@@ -12,7 +12,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name=".home.HomeActivity"
+            android:name="hu.festivalplum.home.HomeActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,15 +23,8 @@
         <activity
             android:name=".FestivalActivity"
             android:label="@string/title_activity_festival"
-            android:parentActivityName=".home.HomeActivity"
+            android:parentActivityName="hu.festivalplum.home.HomeActivity"
             android:launchMode="singleTop" >
-        </activity>
-        <activity
-            android:name=".home.LoginActivity"
-            android:label="@string/title_activity_login" >
-            <meta-data
-                android:name="com.parse.ui.ParseLoginActivity.PARSE_LOGIN_ENABLED"
-                android:value="true" />
         </activity>
     </application>
 
