@@ -4,24 +4,27 @@ import java.util.List;
 import java.util.Map;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import hu.festivalplum.R;
 
-public class TimeViewAdapter extends BaseExpandableListAdapter {
+public class HomeViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
     /** header titles */
     private List<String> headerTitles;
     /** child data in format of header title, child title */
-    private Map<String, List<String>> childTitles;
+    private Map<String, List<HomeObject>> childTitles;
 
-    public TimeViewAdapter(Context context, List<String> headerTitles, Map<String, List<String>> childTitles) {
+    public HomeViewAdapter(Context context, List<String> headerTitles, Map<String, List<HomeObject>> childTitles) {
         this.context = context;
         this.headerTitles = headerTitles;
         this.childTitles = childTitles;
@@ -40,7 +43,8 @@ public class TimeViewAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
 
-        final String childText = (String) getChild(groupPosition, childPosition);
+        //final String childText = (String) getChild(groupPosition, childPosition);
+        HomeObject child = (HomeObject) getChild(groupPosition, childPosition);
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -49,7 +53,12 @@ public class TimeViewAdapter extends BaseExpandableListAdapter {
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.name);
 
-        txtListChild.setText(childText);
+        byte[] img = child.getPlaceImg();
+        Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
+        ImageView image = (ImageView) convertView.findViewById(R.id.image);
+        image.setImageBitmap(bitmap);
+
+        txtListChild.setText(child.getPlaceName() + " / " + child.getCityName());
         return convertView;
     }
 

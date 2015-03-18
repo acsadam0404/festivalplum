@@ -10,4 +10,7 @@
     <string name="action_settings">Beállítások</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="title_activity_main">MainActivity</string>
+    <string name="search_hint">Keresés</string>
+
+
 </resources>
