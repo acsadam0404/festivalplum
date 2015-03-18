@@ -28,8 +28,10 @@ public class TimeView extends ExpandableListView {
         setOnChildClickListener(new OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
-                Toast.makeText(context, "click", Toast.LENGTH_SHORT).show();
                 Intent intent = new Intent(context, FestivalActivity.class);
+                HomeObject object = (HomeObject)expandableListView.getExpandableListAdapter().getChild(i,i2);
+                intent.putExtra("eventId", object.getEventId());
+                intent.putExtra("place", object.getPlaceName());
                 context.startActivity(intent);
                 return true;
             }
