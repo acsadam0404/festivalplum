@@ -4,12 +4,14 @@
     <item android:id="@+id/action_search"
         android:title="@string/action_search"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="collapseActionView|ifRoom"
+        app:showAsAction="ifRoom"
         android:actionViewClass="android.widget.SearchView" />
     <item android:id="@+id/action_favourite"
         android:icon="@android:drawable/btn_star_big_off"
         android:title="@string/action_favourite"
         app:showAsAction="always"/>
+    <item android:id="@+id/action_starter" android:title="@string/action_starter"
+        android:orderInCategory="100" app:showAsAction="never" />
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>

@@ -82,7 +82,8 @@ public class FestivalActivity extends Activity {
             if(result.size() > 0){
                 cal.setTime(result.get(0).getDate("startDate"));
                 int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd");
+                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
+                SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
                 for(int i = 0; i < result.size(); i++) {
                     ParseObject concert = result.get(i);
                     ParseObject band = concert.getParseObject("band");
@@ -100,8 +101,8 @@ public class FestivalActivity extends Activity {
                     int min = cal.get(Calendar.MINUTE);
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = sdf.format(startDate) + " " + place + " (" + festDay + ". nap)";
-
+                    String title = sdfDate.format(startDate) + " " + place + " (" + festDay + ". nap)";
+                    String time = sdfTime.format(startDate);
                     ParseFile imageFile = (ParseFile)band.get("image");
                     byte[] bandImg = imageFile.getData();
 
@@ -114,6 +115,7 @@ public class FestivalActivity extends Activity {
                     festivalObject.setImage(bandImg);
                     festivalObject.setStageName(stageName);
                     festivalObject.setToDate(toDate);
+                    festivalObject.setTime(time);
 
                     if(!childTitles.containsKey(title)){
                         headerTitles.add(title);

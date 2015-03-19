@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import hu.festivalplum.R;
 
@@ -57,6 +58,14 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
+
+        ImageView like = (ImageView) convertView.findViewById(R.id.like);
+        like.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "LIKE", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         txtListChild.setText(child.getPlaceName() + " / " + child.getCityName());
         return convertView;

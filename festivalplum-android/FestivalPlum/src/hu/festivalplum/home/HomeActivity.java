@@ -1,8 +1,10 @@
 package hu.festivalplum.home;
 
 
+import android.app.ActionBar;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
@@ -26,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
+import hu.festivalplum.StarterActivity;
+import hu.festivalplum.favorite.FavoriteActivity;
 
 public class HomeActivity extends FragmentActivity {
 
@@ -54,7 +58,7 @@ public class HomeActivity extends FragmentActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
-        super.onCreateOptionsMenu(menu);
+
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -63,21 +67,28 @@ public class HomeActivity extends FragmentActivity {
         searchView.setSearchableInfo(
                 searchManager.getSearchableInfo(getComponentName()));
 
-        return true;
+        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        
+        Intent i;
         switch (id){
             case R.id.action_settings:
-
+                //
                 break;
             case R.id.action_search:
-
+                onSearchRequested();
                 break;
             case R.id.action_favourite:
+                i = new Intent(this, FavoriteActivity.class);
+                this.startActivity(i);
+
+                break;
+            case R.id.action_starter:
+                i = new Intent(this, StarterActivity.class);
+                this.startActivity(i);
 
                 break;
         }
@@ -183,4 +194,5 @@ public class HomeActivity extends FragmentActivity {
     public Map<String, List<HomeObject>> getCityChildTitles() {
         return cityChildTitles;
     }
+
 }

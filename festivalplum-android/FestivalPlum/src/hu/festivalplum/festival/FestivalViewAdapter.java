@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
@@ -62,7 +63,10 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
 
-        txtListChild.setText(child.getBandName() + " / " + child.getStageName());
+        ImageView like = (ImageView) convertView.findViewById(R.id.like);
+        like.setVisibility(0);
+
+        txtListChild.setText(child.getBandName() + " - " + child.getStageName() + " - " + child.getTime());
         return convertView;
     }
 

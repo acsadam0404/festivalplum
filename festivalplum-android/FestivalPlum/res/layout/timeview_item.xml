@@ -16,6 +16,15 @@
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+    <ImageView
+        android:focusable="false"
+        android:id="@+id/like"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_gravity="right"
+        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
+        android:clickable="true"
+        android:nestedScrollingEnabled="false" />
 <!--
     <ImageButton
         android:focusable="false"
