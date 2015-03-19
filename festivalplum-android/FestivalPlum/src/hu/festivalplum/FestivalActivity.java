@@ -2,7 +2,6 @@ package hu.festivalplum;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -22,8 +21,6 @@ import java.util.Map;
 
 import hu.festivalplum.festival.FestivalObject;
 import hu.festivalplum.festival.FestivalView;
-import hu.festivalplum.home.HomeObject;
-import hu.festivalplum.home.HomeUtil;
 
 
 public class FestivalActivity extends Activity {

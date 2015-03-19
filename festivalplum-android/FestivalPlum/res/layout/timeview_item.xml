@@ -22,7 +22,7 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right"
-        android:src="@drawable/abc_btn_check_to_on_mtrl_015"
+        android:src="@android:drawable/btn_star"
         android:clickable="true"
         android:nestedScrollingEnabled="false" />
 <!--
