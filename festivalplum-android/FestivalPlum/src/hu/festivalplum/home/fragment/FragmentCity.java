@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.fragment;
 
 
 import android.os.Bundle;
@@ -6,17 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.List;
-import java.util.Map;
+import hu.festivalplum.home.view.SettlementView;
 
 /**
  * Created by viktor on 2015.03.15..
  */
-public class FragmentName extends MyFragment {
+public class FragmentCity extends MyFragment {
 
-    private static final String NAME = "Név";
+    private static final String NAME = "Város";
 
-    public FragmentName() {
+    public FragmentCity() {
 
     }
 
@@ -24,7 +23,7 @@ public class FragmentName extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = new NameView(getActivity());
+        View v = new SettlementView(getActivity());
         return v;
     }
 

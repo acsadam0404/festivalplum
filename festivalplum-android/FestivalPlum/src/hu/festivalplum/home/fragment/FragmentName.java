@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.fragment;
 
 
 import android.os.Bundle;
@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import hu.festivalplum.home.view.NameView;
+
 /**
  * Created by viktor on 2015.03.15..
  */
-public class FragmentTime extends MyFragment {
+public class FragmentName extends MyFragment {
 
-    private static final String NAME = "Idő";
+    private static final String NAME = "Név";
 
-    public FragmentTime() {
+    public FragmentName() {
 
     }
 
@@ -21,7 +23,7 @@ public class FragmentTime extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = new TimeView(getActivity());
+        View v = new NameView(getActivity());
         return v;
     }
 
@@ -31,4 +33,3 @@ public class FragmentTime extends MyFragment {
     }
 
 }
-

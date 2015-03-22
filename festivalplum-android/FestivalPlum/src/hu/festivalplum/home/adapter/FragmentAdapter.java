@@ -1,21 +1,18 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.adapter;
 
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+
+import hu.festivalplum.home.fragment.FragmentBand;
+import hu.festivalplum.home.fragment.FragmentCity;
+import hu.festivalplum.home.fragment.FragmentName;
+import hu.festivalplum.home.fragment.FragmentTime;
+import hu.festivalplum.home.fragment.MyFragment;
+
 
 /**
  * Created by viktor on 2015.03.15..

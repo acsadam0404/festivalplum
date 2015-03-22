@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum;
 
 import android.app.Activity;
 import android.os.Bundle;

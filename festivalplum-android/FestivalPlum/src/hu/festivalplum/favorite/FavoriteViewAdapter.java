@@ -2,23 +2,18 @@ package hu.festivalplum.favorite;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
-import android.widget.ListAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 
 import hu.festivalplum.MapActivity;
 import hu.festivalplum.R;
-import hu.festivalplum.home.HomeObject;
+import hu.festivalplum.model.HomeObject;
 
 /**
  * Created by viktor on 2015.03.19..

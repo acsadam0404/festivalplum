@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.adapter;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import hu.festivalplum.R;
+import hu.festivalplum.model.HomeObject;
 
 public class HomeViewAdapter extends BaseExpandableListAdapter {
 

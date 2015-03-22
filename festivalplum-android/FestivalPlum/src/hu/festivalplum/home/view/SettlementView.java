@@ -1,28 +1,29 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.view;
 
 import android.content.Context;
 import android.content.Intent;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
 
-import hu.festivalplum.FestivalActivity;
+import hu.festivalplum.festival.FestivalActivity;
+import hu.festivalplum.home.HomeActivity;
+import hu.festivalplum.home.adapter.HomeViewAdapter;
+import hu.festivalplum.model.HomeObject;
 
 /**
- * Created by Ács Ádám on 2015.02.20..
+ * Created by Ács Ádám on 2015.03.06..
  */
-public class TimeView extends ExpandableListView {
+public class SettlementView extends ExpandableListView {
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
 
-    public TimeView(final Context context) {
+    public SettlementView(final Context context) {
         super(context);
-
-        childTitles = ((HomeActivity)context).getTimeChildTitles();
-        headerTitles = ((HomeActivity)context).getTimeHeaderTitles();
+        childTitles = ((HomeActivity)context).getCityChild();
+        headerTitles = ((HomeActivity)context).getCityGroup();
         setAdapter(new HomeViewAdapter(context, headerTitles, childTitles));
 
         setOnChildClickListener(new OnChildClickListener() {
@@ -36,6 +37,7 @@ public class TimeView extends ExpandableListView {
                 return true;
             }
         });
+
     }
 
 }

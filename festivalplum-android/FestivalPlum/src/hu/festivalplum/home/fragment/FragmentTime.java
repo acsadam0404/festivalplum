@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.fragment;
 
 
 import android.os.Bundle;
@@ -6,14 +6,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import hu.festivalplum.home.view.TimeView;
+
 /**
  * Created by viktor on 2015.03.15..
  */
-public class FragmentCity extends MyFragment {
+public class FragmentTime extends MyFragment {
 
-    private static final String NAME = "Város";
+    private static final String NAME = "Idő";
 
-    public FragmentCity() {
+    public FragmentTime() {
 
     }
 
@@ -21,7 +23,7 @@ public class FragmentCity extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = new SettlementView(getActivity());
+        View v = new TimeView(getActivity());
         return v;
     }
 
@@ -31,3 +33,4 @@ public class FragmentCity extends MyFragment {
     }
 
 }
+

@@ -6,9 +6,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.List;
 
-import hu.festivalplum.FestivalActivity;
-import hu.festivalplum.festival.FestivalViewAdapter;
-import hu.festivalplum.home.HomeObject;
+import hu.festivalplum.model.HomeObject;
 
 /**
  * Created by viktor on 2015.03.19..

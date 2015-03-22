@@ -1,9 +1,9 @@
-package hu.festivalplum.home;
+package hu.festivalplum.utils;
 
 /**
  * Created by viktor on 2015.03.18..
  */
-public class HomeUtil {
+public class Utils {
     public static final String[] month = new String[]{"Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"};
 
     public static String getMonthName(int m){

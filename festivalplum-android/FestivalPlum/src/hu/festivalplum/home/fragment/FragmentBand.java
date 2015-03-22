@@ -1,10 +1,12 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.fragment;
 
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import hu.festivalplum.home.view.ArtistView;
 
 /**
  * Created by viktor on 2015.03.15..

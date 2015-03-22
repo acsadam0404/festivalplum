@@ -1,4 +1,4 @@
-package hu.festivalplum.home;
+package hu.festivalplum.home.view;
 
 import android.content.Context;
 import android.widget.ListView;
