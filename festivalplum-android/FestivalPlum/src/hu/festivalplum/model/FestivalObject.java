@@ -11,18 +11,9 @@ public class FestivalObject {
     private String StageName;
     private Date startDate;
     private Date toDate;
-    private String time;
 
     public FestivalObject(){
         //
-    }
-
-    public String getTime() {
-        return time;
-    }
-
-    public void setTime(String time) {
-        this.time = time;
     }
 
     public String getBandName() {

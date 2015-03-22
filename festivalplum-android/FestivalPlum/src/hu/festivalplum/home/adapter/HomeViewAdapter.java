@@ -60,7 +60,8 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.homeview_child, null);
         }
 
-        TextView txtListChild = (TextView) convertView.findViewById(R.id.name);
+        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView date = (TextView) convertView.findViewById(R.id.date);
 
         byte[] img = child.getPlaceImg();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
@@ -71,7 +72,8 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         Utils.setFavoriteImage(like,child.isFavorite());
         like.setTag(child);
 
-        txtListChild.setText(child.getPlaceName() + " / " + child.getCityName());
+        name.setText(child.getPlaceName() + " - " + child.getCityName());
+        date.setText(Utils.sdfDate.format(child.getStartDate()) + " - " + Utils.sdfDate.format(child.getEndDate()));
         return convertView;
     }
 

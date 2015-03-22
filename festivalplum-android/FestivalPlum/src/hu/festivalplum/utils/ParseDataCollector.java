@@ -4,8 +4,6 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
-
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -55,7 +53,7 @@ public class ParseDataCollector {
                 int month = cal.get(Calendar.MONTH);
                 String title = year + ". " + Utils.getMonthName(month);
                 String eventId = event.getObjectId();
-                Date endDate = event.getDate("startDate");
+                Date endDate = event.getDate("endDate");
                 if(endDate == null)
                     continue;
                 ParseFile imageFile = (ParseFile)place.get("image");
@@ -139,8 +137,7 @@ public class ParseDataCollector {
             if (result.size() > 0) {
                 cal.setTime(result.get(0).getDate("startDate"));
                 int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
-                SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
-                SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
+
                 for (int i = 0; i < result.size(); i++) {
                     ParseObject concert = result.get(i);
                     ParseObject band = concert.getParseObject("band");
@@ -158,8 +155,7 @@ public class ParseDataCollector {
                     cal.setTime(startDate);
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = sdfDate.format(startDate) + " " + place + " (" + festDay + ". nap)";
-                    String time = sdfTime.format(startDate);
+                    String title = Utils.sdfDate.format(startDate) + " " + place + " (" + festDay + ". nap)";
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
@@ -177,7 +173,6 @@ public class ParseDataCollector {
                     festivalObject.setImage(bandImg);
                     festivalObject.setStageName(stageName);
                     festivalObject.setToDate(toDate);
-                    festivalObject.setTime(time);
 
                     if (!festivalChild.containsKey(title)) {
                         festivalGroup.add(title);
@@ -219,13 +214,9 @@ public class ParseDataCollector {
                 Date startDate = event.getDate("startDate");
                 if (startDate == null)
                     continue;
-                Calendar cal = Calendar.getInstance();
-                cal.setTime(startDate);
-                int year = cal.get(Calendar.YEAR);
-                int month = cal.get(Calendar.MONTH);
-                String title = year + ". " + Utils.getMonthName(month);
+
                 String eventId = event.getObjectId();
-                Date endDate = event.getDate("startDate");
+                Date endDate = event.getDate("endDate");
                 if (endDate == null)
                     continue;
                 ParseFile imageFile = (ParseFile) place.get("image");

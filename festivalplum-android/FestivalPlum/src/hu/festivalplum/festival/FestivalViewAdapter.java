@@ -16,6 +16,7 @@ import java.util.Map;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.FestivalObject;
+import hu.festivalplum.utils.Utils;
 
 /**
  * Created by viktor on 2015.03.18..
@@ -55,14 +56,16 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
             convertView = infalInflater.inflate(R.layout.festivalview_item, null);
         }
 
-        TextView txtListChild = (TextView) convertView.findViewById(R.id.name);
+        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView date = (TextView) convertView.findViewById(R.id.date);
 
         byte[] img = child.getImage();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
 
-        txtListChild.setText(child.getBandName() + " - " + child.getStageName() + " - " + child.getTime());
+        name.setText(child.getBandName() + " - " + child.getStageName());
+        date.setText(Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()));
         return convertView;
     }
 

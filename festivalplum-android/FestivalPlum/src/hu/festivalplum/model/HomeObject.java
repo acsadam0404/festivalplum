@@ -13,7 +13,6 @@ public class HomeObject {
     private byte[] placeImg;
     private String placeName;
     private String cityName;
-
     private boolean favorite;
 
     public HomeObject(){

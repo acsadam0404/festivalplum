@@ -70,6 +70,8 @@ public class HomeActivity extends FragmentActivity {
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
+        tabs.setShouldExpand(true);
+        tabs.setIndicatorColorResource(android.R.color.holo_purple);
     }
 
     public void likeHandler (View v) {

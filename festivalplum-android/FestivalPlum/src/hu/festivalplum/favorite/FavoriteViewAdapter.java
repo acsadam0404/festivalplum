@@ -2,6 +2,8 @@ package hu.festivalplum.favorite;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +16,7 @@ import java.util.List;
 import hu.festivalplum.MapActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.Utils;
 
 /**
  * Created by viktor on 2015.03.19..
@@ -52,20 +55,19 @@ public class FavoriteViewAdapter extends BaseAdapter {
             view = infalInflater.inflate(R.layout.favoriteview_item, null);
         }
 
-        TextView txtListChild = (TextView) view.findViewById(R.id.name);
+        TextView name = (TextView) view.findViewById(R.id.name);
+        TextView date = (TextView) view.findViewById(R.id.date);
 
+        byte[] img = item.getPlaceImg();
+        Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
+        ImageView image = (ImageView) view.findViewById(R.id.image);
+        image.setImageBitmap(bitmap);
 
+        ImageView map = (ImageView)view.findViewById(R.id.map);
+        map.setTag(item);
 
-        ImageView like = (ImageView) view.findViewById(R.id.map);
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent i = new Intent(context, MapActivity.class);
-                context.startActivity(i);
-            }
-        });
-
-        txtListChild.setText(item.getPlaceName() + " / " + item.getCityName());
+        name.setText(item.getPlaceName() + " - " + item.getCityName());
+        date.setText(Utils.sdfDate.format(item.getStartDate()) + " - " + Utils.sdfDate.format(item.getEndDate()));
 
         return view;
     }

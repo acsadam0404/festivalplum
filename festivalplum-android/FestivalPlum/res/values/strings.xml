@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="hello">Hello World, FestivalPlum!</string>
     <string name="app_name">Festival Plum</string>
     <string name="action_favourite">Kedvencek</string>
     <string name="action_search">Keresés</string>
-    <string name="title_activity_festival">FestivalActivity</string>
+    <string name="title_activity_festival">Fesztivál</string>
     <string name="action_starter">Starter</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Beállítások</string>
@@ -12,8 +11,8 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="search_hint">Keresés</string>
     <string name="title_activity_starter">StarterActivity</string>
-    <string name="title_activity_favorite">FavoriteActivity</string>
-    <string name="title_activity_map">MapActivity</string>
+    <string name="title_activity_favorite">Kedvencek</string>
+    <string name="title_activity_map">Térkép</string>
 
 
 </resources>
