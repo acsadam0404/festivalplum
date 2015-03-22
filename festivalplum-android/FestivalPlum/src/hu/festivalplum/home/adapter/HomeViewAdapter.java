@@ -53,6 +53,8 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         HomeObject child = (HomeObject) getChild(groupPosition, childPosition);
         if(favoriteIds.contains(child.getEventId())){
             child.setFavorite(true);
+        }else{
+            child.setFavorite(false);
         }
 
         if (convertView == null) {

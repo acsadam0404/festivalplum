@@ -12,7 +12,6 @@ import android.widget.AbsListView;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import hu.festivalplum.MapActivity;
@@ -88,6 +87,7 @@ public class FavoriteActivity extends Activity {
                         }
                         break;
                 }
+                HomeActivity.modFavorite = true;
                 mAdapter.notifyDataSetChanged();
                 actionMode.finish();
                 return false;

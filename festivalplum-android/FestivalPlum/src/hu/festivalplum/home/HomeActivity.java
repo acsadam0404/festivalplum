@@ -12,21 +12,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 
 import com.astuetz.PagerSlidingTabStrip;
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
 
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -51,6 +41,8 @@ public class HomeActivity extends FragmentActivity {
     private Map<String, List<HomeObject>> cityChild;
 
     private FragmentAdapter fragmentAdapter;
+
+    public static boolean modFavorite = false;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,6 +72,15 @@ public class HomeActivity extends FragmentActivity {
         item.setFavorite(!item.isFavorite());
         Utils.setFavoriteImage((ImageView)v,item.isFavorite());
         fragmentAdapter.refreshView();
+    }
+
+    @Override
+    protected void onResume() {
+        if(modFavorite){
+            fragmentAdapter.refreshView();
+            modFavorite = false;
+        }
+        super.onResume();
     }
 
     @Override
