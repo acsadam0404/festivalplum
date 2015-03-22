@@ -49,7 +49,7 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.timeview_item, null);
+            convertView = infalInflater.inflate(R.layout.homeview_child, null);
         }
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.name);
@@ -96,7 +96,7 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.timeview_group, null);
+            convertView = infalInflater.inflate(R.layout.homeview_group, null);
         }
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);

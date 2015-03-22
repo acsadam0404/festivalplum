@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:focusable="false"
@@ -9,13 +9,20 @@
         android:focusable="false"
         android:id="@+id/image"
         android:layout_width="50dp"
-        android:layout_height="50dp" />
+        android:layout_height="50dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:focusable="false"
         android:id="@+id/name"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/image"
+        android:layout_toEndOf="@+id/like"/>
+
     <ImageView
         android:focusable="false"
         android:id="@+id/like"
@@ -24,7 +31,10 @@
         android:layout_gravity="right"
         android:src="@android:drawable/btn_star"
         android:clickable="true"
-        android:nestedScrollingEnabled="false" />
+        android:nestedScrollingEnabled="false"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 <!--
     <ImageButton
         android:focusable="false"
@@ -33,4 +43,4 @@
         android:layout_height="50dp" />
 -->
 
-</LinearLayout>
+</RelativeLayout>

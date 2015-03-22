@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
-import hu.festivalplum.home.HomeObject;
 
 /**
  * Created by viktor on 2015.03.18..
@@ -53,7 +51,7 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.timeview_item, null);
+            convertView = infalInflater.inflate(R.layout.festivalview_item, null);
         }
 
         TextView txtListChild = (TextView) convertView.findViewById(R.id.name);
@@ -62,9 +60,6 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
-
-        ImageView like = (ImageView) convertView.findViewById(R.id.like);
-        like.setVisibility(0);
 
         txtListChild.setText(child.getBandName() + " - " + child.getStageName() + " - " + child.getTime());
         return convertView;
@@ -95,7 +90,7 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         String headerTitle = (String) getGroup(groupPosition);
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.timeview_group, null);
+            convertView = infalInflater.inflate(R.layout.homeview_group, null);
         }
 
         TextView lblListHeader = (TextView) convertView.findViewById(R.id.lblListHeader);
