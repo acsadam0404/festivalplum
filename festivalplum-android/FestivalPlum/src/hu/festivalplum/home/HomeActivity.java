@@ -10,7 +10,11 @@ import android.support.v4.view.ViewPager;
 
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.SearchView;
+import android.widget.Toast;
 
 
 import com.astuetz.PagerSlidingTabStrip;
@@ -32,6 +36,7 @@ import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
+import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
 
 public class HomeActivity extends FragmentActivity {
@@ -45,6 +50,8 @@ public class HomeActivity extends FragmentActivity {
     private List<String> cityGroup;
     private Map<String, List<HomeObject>> cityChild;
 
+    private FragmentAdapter fragmentAdapter;
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -56,13 +63,21 @@ public class HomeActivity extends FragmentActivity {
         nameChild = (Map<String, List<HomeObject>>)data.get("nameChild");
         cityGroup = (List<String>)data.get("cityGroup");
         cityChild = (Map<String, List<HomeObject>>)data.get("cityChild");
-        FragmentAdapter adapter = new FragmentAdapter(getSupportFragmentManager());
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
-        p.setAdapter(adapter);
+        p.setAdapter(fragmentAdapter);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
+    }
+
+    public void likeHandler (View v) {
+        HomeObject item = (HomeObject)v.getTag();
+        SQLiteUtil.getInstence(this).addFavoriteId("Event", item.getEventId());
+        item.setFavorite(!item.isFavorite());
+        Utils.setFavoriteImage((ImageView)v,item.isFavorite());
+        fragmentAdapter.refreshView();
     }
 
     @Override

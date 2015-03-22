@@ -29,12 +29,13 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_gravity="right"
-        android:src="@android:drawable/btn_star"
+        android:src="@android:drawable/btn_star_big_off"
         android:clickable="true"
         android:nestedScrollingEnabled="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:onClick="likeHandler"/>
 <!--
     <ImageButton
         android:focusable="false"

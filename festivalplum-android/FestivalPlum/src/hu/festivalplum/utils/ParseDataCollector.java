@@ -13,7 +13,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import hu.festivalplum.festival.FestivalObject;
+import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
 
 /**
@@ -195,6 +195,64 @@ public class ParseDataCollector {
         } catch (ParseException e) {
             //
         }
+        return ret;
+    }
+
+    public static List<HomeObject> collectFavoriteData(List<String> eventIds){
+        List<HomeObject> ret = new ArrayList<>();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.whereContainedIn("objectId", eventIds);
+        query.include("place");
+        query.include("place.address");
+
+        try {
+            List<ParseObject> result = query.find();
+            for(int i = 0; i < result.size(); i++) {
+                ParseObject event = result.get(i);
+                ParseObject place = event.getParseObject("place");
+                if (place == null)
+                    continue;
+                ParseObject city = place.getParseObject("address");
+                if (city == null)
+                    continue;
+                Date startDate = event.getDate("startDate");
+                if (startDate == null)
+                    continue;
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                String title = year + ". " + Utils.getMonthName(month);
+                String eventId = event.getObjectId();
+                Date endDate = event.getDate("startDate");
+                if (endDate == null)
+                    continue;
+                ParseFile imageFile = (ParseFile) place.get("image");
+                if (imageFile == null)
+                    continue;
+                byte[] placeImg = imageFile.getData();
+                String placeName = place.getString("name");
+                if (placeName == null)
+                    continue;
+                String cityName = city.getString("city");
+                if (cityName == null)
+                    continue;
+                HomeObject homeObject = new HomeObject();
+                homeObject.setCityName(cityName);
+                homeObject.setStartDate(startDate);
+                homeObject.setEndDate(endDate);
+                homeObject.setEventId(eventId);
+                homeObject.setPlaceImg(placeImg);
+                homeObject.setPlaceName(placeName);
+
+                ret.add(homeObject);
+            }
+
+        } catch (ParseException e){
+            e.printStackTrace();
+        }
+
         return ret;
     }
 }

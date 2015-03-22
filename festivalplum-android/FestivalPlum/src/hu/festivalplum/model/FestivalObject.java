@@ -1,4 +1,4 @@
-package hu.festivalplum.festival;
+package hu.festivalplum.model;
 
 import java.util.Date;
 

@@ -5,21 +5,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ExpandableListView;
 
-import com.parse.ParseException;
-import com.parse.ParseFile;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
+import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.utils.ParseDataCollector;
 
 
@@ -37,7 +29,11 @@ public class FestivalActivity extends Activity {
         Map<String,Object> data = ParseDataCollector.collectFestivalData(intent.getStringExtra("eventId"), intent.getStringExtra("place"));
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
-        setContentView(new FestivalView(this));
+
+        ExpandableListView v = new ExpandableListView(this);
+        v.setAdapter(new FestivalViewAdapter(this, festivalGroup, festivalChild));
+
+        setContentView(v);
 
     }
 

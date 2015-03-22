@@ -14,6 +14,8 @@ public class HomeObject {
     private String placeName;
     private String cityName;
 
+    private boolean favorite;
+
     public HomeObject(){
         //
     }
@@ -65,5 +67,14 @@ public class HomeObject {
     public void setEndDate(Date endDate) {
         this.endDate = endDate;
     }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
 
 }

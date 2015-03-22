@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
+import hu.festivalplum.model.FestivalObject;
 
 /**
  * Created by viktor on 2015.03.18..

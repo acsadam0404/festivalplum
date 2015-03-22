@@ -17,6 +17,8 @@ import android.widget.Toast;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.SQLiteUtil;
+import hu.festivalplum.utils.Utils;
 
 public class HomeViewAdapter extends BaseExpandableListAdapter {
 
@@ -26,10 +28,14 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     /** child data in format of header title, child title */
     private Map<String, List<HomeObject>> childTitles;
 
+    private List<String> favoriteIds;
+
     public HomeViewAdapter(Context context, List<String> headerTitles, Map<String, List<HomeObject>> childTitles) {
+        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
         this.context = context;
         this.headerTitles = headerTitles;
         this.childTitles = childTitles;
+
     }
 
     @Override
@@ -44,9 +50,10 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
-
-        //final String childText = (String) getChild(groupPosition, childPosition);
         HomeObject child = (HomeObject) getChild(groupPosition, childPosition);
+        if(favoriteIds.contains(child.getEventId())){
+            child.setFavorite(true);
+        }
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -60,13 +67,9 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
 
-        ImageView like = (ImageView) convertView.findViewById(R.id.like);
-        like.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Toast.makeText(context, "LIKE", Toast.LENGTH_SHORT).show();
-            }
-        });
+        ImageView like = (ImageView)convertView.findViewById(R.id.like);
+        Utils.setFavoriteImage(like,child.isFavorite());
+        like.setTag(child);
 
         txtListChild.setText(child.getPlaceName() + " / " + child.getCityName());
         return convertView;
@@ -120,5 +123,11 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
+        super.notifyDataSetChanged();
     }
 }

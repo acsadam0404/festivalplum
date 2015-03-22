@@ -35,6 +35,12 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         }
     }
 
+    public void refreshView(){
+        for (MyFragment f : fragments){
+            f.refreshView();
+        }
+    }
+
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);

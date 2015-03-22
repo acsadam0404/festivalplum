@@ -5,8 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
-import hu.festivalplum.home.view.ArtistView;
+import android.widget.ListView;
 
 /**
  * Created by viktor on 2015.03.15..
@@ -23,7 +22,7 @@ public class FragmentBand extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = new ArtistView(getActivity());
+        View v = new ListView(getActivity());
         return v;
     }
 
@@ -31,5 +30,6 @@ public class FragmentBand extends MyFragment {
     public String getName() {
         return NAME;
     }
+
 
 }
