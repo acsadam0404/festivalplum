@@ -114,11 +114,6 @@ public class HomeActivity extends FragmentActivity {
                 this.startActivity(i);
 
                 break;
-            case R.id.action_starter:
-                i = new Intent(this, StarterActivity.class);
-                this.startActivity(i);
-
-                break;
         }
 
         return super.onOptionsItemSelected(item);
