@@ -118,6 +118,8 @@ public class ParseDataCollector {
         return ret;
     }
 
+
+
     public static Map<String, Object> collectFestivalData(String eventId, final String place) {
         Map<String, Object> ret = new HashMap<>();
 
@@ -194,13 +196,27 @@ public class ParseDataCollector {
     }
 
     public static List<HomeObject> collectFavoriteData(List<String> eventIds){
-        List<HomeObject> ret = new ArrayList<>();
-
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.whereContainedIn("objectId", eventIds);
         query.include("place");
         query.include("place.address");
 
+        return getHomeList(query);
+    }
+
+    public static List<HomeObject> collectSearchData(String name){
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("Place");
+        q.whereMatches("name", name);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.include("place");
+        query.include("place.address");
+        query.whereMatchesQuery("place", q);
+
+        return getHomeList(query);
+    }
+
+    private static List<HomeObject> getHomeList(ParseQuery<ParseObject> query){
+        List<HomeObject> ret = new ArrayList<>();
         try {
             List<ParseObject> result = query.find();
             for(int i = 0; i < result.size(); i++) {

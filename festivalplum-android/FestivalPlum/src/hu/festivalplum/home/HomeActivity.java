@@ -64,6 +64,7 @@ public class HomeActivity extends FragmentActivity {
         tabs.setViewPager(p);
         tabs.setShouldExpand(true);
         tabs.setIndicatorColorResource(android.R.color.holo_purple);
+
     }
 
     public void likeHandler (View v) {
@@ -87,7 +88,6 @@ public class HomeActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
-
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
@@ -107,7 +107,7 @@ public class HomeActivity extends FragmentActivity {
                 //
                 break;
             case R.id.action_search:
-                onSearchRequested();
+                //
                 break;
             case R.id.action_favourite:
                 i = new Intent(this, FavoriteActivity.class);
