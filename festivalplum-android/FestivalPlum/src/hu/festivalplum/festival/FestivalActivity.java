@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ExpandableListView;
+import android.widget.ListView;
 
 import java.util.List;
 import java.util.Map;
@@ -23,17 +24,16 @@ public class FestivalActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_explistview);
+
+        ExpandableListView v = (ExpandableListView) findViewById(R.id.expandableListView);
 
         Intent intent = getIntent();
-
         Map<String,Object> data = ParseDataCollector.collectFestivalData(intent.getStringExtra("eventId"), intent.getStringExtra("place"));
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
 
-        ExpandableListView v = new ExpandableListView(this);
         v.setAdapter(new FestivalViewAdapter(this, festivalGroup, festivalChild));
-
-        setContentView(v);
 
     }
 

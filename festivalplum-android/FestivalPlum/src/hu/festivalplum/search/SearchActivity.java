@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.List;
 
+import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.model.HomeObject;
@@ -27,8 +28,10 @@ public class SearchActivity extends Activity {
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_listview);
 
-        ListView v = new ListView(this);
+        ListView v = (ListView) findViewById(R.id.listView);
+
         mAdapter = new SearcViewAdapter(this);
         v.setAdapter(mAdapter);
 
@@ -42,8 +45,6 @@ public class SearchActivity extends Activity {
                 SearchActivity.this.startActivity(intent);
             }
         });
-
-        setContentView(v);
 
         handleIntent(getIntent());
     }

@@ -29,8 +29,9 @@ public class FavoriteActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_listview);
 
-        ListView v = new ListView(this);
+        ListView v = (ListView) findViewById(R.id.listView);
 
         List<String> eventIds = SQLiteUtil.getInstence(this).getFavoriteIds("Event");
         List<HomeObject> items = ParseDataCollector.collectFavoriteData(eventIds);
@@ -99,7 +100,7 @@ public class FavoriteActivity extends Activity {
             }
         });
 
-        setContentView(v);
+
     }
 
     public void mapHandler (View v) {
