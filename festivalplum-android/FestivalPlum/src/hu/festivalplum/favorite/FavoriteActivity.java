@@ -108,5 +108,6 @@ public class FavoriteActivity extends Activity {
         Intent intent = new Intent(this, MapActivity.class);
         intent.putExtra("eventId", item.getEventId());
         startActivity(intent);
+        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
     }
 }

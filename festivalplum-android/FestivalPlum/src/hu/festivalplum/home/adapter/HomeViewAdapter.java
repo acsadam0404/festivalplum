@@ -1,5 +1,7 @@
 package hu.festivalplum.home.adapter;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,9 +25,10 @@ import hu.festivalplum.utils.Utils;
 public class HomeViewAdapter extends BaseExpandableListAdapter {
 
     private Context context;
-    /** header titles */
+
+    private List<String> baseHeaderTitles;
+    private Map<String, List<HomeObject>> baseChildTitles;
     private List<String> headerTitles;
-    /** child data in format of header title, child title */
     private Map<String, List<HomeObject>> childTitles;
 
     private List<String> favoriteIds;
@@ -35,7 +38,8 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         this.context = context;
         this.headerTitles = headerTitles;
         this.childTitles = childTitles;
-
+        this.baseHeaderTitles = headerTitles;
+        this.baseChildTitles = childTitles;
     }
 
     @Override
@@ -132,6 +136,36 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     @Override
     public void notifyDataSetChanged() {
         this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
+        super.notifyDataSetChanged();
+    }
+
+    public void filter(String query){
+        this.headerTitles = new ArrayList<>();
+        this.childTitles = new HashMap<>();
+        query = query.toLowerCase();
+
+        for(String key : baseHeaderTitles){
+            List<HomeObject> tmpChildList = baseChildTitles.get(key);
+            for(HomeObject o : tmpChildList){
+                if(o.getPlaceName().toLowerCase().contains(query)){
+                    if(childTitles.containsKey(key)){
+                        childTitles.get(key).add(o);
+                    }else{
+                        List<HomeObject> fTmpChildList = new ArrayList<>();
+                        fTmpChildList.add(o);
+                        childTitles.put(key, fTmpChildList);
+                        headerTitles.add(key);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
+    }
+
+    public void resetFilter(){
+        this.headerTitles = this.baseHeaderTitles;
+        this.childTitles = this.baseChildTitles;
+
         super.notifyDataSetChanged();
     }
 }

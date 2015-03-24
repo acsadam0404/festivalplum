@@ -1,6 +1,7 @@
 package hu.festivalplum.home.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import java.util.List;
 import java.util.Map;
+
+import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;

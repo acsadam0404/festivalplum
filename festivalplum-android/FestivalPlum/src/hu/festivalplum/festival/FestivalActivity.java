@@ -1,10 +1,14 @@
 package hu.festivalplum.festival;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
@@ -24,10 +28,18 @@ public class FestivalActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_explistview);
+
+        LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        View contentView = infalInflater.inflate(R.layout.activity_explistview, null);
+
+        setContentView(contentView);
 
         ExpandableListView v = (ExpandableListView) findViewById(R.id.expandableListView);
-
+        AlphaAnimation animation = new AlphaAnimation(0f, 1.0f);
+        animation.setDuration(3000);
+        animation.setStartOffset(0);
+        animation.setFillAfter(true);
+        contentView.startAnimation(animation);
         Intent intent = getIntent();
         Map<String,Object> data = ParseDataCollector.collectFestivalData(intent.getStringExtra("eventId"), intent.getStringExtra("place"));
         festivalGroup = (List<String>)data.get("festivalGroup");

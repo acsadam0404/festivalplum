@@ -33,6 +33,7 @@ public class SearchActivity extends Activity {
         ListView v = (ListView) findViewById(R.id.listView);
 
         mAdapter = new SearcViewAdapter(this);
+
         v.setAdapter(mAdapter);
 
         v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
