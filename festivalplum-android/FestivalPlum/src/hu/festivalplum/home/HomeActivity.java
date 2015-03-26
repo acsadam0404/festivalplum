@@ -21,7 +21,6 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
-import hu.festivalplum.StarterActivity;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
 import hu.festivalplum.model.HomeObject;
@@ -59,6 +58,7 @@ public class HomeActivity extends FragmentActivity {
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(fragmentAdapter);
+        p.setCurrentItem(1);
 
         PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
