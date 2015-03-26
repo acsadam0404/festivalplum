@@ -24,7 +24,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
 
     public FragmentAdapter(FragmentManager fm) {
         super(fm);
-        fragments = new ArrayList<MyFragment>();
+        fragments = new ArrayList<>();
         fragments.add(new FragmentName());
         fragments.add(new FragmentTime());
         fragments.add(new FragmentCity());
@@ -32,12 +32,6 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         titles = new String[fragments.size()];
         for(int i = 0; i < fragments.size(); i++){
             titles[i] = fragments.get(i).getName();
-        }
-    }
-
-    public void refreshView(){
-        for (MyFragment f : fragments){
-            f.refreshView();
         }
     }
 

@@ -41,8 +41,6 @@ public class HomeActivity extends FragmentActivity {
 
     private FragmentAdapter fragmentAdapter;
 
-    public static boolean modFavorite = false;
-
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
@@ -65,23 +63,6 @@ public class HomeActivity extends FragmentActivity {
         tabs.setShouldExpand(true);
         tabs.setIndicatorColorResource(android.R.color.holo_purple);
 
-    }
-
-    public void likeHandler (View v) {
-        HomeObject item = (HomeObject)v.getTag();
-        SQLiteUtil.getInstence(this).addFavoriteId("Event", item.getEventId());
-        item.setFavorite(!item.isFavorite());
-        Utils.setFavoriteImage((ImageView)v,item.isFavorite());
-        fragmentAdapter.refreshView();
-    }
-
-    @Override
-    protected void onResume() {
-        if(modFavorite){
-            fragmentAdapter.refreshView();
-            modFavorite = false;
-        }
-        super.onResume();
     }
 
     @Override

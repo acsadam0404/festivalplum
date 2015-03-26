@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -15,10 +14,8 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import hu.festivalplum.R;
 import hu.festivalplum.model.HomeObject;
-import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
 
 public class HomeViewAdapter extends BaseExpandableListAdapter {
@@ -30,10 +27,7 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
 
-    private List<String> favoriteIds;
-
     public HomeViewAdapter(Context context, List<String> headerTitles, Map<String, List<HomeObject>> childTitles) {
-        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
         this.context = context;
         this.headerTitles = headerTitles;
         this.childTitles = childTitles;
@@ -54,11 +48,6 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
         HomeObject child = (HomeObject) getChild(groupPosition, childPosition);
-        if(favoriteIds.contains(child.getEventId())){
-            child.setFavorite(true);
-        }else{
-            child.setFavorite(false);
-        }
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -72,10 +61,6 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
-
-        ImageView like = (ImageView)convertView.findViewById(R.id.like);
-        Utils.setFavoriteImage(like,child.isFavorite());
-        like.setTag(child);
 
         name.setText(child.getPlaceName() + " - " + child.getCityName());
         date.setText(Utils.sdfDate.format(child.getStartDate()) + " - " + Utils.sdfDate.format(child.getEndDate()));
@@ -130,12 +115,6 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
-    }
-
-    @Override
-    public void notifyDataSetChanged() {
-        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
-        super.notifyDataSetChanged();
     }
 
     public void filter(String query){

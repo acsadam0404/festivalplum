@@ -15,7 +15,8 @@ import java.util.HashMap;
 import java.util.List;
 
 import hu.festivalplum.R;
-import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.model.FestivalObject;
+import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -26,10 +27,13 @@ import hu.festivalplum.utils.Utils;
 public class FavoriteViewAdapter extends BaseAdapter {
 
     private Context context;
-    private List<HomeObject> list;
+    private List<FestivalObject> list;
     private HashMap<Integer, Boolean> mSelection = new HashMap<Integer, Boolean>();
 
-    public FavoriteViewAdapter(Context context, List<HomeObject> list){
+    private List<String> favoriteIds;
+
+    public FavoriteViewAdapter(Context context, List<FestivalObject> list){
+        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
         this.context = context;
         this.list = list;
     }
@@ -50,35 +54,42 @@ public class FavoriteViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-        HomeObject item = (HomeObject)getItem(i);
-
-        if (view == null) {
-            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            view = infalInflater.inflate(R.layout.favoriteview_item, null);
+    public View getView(int i, View convertView, ViewGroup viewGroup) {
+        FestivalObject child = (FestivalObject) getItem(i);
+        if(favoriteIds.contains(child.getConcertId())){
+            child.setFavorite(true);
+        }else{
+            child.setFavorite(false);
         }
 
-        TextView name = (TextView) view.findViewById(R.id.name);
-        TextView date = (TextView) view.findViewById(R.id.date);
+        if (convertView == null) {
+            LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = infalInflater.inflate(R.layout.festivalview_item, null);
+        }
 
-        byte[] img = item.getPlaceImg();
+        TextView name = (TextView) convertView.findViewById(R.id.name);
+        TextView date = (TextView) convertView.findViewById(R.id.date);
+
+        byte[] img = child.getImage();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
-        ImageView image = (ImageView) view.findViewById(R.id.image);
+        ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
 
-        ImageView map = (ImageView)view.findViewById(R.id.map);
-        map.setTag(item);
+        ImageView like = (ImageView)convertView.findViewById(R.id.like);
+        Utils.setFavoriteImage(like,child.isFavorite());
+        like.setTag(child);
 
-        name.setText(item.getPlaceName() + " - " + item.getCityName());
-        date.setText(Utils.sdfDate.format(item.getStartDate()) + " - " + Utils.sdfDate.format(item.getEndDate()));
+        name.setText(child.getBandName() + " - " + child.getStageName());
+        date.setText(Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()));
 
         if (mSelection.get(i) != null) {
-            view.setBackgroundColor(context.getResources().getColor(android.R.color.holo_purple));
+            convertView.setBackgroundColor(context.getResources().getColor(android.R.color.holo_purple));
         }else{
-            view.setBackgroundColor(context.getResources().getColor(android.R.color.background_light));
+            convertView.setBackgroundColor(context.getResources().getColor(android.R.color.background_light));
         }
 
-        return view;
+
+        return convertView;
     }
 
     public void setNewSelection(int position, boolean value) {
@@ -96,18 +107,18 @@ public class FavoriteViewAdapter extends BaseAdapter {
         notifyDataSetChanged();
     }
 
-    public List<HomeObject> getAllSelectedItem(){
-        List<HomeObject> ret = new ArrayList<>();
+    public List<FestivalObject> getAllSelectedItem(){
+        List<FestivalObject> ret = new ArrayList<>();
         for(Integer i : mSelection.keySet()){
-            ret.add((HomeObject)getItem(i));
+            ret.add((FestivalObject)getItem(i));
         }
         return ret;
     }
 
     @Override
     public void notifyDataSetChanged() {
-        List<String> eventIds = SQLiteUtil.getInstence(context).getFavoriteIds("Event");
-        this.list = ParseDataCollector.collectFavoriteData(eventIds);
+        List<String> concertIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
+        this.list = ParseDataCollector.collectFavoriteData(concertIds);
         super.notifyDataSetChanged();
     }
 }

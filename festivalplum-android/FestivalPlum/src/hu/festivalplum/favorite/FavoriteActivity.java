@@ -1,6 +1,8 @@
 package hu.festivalplum.favorite;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.ActionMode;
@@ -10,6 +12,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import java.util.List;
@@ -18,9 +21,11 @@ import hu.festivalplum.MapActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
+import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
+import hu.festivalplum.utils.Utils;
 
 public class FavoriteActivity extends Activity {
 
@@ -33,22 +38,11 @@ public class FavoriteActivity extends Activity {
 
         ListView v = (ListView) findViewById(R.id.listView);
 
-        List<String> eventIds = SQLiteUtil.getInstence(this).getFavoriteIds("Event");
-        List<HomeObject> items = ParseDataCollector.collectFavoriteData(eventIds);
+        List<String> concertIds = SQLiteUtil.getInstence(this).getFavoriteIds("Concert");
+        List<FestivalObject> items = ParseDataCollector.collectFavoriteData(concertIds);
 
         mAdapter = new FavoriteViewAdapter(this, items);
         v.setAdapter(mAdapter);
-
-        v.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(FavoriteActivity.this, FestivalActivity.class);
-                HomeObject object = (HomeObject) adapterView.getAdapter().getItem(i);
-                intent.putExtra("eventId", object.getEventId());
-                intent.putExtra("place", object.getPlaceName());
-                FavoriteActivity.this.startActivity(intent);
-            }
-        });
 
         v.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE_MODAL);
 
@@ -83,12 +77,12 @@ public class FavoriteActivity extends Activity {
             public boolean onActionItemClicked(ActionMode actionMode, MenuItem menuItem) {
                 switch (menuItem.getItemId()) {
                     case R.id.item_delete:
-                        for (HomeObject o : mAdapter.getAllSelectedItem()){
-                            SQLiteUtil.getInstence(FavoriteActivity.this).removeFavoriteId("Event", o.getEventId(), true);
+                        for (FestivalObject o : mAdapter.getAllSelectedItem()){
+                            SQLiteUtil.getInstence(FavoriteActivity.this).removeFavoriteId("Concert", o.getConcertId(), true);
                         }
                         break;
                 }
-                HomeActivity.modFavorite = true;
+                FestivalActivity.modFavorite = true;
                 mAdapter.notifyDataSetChanged();
                 actionMode.finish();
                 return false;
@@ -103,11 +97,28 @@ public class FavoriteActivity extends Activity {
 
     }
 
-    public void mapHandler (View v) {
-        HomeObject item = (HomeObject)v.getTag();
-        Intent intent = new Intent(this, MapActivity.class);
-        intent.putExtra("eventId", item.getEventId());
-        startActivity(intent);
-        overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+    public void likeHandler (final View v) {
+        final FestivalObject item = (FestivalObject)v.getTag();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_favorite_title)
+                .setMessage(R.string.dialog_delete_favorite_msg)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SQLiteUtil.getInstence(FavoriteActivity.this).addFavoriteId("Concert", item.getConcertId());
+                        item.setFavorite(!item.isFavorite());
+                        Utils.setFavoriteImage((ImageView) v, item.isFavorite());
+                        FestivalActivity.modFavorite = true;
+                        mAdapter.notifyDataSetChanged();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
+
+
     }
 }

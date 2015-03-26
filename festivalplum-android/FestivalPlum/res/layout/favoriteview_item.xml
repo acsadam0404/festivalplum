@@ -39,17 +39,17 @@
 
     <ImageView
         android:focusable="false"
-        android:id="@+id/map"
+        android:id="@+id/like"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_gravity="right"
-        android:src="@android:drawable/ic_menu_compass"
+        android:src="@android:drawable/btn_star_big_off"
         android:clickable="true"
         android:nestedScrollingEnabled="false"
         android:layout_alignParentTop="true"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:onClick="mapHandler"
+        android:onClick="likeHandler"
         android:layout_marginRight="5dp"/>
 
 </RelativeLayout>

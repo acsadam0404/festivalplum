@@ -38,6 +38,8 @@ public class FestivalActivity extends FragmentActivity {
 
     private FragmentAdapter fragmentAdapter;
 
+    public static boolean modFavorite = false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -116,6 +118,15 @@ public class FestivalActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onResume() {
+        if(modFavorite){
+            fragmentAdapter.refreshView();
+            modFavorite = false;
+        }
+        super.onResume();
     }
 
     public List<String> getFestivalGroup() {

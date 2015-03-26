@@ -197,6 +197,71 @@ public class ParseDataCollector {
         return ret;
     }
 
+    public static List<FestivalObject> collectFavoriteData(List<String> concertIds){
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+        query.whereContainedIn("objectId", concertIds);
+        query.include("band");
+        query.include("stage");
+        query.orderByAscending("startDate");
+
+        return getFestivalList(query);
+    }
+
+    private static List<FestivalObject> getFestivalList(ParseQuery<ParseObject> query){
+        List<FestivalObject> ret = new ArrayList<>();
+        try {
+            List<ParseObject> result = query.find();
+            Calendar cal = Calendar.getInstance();
+            if (result.size() > 0) {
+                cal.setTime(result.get(0).getDate("startDate"));
+                int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+
+                for (int i = 0; i < result.size(); i++) {
+                    ParseObject concert = result.get(i);
+                    String concertId = concert.getObjectId();
+                    ParseObject band = concert.getParseObject("band");
+                    if (band == null)
+                        continue;
+                    ParseObject stage = concert.getParseObject("stage");
+                    if (stage == null)
+                        continue;
+                    Date startDate = concert.getDate("startDate");
+                    if (startDate == null)
+                        continue;
+                    Date toDate = concert.getDate("toDate");
+                    if (toDate == null)
+                        continue;
+                    cal.setTime(startDate);
+
+                    int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
+
+                    ParseFile imageFile = (ParseFile) band.get("image");
+                    if (imageFile == null)
+                        continue;
+                    byte[] bandImg = imageFile.getData();
+
+                    String stageName = stage.getString("name");
+                    if (stageName == null)
+                        continue;
+                    String bandName = band.getString("name");
+                    if (bandName == null)
+                        continue;
+                    FestivalObject festivalObject = new FestivalObject();
+                    festivalObject.setStartDate(startDate);
+                    festivalObject.setBandName(bandName);
+                    festivalObject.setImage(bandImg);
+                    festivalObject.setStageName(stageName);
+                    festivalObject.setToDate(toDate);
+                    festivalObject.setConcertId(concertId);
+                    ret.add(festivalObject);
+                }
+            }
+        }catch (Exception e){
+            //
+        }
+        return ret;
+    }
+/*
     public static List<HomeObject> collectFavoriteData(List<String> eventIds){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.whereContainedIn("objectId", eventIds);
@@ -205,7 +270,7 @@ public class ParseDataCollector {
 
         return getHomeList(query);
     }
-
+*/
     public static List<HomeObject> collectSearchData(String name){
         ParseQuery<ParseObject> q = ParseQuery.getQuery("Place");
         q.whereMatches("name", name);

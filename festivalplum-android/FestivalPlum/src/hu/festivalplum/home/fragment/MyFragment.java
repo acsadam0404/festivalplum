@@ -14,11 +14,6 @@ public abstract class MyFragment extends Fragment {
 
     public abstract String getName();
 
-    public void refreshView(){
-        if(homeViewAdapter != null)
-            homeViewAdapter.notifyDataSetChanged();
-    }
-
     public void
     filterInView(String query){
         this.query = query;
