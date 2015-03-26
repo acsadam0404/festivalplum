@@ -1,4 +1,4 @@
-package hu.festivalplum.festival;
+package hu.festivalplum.festival.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -11,11 +11,14 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.FestivalObject;
+import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
 
 /**
@@ -24,15 +27,21 @@ import hu.festivalplum.utils.Utils;
 public class FestivalViewAdapter  extends BaseExpandableListAdapter {
 
     private Context context;
-    /** header titles */
+
+    private List<String> baseHeaderTitles;
+    private Map<String, List<FestivalObject>> baseChildTitles;
     private List<String> headerTitles;
-    /** child data in format of header title, child title */
     private Map<String, List<FestivalObject>> childTitles;
 
+    private List<String> favoriteIds;
+
     public FestivalViewAdapter(Context context, List<String> headerTitles, Map<String, List<FestivalObject>> childTitles) {
+        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
         this.context = context;
         this.headerTitles = headerTitles;
         this.childTitles = childTitles;
+        this.baseHeaderTitles = headerTitles;
+        this.baseChildTitles = childTitles;
     }
 
     @Override
@@ -47,9 +56,12 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
-
-        //final String childText = (String) getChild(groupPosition, childPosition);
         FestivalObject child = (FestivalObject) getChild(groupPosition, childPosition);
+        if(favoriteIds.contains(child.getConcertId())){
+            child.setFavorite(true);
+        }else{
+            child.setFavorite(false);
+        }
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -63,6 +75,10 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
         image.setImageBitmap(bitmap);
+
+        ImageView like = (ImageView)convertView.findViewById(R.id.like);
+        Utils.setFavoriteImage(like,child.isFavorite());
+        like.setTag(child);
 
         name.setText(child.getBandName() + " - " + child.getStageName());
         date.setText(Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()));
@@ -117,5 +133,34 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
+    }
+
+    @Override
+    public void notifyDataSetChanged() {
+        this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
+        super.notifyDataSetChanged();
+    }
+
+    public void filter(String query){
+        this.headerTitles = new ArrayList<>();
+        this.childTitles = new HashMap<>();
+        query = query.toLowerCase();
+
+        for(String key : baseHeaderTitles){
+            List<FestivalObject> tmpChildList = baseChildTitles.get(key);
+            for(FestivalObject o : tmpChildList){
+                if(o.getBandName().toLowerCase().contains(query)){
+                    if(childTitles.containsKey(key)){
+                        childTitles.get(key).add(o);
+                    }else{
+                        List<FestivalObject> fTmpChildList = new ArrayList<>();
+                        fTmpChildList.add(o);
+                        childTitles.put(key, fTmpChildList);
+                        headerTitles.add(key);
+                    }
+                }
+            }
+        }
+        notifyDataSetChanged();
     }
 }

@@ -142,6 +142,7 @@ public class ParseDataCollector {
 
                 for (int i = 0; i < result.size(); i++) {
                     ParseObject concert = result.get(i);
+                    String concertId = concert.getObjectId();
                     ParseObject band = concert.getParseObject("band");
                     if(band == null)
                         continue;
@@ -175,6 +176,7 @@ public class ParseDataCollector {
                     festivalObject.setImage(bandImg);
                     festivalObject.setStageName(stageName);
                     festivalObject.setToDate(toDate);
+                    festivalObject.setConcertId(concertId);
 
                     if (!festivalChild.containsKey(title)) {
                         festivalGroup.add(title);

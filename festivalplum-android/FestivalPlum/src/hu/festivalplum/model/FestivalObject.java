@@ -6,11 +6,14 @@ import java.util.Date;
  * Created by viktor on 2015.03.18..
  */
 public class FestivalObject {
+
+    private String concertId;
     private String bandName;
     private byte[] image;
     private String StageName;
     private Date startDate;
     private Date toDate;
+    private boolean favorite;
 
     public FestivalObject(){
         //
@@ -54,5 +57,21 @@ public class FestivalObject {
 
     public void setToDate(Date toDate) {
         this.toDate = toDate;
+    }
+
+    public boolean isFavorite() {
+        return favorite;
+    }
+
+    public void setFavorite(boolean favorite) {
+        this.favorite = favorite;
+    }
+
+    public String getConcertId() {
+        return concertId;
+    }
+
+    public void setConcertId(String concertId) {
+        this.concertId = concertId;
     }
 }
