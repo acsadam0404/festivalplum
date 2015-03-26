@@ -67,19 +67,6 @@ public class HomeActivity extends FragmentActivity {
 
     }
 
-    @Override
-    protected void onNewIntent(Intent intent) {
-        setIntent(intent);
-        handleIntent(intent);
-    }
-
-    private void handleIntent(Intent intent) {
-        if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
-            String query = intent.getStringExtra(SearchManager.QUERY);
-            fragmentAdapter.filterInView(query);
-        }
-    }
-
     public void likeHandler (View v) {
         HomeObject item = (HomeObject)v.getTag();
         SQLiteUtil.getInstence(this).addFavoriteId("Event", item.getEventId());
@@ -105,10 +92,17 @@ public class HomeActivity extends FragmentActivity {
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
+
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public boolean onClose() {
-                fragmentAdapter.resetFilterInView();
+            public boolean onQueryTextSubmit(String s) {
+                fragmentAdapter.filterInView(s);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                fragmentAdapter.filterInView(s);
                 return false;
             }
         });

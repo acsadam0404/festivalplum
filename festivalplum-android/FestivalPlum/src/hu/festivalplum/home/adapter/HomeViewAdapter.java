@@ -15,7 +15,6 @@ import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.HomeObject;
@@ -162,10 +161,4 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         notifyDataSetChanged();
     }
 
-    public void resetFilter(){
-        this.headerTitles = this.baseHeaderTitles;
-        this.childTitles = this.baseChildTitles;
-
-        super.notifyDataSetChanged();
-    }
 }

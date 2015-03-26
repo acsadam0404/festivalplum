@@ -22,12 +22,8 @@ public abstract class MyFragment extends Fragment {
     public void
     filterInView(String query){
         this.query = query;
-    }
-
-    public void resetFilterInView(){
-        this.query = null;
         if(homeViewAdapter != null){
-            homeViewAdapter.resetFilter();
+            homeViewAdapter.filter(query);
         }
     }
 

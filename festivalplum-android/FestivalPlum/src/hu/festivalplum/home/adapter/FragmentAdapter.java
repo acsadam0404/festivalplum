@@ -47,12 +47,6 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         }
     }
 
-    public void resetFilterInView(){
-        for (MyFragment f : fragments){
-            f.resetFilterInView();
-        }
-    }
-
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);
