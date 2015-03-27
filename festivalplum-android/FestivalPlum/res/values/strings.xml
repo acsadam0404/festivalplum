@@ -14,6 +14,7 @@
     <string name="title_activity_map">Térkép</string>
     <string name="selected">kiválasztott</string>
     <string name="action_delete">Törlés</string>
+    <string name="action_history">Előzmények</string>
 
     <string name="dialog_delete_favorite_title">Kedvenc törlése</string>
     <string name="dialog_delete_favorite_msg">Biztosan törölni akarod a koncertet a kedvencek közül?</string>

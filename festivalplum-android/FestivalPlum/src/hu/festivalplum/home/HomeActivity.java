@@ -22,6 +22,7 @@ import java.util.Map;
 
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
+import hu.festivalplum.history.HistoryActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
@@ -108,7 +109,10 @@ public class HomeActivity extends FragmentActivity {
             case R.id.action_favourite:
                 i = new Intent(this, FavoriteActivity.class);
                 this.startActivity(i);
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
+                break;
+            case R.id.action_history:
+                i = new Intent(this, HistoryActivity.class);
+                this.startActivity(i);
                 break;
         }
 
