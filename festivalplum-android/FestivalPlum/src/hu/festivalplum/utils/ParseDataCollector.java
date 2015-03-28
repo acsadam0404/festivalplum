@@ -11,6 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
 
@@ -118,7 +119,50 @@ public class ParseDataCollector {
         return ret;
     }
 
+    public static List<BandObject> collectBandData(){
+        List<BandObject> ret = new ArrayList<>();
+        List<String> distinctHelper = new ArrayList<>();
+        Date date = new Date();
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("Band");
+        q.orderByAscending("name");
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+        query.include("band");
+        query.whereMatchesQuery("band", q);
+        query.whereGreaterThan("startDate", date);
 
+
+        try {
+            List<ParseObject> result = query.find();
+            if (result.size() > 0) {
+                for (int i = 0; i < result.size(); i++) {
+                    ParseObject concert = result.get(i);
+                    ParseObject band = concert.getParseObject("band");
+                    if(band == null)
+                        continue;
+                    String bandId = band.getObjectId();
+                    String name = band.getString("name");
+                    String style = band.getString("style");
+                    ParseFile imageFile = (ParseFile) band.get("image");
+                    if(imageFile == null)
+                        continue;
+                    byte[] bandImg = imageFile.getData();
+                    BandObject bandObject = new BandObject();
+                    if(!distinctHelper.contains(name)) {
+                        bandObject.setName(name);
+                        bandObject.setStyle(style);
+                        bandObject.setBandImg(bandImg);
+                        bandObject.setBandId(bandId);
+                        distinctHelper.add(name);
+                        ret.add(bandObject);
+                    }
+                }
+            }
+        }catch (Exception e){
+            //
+        }
+
+        return ret;
+    }
 
     public static Map<String, Object> collectFestivalData(String eventId, final String place) {
         Map<String, Object> ret = new HashMap<>();

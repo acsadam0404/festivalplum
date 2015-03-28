@@ -24,6 +24,7 @@ import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.history.HistoryActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
+import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
@@ -40,6 +41,8 @@ public class HomeActivity extends FragmentActivity {
     private List<String> cityGroup;
     private Map<String, List<HomeObject>> cityChild;
 
+    private List<BandObject> bandData;
+
     private FragmentAdapter fragmentAdapter;
 
     public void onCreate(Bundle savedInstanceState) {
@@ -47,6 +50,7 @@ public class HomeActivity extends FragmentActivity {
         setContentView(R.layout.activity_home);
 
         Map<String, Object> data =  ParseDataCollector.collectHomeData();
+        bandData = ParseDataCollector.collectBandData();
         timeGroup = (List<String>)data.get("timeGroup");
         timeChild = (Map<String, List<HomeObject>>)data.get("timeChild");
         nameGroup = (List<String>)data.get("nameGroup");
@@ -143,4 +147,7 @@ public class HomeActivity extends FragmentActivity {
         return cityChild;
     }
 
+    public List<BandObject> getBandData() {
+        return bandData;
+    }
 }
