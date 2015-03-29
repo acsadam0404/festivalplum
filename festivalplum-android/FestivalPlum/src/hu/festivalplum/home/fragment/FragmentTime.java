@@ -24,8 +24,6 @@ import hu.festivalplum.model.HomeObject;
  */
 public class FragmentTime extends MyFragment {
 
-    private static final String NAME = "Idő";
-
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
 
@@ -60,8 +58,8 @@ public class FragmentTime extends MyFragment {
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public int getName() {
+        return R.string.tab_time;
     }
 
 }

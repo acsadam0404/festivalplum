@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import hu.festivalplum.FPApplication;
+import hu.festivalplum.R;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.BandViewAdapter;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
@@ -23,7 +24,6 @@ import hu.festivalplum.model.BandObject;
  */
 public class FragmentBand extends MyFragment {
 
-    private static final String NAME = "Fellépő";
     private List<BandObject> bandData;
 
     public FragmentBand() {
@@ -43,8 +43,8 @@ public class FragmentBand extends MyFragment {
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public int getName() {
+        return R.string.tab_band;
     }
 
 

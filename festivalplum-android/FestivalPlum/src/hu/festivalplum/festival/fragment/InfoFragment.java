@@ -6,14 +6,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import hu.festivalplum.R;
 import hu.festivalplum.festival.fragment.MyFragment;
 
 /**
  * Created by viktor on 2015.03.26..
  */
 public class InfoFragment extends MyFragment {
-
-    private static final String NAME = "Info";
 
     public InfoFragment() {
 
@@ -27,7 +26,7 @@ public class InfoFragment extends MyFragment {
         return v;
     }
     @Override
-    public String getName() {
-        return NAME;
+    public int getName() {
+        return R.string.tab_info;
     }
 }

@@ -14,7 +14,7 @@ public abstract class MyFragment extends Fragment {
     protected BandViewAdapter bandViewAdapter;
     protected String query;
 
-    public abstract String getName();
+    public abstract int getName();
 
     public void
     filterInView(String query){

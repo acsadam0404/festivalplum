@@ -1,12 +1,14 @@
 package hu.festivalplum.home.adapter;
 
 
+import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
+import hu.festivalplum.FPApplication;
 import hu.festivalplum.home.fragment.FragmentBand;
 import hu.festivalplum.home.fragment.FragmentCity;
 import hu.festivalplum.home.fragment.FragmentName;
@@ -22,7 +24,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private ArrayList<MyFragment> fragments;
     private String[] titles;
 
-    public FragmentAdapter(FragmentManager fm) {
+    public FragmentAdapter(FragmentManager fm, Context context) {
         super(fm);
         fragments = new ArrayList<>();
         fragments.add(new FragmentName());
@@ -31,7 +33,7 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         fragments.add(new FragmentBand());
         titles = new String[fragments.size()];
         for(int i = 0; i < fragments.size(); i++){
-            titles[i] = fragments.get(i).getName();
+            titles[i] = context.getResources().getString(fragments.get(i).getName());
         }
     }
 

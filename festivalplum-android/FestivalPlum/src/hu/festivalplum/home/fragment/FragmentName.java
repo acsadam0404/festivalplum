@@ -12,6 +12,7 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.FPApplication;
+import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
@@ -21,8 +22,6 @@ import hu.festivalplum.model.HomeObject;
  * Created by viktor on 2015.03.15..
  */
 public class FragmentName extends MyFragment {
-
-    private static final String NAME = "Név";
 
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
@@ -59,8 +58,8 @@ public class FragmentName extends MyFragment {
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public int getName() {
+        return R.string.tab_name;
     }
 
 }

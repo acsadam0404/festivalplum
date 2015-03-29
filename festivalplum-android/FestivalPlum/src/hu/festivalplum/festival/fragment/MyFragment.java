@@ -12,7 +12,7 @@ public abstract class MyFragment extends Fragment {
     protected FestivalViewAdapter festivalViewAdapter;
     protected String query;
 
-    public abstract String getName();
+    public abstract int getName();
 
     public void refreshView(){
         if(festivalViewAdapter != null)

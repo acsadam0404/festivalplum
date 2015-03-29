@@ -56,7 +56,7 @@ public class FestivalActivity extends FragmentActivity {
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
 
-        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this);
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(fragmentAdapter);

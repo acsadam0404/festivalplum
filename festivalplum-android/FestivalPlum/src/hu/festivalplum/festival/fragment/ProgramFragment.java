@@ -12,6 +12,7 @@ import android.widget.ListView;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.festival.adapter.FestivalViewAdapter;
 import hu.festivalplum.model.FestivalObject;
@@ -20,8 +21,6 @@ import hu.festivalplum.model.FestivalObject;
  * Created by viktor on 2015.03.26..
  */
 public class ProgramFragment extends MyFragment {
-
-    private static final String NAME = "Program";
 
     private List<String> headerTitles;
     private Map<String, List<FestivalObject>> childTitles;
@@ -45,7 +44,7 @@ public class ProgramFragment extends MyFragment {
     }
 
     @Override
-    public String getName() {
-        return NAME;
+    public int getName() {
+        return R.string.tab_program;
     }
 }
