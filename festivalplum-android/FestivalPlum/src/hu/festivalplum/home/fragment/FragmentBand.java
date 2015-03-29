@@ -11,6 +11,7 @@ import android.widget.ListView;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.zip.Inflater;
 
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
@@ -18,6 +19,7 @@ import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.BandViewAdapter;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
 import hu.festivalplum.model.BandObject;
+import hu.festivalplum.utils.SideBar;
 
 /**
  * Created by viktor on 2015.03.15..
@@ -33,13 +35,17 @@ public class FragmentBand extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final Context context = getActivity();
-        ListView v = new ListView(context);
+        View contentView = inflater.inflate(R.layout.fragment_band, container, false);
+        ListView list = (ListView) contentView.findViewById(R.id.myListView);
+
         bandData = FPApplication.getInstence().getBandData();
 
         bandViewAdapter = new BandViewAdapter(context, bandData);
-        v.setAdapter(bandViewAdapter);
+        list.setAdapter(bandViewAdapter);
+        SideBar indexBar = (SideBar) contentView.findViewById(R.id.sideBar);
+        indexBar.setListView(list);
 
-        return v;
+        return contentView;
     }
 
     @Override

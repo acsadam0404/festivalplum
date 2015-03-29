@@ -3,11 +3,15 @@ package hu.festivalplum.home.adapter;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -21,7 +25,7 @@ import hu.festivalplum.model.HomeObject;
 /**
  * Created by viktor on 2015.03.28..
  */
-public class BandViewAdapter extends BaseAdapter {
+public class BandViewAdapter extends BaseAdapter implements SectionIndexer {
 
     private Context context;
     private List<BandObject> list;
@@ -67,6 +71,36 @@ public class BandViewAdapter extends BaseAdapter {
         name.setText(band.getName());
         style.setText(band.getStyle());
         return view;
+    }
+
+    private void setSection(LinearLayout header, String label) {
+        TextView text = new TextView(context);
+        header.setBackgroundColor(0xffaabbcc);
+        text.setTextColor(Color.WHITE);
+        text.setText(label.substring(0, 1).toUpperCase());
+        text.setTextSize(20);
+        text.setPadding(5, 0, 0, 0);
+        text.setGravity(Gravity.CENTER_VERTICAL);
+        header.addView(text);
+    }
+    public int getPositionForSection(int section) {
+        if (section == 35) {
+            return 0;
+        }
+        for (int i = 0; i < list.size(); i++) {
+            String l = list.get(i).getName();
+            char firstChar = l.toUpperCase().charAt(0);
+            if (firstChar == section) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    public int getSectionForPosition(int arg0) {
+        return 0;
+    }
+    public Object[] getSections() {
+        return null;
     }
 
     public void filter(String query){
