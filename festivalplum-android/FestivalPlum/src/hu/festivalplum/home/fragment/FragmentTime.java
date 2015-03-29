@@ -27,6 +27,8 @@ public class FragmentTime extends MyFragment {
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
 
+    private ExpandableListView expandableListView;
+
     public FragmentTime() {
 
     }
@@ -36,13 +38,13 @@ public class FragmentTime extends MyFragment {
                              Bundle savedInstanceState) {
 
         final Context context = getActivity();
-        ExpandableListView v = new ExpandableListView(context);
+        expandableListView = new ExpandableListView(context);
         childTitles = FPApplication.getInstence().getTimeChild();
         headerTitles = FPApplication.getInstence().getTimeGroup();
         homeViewAdapter = new HomeViewAdapter(context, headerTitles, childTitles);
-        v.setAdapter(homeViewAdapter);
+        expandableListView.setAdapter(homeViewAdapter);
 
-        v.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
                 Intent intent = new Intent(context, FestivalActivity.class);
@@ -54,7 +56,15 @@ public class FragmentTime extends MyFragment {
             }
         });
 
-        return v;
+        return expandableListView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (int i = 0; i < homeViewAdapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
     }
 
     @Override

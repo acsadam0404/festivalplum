@@ -25,6 +25,8 @@ public class ProgramFragment extends MyFragment {
     private List<String> headerTitles;
     private Map<String, List<FestivalObject>> childTitles;
 
+    private ExpandableListView expandableListView;
+
     public ProgramFragment() {
 
     }
@@ -34,13 +36,21 @@ public class ProgramFragment extends MyFragment {
                              Bundle savedInstanceState) {
 
         final Context context = getActivity();
-        ExpandableListView v = new ExpandableListView(context);
+        expandableListView = new ExpandableListView(context);
         childTitles = ((FestivalActivity)context).getFestivalChild();
         headerTitles = ((FestivalActivity)context).getFestivalGroup();
         festivalViewAdapter = new FestivalViewAdapter(context, headerTitles, childTitles);
-        v.setAdapter(festivalViewAdapter);
+        expandableListView.setAdapter(festivalViewAdapter);
 
-        return v;
+        return expandableListView;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (int i = 0; i < festivalViewAdapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
     }
 
     @Override

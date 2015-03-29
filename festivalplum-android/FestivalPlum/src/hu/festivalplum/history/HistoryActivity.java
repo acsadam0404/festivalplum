@@ -28,6 +28,8 @@ public class HistoryActivity extends Activity {
     private List<String> headerTitles;
     private Map<String, List<HomeObject>> childTitles;
 
+    private ExpandableListView expandableListView;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -35,14 +37,14 @@ public class HistoryActivity extends Activity {
         LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = infalInflater.inflate(R.layout.activity_explistview, null);
         setContentView(contentView);
-        ExpandableListView v = (ExpandableListView) findViewById(R.id.expandableListView);
+        expandableListView = (ExpandableListView) findViewById(R.id.expandableListView);
 
         headerTitles = FPApplication.getInstence().getHistoryTimeGroup();
         childTitles = FPApplication.getInstence().getHistoryTimeChild();
 
         mAdapter = new HomeViewAdapter(this, headerTitles, childTitles);
-        v.setAdapter(mAdapter);
-        v.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        expandableListView.setAdapter(mAdapter);
+        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
                 Intent intent = new Intent(HistoryActivity.this, FestivalActivity.class);
@@ -53,6 +55,14 @@ public class HistoryActivity extends Activity {
                 return true;
             }
         });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        for (int i = 0; i < mAdapter.getGroupCount(); i++) {
+            expandableListView.expandGroup(i);
+        }
     }
 
     @Override
