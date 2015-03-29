@@ -52,6 +52,7 @@ public class FestivalActivity extends FragmentActivity {
         Intent intent = getIntent();
         eventId = intent.getStringExtra("eventId");
         place = intent.getStringExtra("place");
+        getActionBar().setTitle(place);
         initFestival();
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
