@@ -4,6 +4,8 @@ import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
 import com.parse.ParseQuery;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -31,9 +33,13 @@ public class ParseDataCollector {
         List<String> cityGroup = new ArrayList<String>();
         Map<String, List<HomeObject>> cityChild = new HashMap<String,List<HomeObject>>();
 
+        Date date = new Date();
+
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.include("place");
         query.include("place.address");
+        query.whereGreaterThanOrEqualTo("startDate", date);
+        query.orderByAscending("startDate");
 
         try {
             List<ParseObject> result = query.find();
@@ -119,6 +125,81 @@ public class ParseDataCollector {
         return ret;
     }
 
+    public static Map<String, Object> collectHistoryData(){
+        Map<String, Object> ret = new HashMap<>();
+
+        List<String> timeGroup = new ArrayList<String>();
+        Map<String, List<HomeObject>> timeChild = new HashMap<String,List<HomeObject>>();
+
+        Date date = new Date();
+
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
+        query.include("place");
+        query.include("place.address");
+        query.whereLessThanOrEqualTo("startDate", date);
+        query.orderByAscending("startDate");
+
+        try {
+            List<ParseObject> result = query.find();
+            for(int i = 0; i < result.size(); i++) {
+                ParseObject event = result.get(i);
+                ParseObject place = event.getParseObject("place");
+                if(place == null)
+                    continue;
+                ParseObject city = place.getParseObject("address");
+                if(city == null)
+                    continue;
+                Date startDate = event.getDate("startDate");
+                if(startDate == null)
+                    continue;
+                Calendar cal = Calendar.getInstance();
+                cal.setTime(startDate);
+                int year = cal.get(Calendar.YEAR);
+                int month = cal.get(Calendar.MONTH);
+                String title = year + ". " + Utils.getMonthName(month);
+                String eventId = event.getObjectId();
+                Date endDate = event.getDate("endDate");
+                if(endDate == null)
+                    continue;
+                ParseFile imageFile = (ParseFile)place.get("image");
+                if(imageFile == null)
+                    continue;
+                byte[] placeImg = imageFile.getData();
+                String placeName = place.getString("name");
+                if(placeName == null)
+                    continue;
+                String cityName = city.getString("city");
+                if(cityName == null)
+                    continue;
+                HomeObject homeObject = new HomeObject();
+                homeObject.setCityName(cityName);
+                homeObject.setStartDate(startDate);
+                homeObject.setEndDate(endDate);
+                homeObject.setEventId(eventId);
+                homeObject.setPlaceImg(placeImg);
+                homeObject.setPlaceName(placeName);
+
+                if(!timeChild.containsKey(title)){
+                    timeGroup.add(title);
+                    List<HomeObject> list = new ArrayList<HomeObject>();
+                    list.add(homeObject);
+                    timeChild.put(title, list);
+                }else{
+                    timeChild.get(title).add(homeObject);
+                }
+
+            }
+
+            ret.put("timeGroup", timeGroup);
+            ret.put("timeChild", timeChild);
+
+        } catch (ParseException e){
+            //
+        }
+
+        return ret;
+    }
+
     public static List<BandObject> collectBandData(){
         List<BandObject> ret = new ArrayList<>();
         List<String> distinctHelper = new ArrayList<>();
@@ -170,16 +251,30 @@ public class ParseDataCollector {
         List<String> festivalGroup = new ArrayList<String>();
         Map<String, List<FestivalObject>> festivalChild = new HashMap<String, List<FestivalObject>>();
 
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Date endDate = null;
+        try {
+            endDate = Utils.sdf.parse(year + "." + month + "." + day + ".06:00");
+        }catch (Exception e){
+            //
+        }
+
         ParseQuery<ParseObject> q = ParseQuery.getQuery("Event");
         q.whereEqualTo("objectId", eventId);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
         query.include("band");
         query.include("stage");
         query.whereMatchesQuery("event", q);
+        if(endDate != null)
+            query.whereGreaterThan("toDate",endDate);
         query.orderByAscending("startDate");
         try {
             List<ParseObject> result = query.find();
-            Calendar cal = Calendar.getInstance();
             if (result.size() > 0) {
                 cal.setTime(result.get(0).getDate("startDate"));
                 int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
@@ -246,6 +341,7 @@ public class ParseDataCollector {
         query.whereContainedIn("objectId", concertIds);
         query.include("band");
         query.include("stage");
+        query.whereGreaterThan("toDate", new Date());
         query.orderByAscending("startDate");
 
         return getFestivalList(query);

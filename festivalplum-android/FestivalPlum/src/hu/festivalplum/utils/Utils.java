@@ -11,6 +11,7 @@ public class Utils {
 
     public static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
     public static final SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
+    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH:mm");
 
     public static final String[] month = new String[]{"Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"};
 

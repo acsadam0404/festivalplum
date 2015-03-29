@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ExpandableListView;
 import java.util.List;
 import java.util.Map;
+
+import hu.festivalplum.FPApplication;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
@@ -36,8 +38,8 @@ public class FragmentName extends MyFragment {
         final Context context = getActivity();
         ExpandableListView v = new ExpandableListView(context);
 
-        childTitles = ((HomeActivity)context).getNameChild();
-        headerTitles = ((HomeActivity)context).getNameGroup();
+        childTitles = FPApplication.getInstence().getNameChild();
+        headerTitles = FPApplication.getInstence().getNameGroup();
         homeViewAdapter = new HomeViewAdapter(context, headerTitles, childTitles);
         v.setAdapter(homeViewAdapter);
 

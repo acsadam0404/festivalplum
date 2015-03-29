@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
@@ -38,8 +39,8 @@ public class FragmentTime extends MyFragment {
 
         final Context context = getActivity();
         ExpandableListView v = new ExpandableListView(context);
-        childTitles = ((HomeActivity)context).getTimeChild();
-        headerTitles = ((HomeActivity)context).getTimeGroup();
+        childTitles = FPApplication.getInstence().getTimeChild();
+        headerTitles = FPApplication.getInstence().getTimeGroup();
         homeViewAdapter = new HomeViewAdapter(context, headerTitles, childTitles);
         v.setAdapter(homeViewAdapter);
 

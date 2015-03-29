@@ -32,16 +32,7 @@ import hu.festivalplum.utils.Utils;
 
 public class HomeActivity extends FragmentActivity {
 
-    private List<String> timeGroup;
-    private Map<String, List<HomeObject>> timeChild;
 
-    private List<String> nameGroup;
-    private Map<String, List<HomeObject>> nameChild;
-
-    private List<String> cityGroup;
-    private Map<String, List<HomeObject>> cityChild;
-
-    private List<BandObject> bandData;
 
     private FragmentAdapter fragmentAdapter;
 
@@ -49,14 +40,6 @@ public class HomeActivity extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
 
-        Map<String, Object> data =  ParseDataCollector.collectHomeData();
-        bandData = ParseDataCollector.collectBandData();
-        timeGroup = (List<String>)data.get("timeGroup");
-        timeChild = (Map<String, List<HomeObject>>)data.get("timeChild");
-        nameGroup = (List<String>)data.get("nameGroup");
-        nameChild = (Map<String, List<HomeObject>>)data.get("nameChild");
-        cityGroup = (List<String>)data.get("cityGroup");
-        cityChild = (Map<String, List<HomeObject>>)data.get("cityChild");
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager());
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
@@ -121,33 +104,5 @@ public class HomeActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public List<String> getTimeGroup() {
-        return timeGroup;
-    }
-
-    public Map<String, List<HomeObject>> getTimeChild() {
-        return timeChild;
-    }
-
-    public List<String> getNameGroup() {
-        return nameGroup;
-    }
-
-    public Map<String, List<HomeObject>> getNameChild() {
-        return nameChild;
-    }
-
-    public List<String> getCityGroup() {
-        return cityGroup;
-    }
-
-    public Map<String, List<HomeObject>> getCityChild() {
-        return cityChild;
-    }
-
-    public List<BandObject> getBandData() {
-        return bandData;
     }
 }

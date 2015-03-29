@@ -12,6 +12,7 @@ import android.widget.ExpandableListView;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.FPApplication;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
@@ -37,8 +38,8 @@ public class FragmentCity extends MyFragment {
 
         final Context context = getActivity();
         ExpandableListView v = new ExpandableListView(context);
-        childTitles = ((HomeActivity)context).getCityChild();
-        headerTitles = ((HomeActivity)context).getCityGroup();
+        childTitles = FPApplication.getInstence().getCityChild();
+        headerTitles = FPApplication.getInstence().getCityGroup();
         homeViewAdapter = new HomeViewAdapter(context, headerTitles, childTitles);
         v.setAdapter(homeViewAdapter);
 

@@ -16,6 +16,7 @@ import android.widget.SearchView;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.favorite.FavoriteViewAdapter;
@@ -44,10 +45,8 @@ public class HistoryActivity extends Activity {
         setContentView(contentView);
         ExpandableListView v = (ExpandableListView) findViewById(R.id.expandableListView);
 
-        //Most jó ide, cachelés után úgyis ki lesz váltva
-        Map<String, Object> data =  ParseDataCollector.collectHomeData();
-        headerTitles = (List<String>)data.get("timeGroup");
-        childTitles = (Map<String, List<HomeObject>>)data.get("timeChild");
+        headerTitles = FPApplication.getInstence().getHistoryTimeGroup();
+        childTitles = FPApplication.getInstence().getHistoryTimeChild();
 
         mAdapter = new HomeViewAdapter(this, headerTitles, childTitles);
         v.setAdapter(mAdapter);

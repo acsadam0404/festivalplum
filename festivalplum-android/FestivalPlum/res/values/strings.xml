@@ -12,10 +12,12 @@
     <string name="title_activity_starter">StarterActivity</string>
     <string name="title_activity_favorite">Kedvencek</string>
     <string name="title_activity_map">Térkép</string>
-    <string name="title_activity_history">Előzmények</string>
+    <string name="title_activity_history">Korábbi események</string>
     <string name="selected">kiválasztott</string>
     <string name="action_delete">Törlés</string>
-    <string name="action_history">Előzmények</string>
+    <string name="action_history">Korábbi események</string>
+
+    <string name="action_about">Névjegy</string>
 
     <string name="dialog_delete_favorite_title">Kedvenc törlése</string>
     <string name="dialog_delete_favorite_msg">Biztosan törölni akarod a koncertet a kedvencek közül?</string>
