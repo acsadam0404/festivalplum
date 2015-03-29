@@ -10,10 +10,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.BandObject;
+import hu.festivalplum.model.HomeObject;
 
 /**
  * Created by viktor on 2015.03.28..
@@ -22,10 +25,12 @@ public class BandViewAdapter extends BaseAdapter {
 
     private Context context;
     private List<BandObject> list;
+    private List<BandObject> baseList;
 
     public BandViewAdapter(Context context, List<BandObject> list){
         this.context = context;
         this.list = list;
+        this.baseList = list;
     }
 
     @Override
@@ -62,5 +67,18 @@ public class BandViewAdapter extends BaseAdapter {
         name.setText(band.getName());
         style.setText(band.getStyle());
         return view;
+    }
+
+    public void filter(String query){
+        this.list = new ArrayList<>();
+        query = query.toLowerCase();
+
+        for(BandObject o : baseList){
+            if(o.getName().toLowerCase().contains(query)){
+                this.list.add(o);
+            }
+        }
+
+        notifyDataSetChanged();
     }
 }

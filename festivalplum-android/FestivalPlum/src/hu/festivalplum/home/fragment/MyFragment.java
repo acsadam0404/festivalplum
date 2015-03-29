@@ -2,6 +2,7 @@ package hu.festivalplum.home.fragment;
 
 import android.support.v4.app.Fragment;
 
+import hu.festivalplum.home.adapter.BandViewAdapter;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
 
 
@@ -10,6 +11,7 @@ import hu.festivalplum.home.adapter.HomeViewAdapter;
  */
 public abstract class MyFragment extends Fragment {
     protected HomeViewAdapter homeViewAdapter;
+    protected BandViewAdapter bandViewAdapter;
     protected String query;
 
     public abstract String getName();
@@ -19,6 +21,8 @@ public abstract class MyFragment extends Fragment {
         this.query = query;
         if(homeViewAdapter != null){
             homeViewAdapter.filter(query);
+        }else if(bandViewAdapter != null){
+            bandViewAdapter.filter(query);
         }
     }
 

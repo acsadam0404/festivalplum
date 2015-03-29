@@ -245,7 +245,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static Map<String, Object> collectFestivalData(String eventId, final String place) {
+    public static Map<String, Object> collectFestivalData(String eventId, final String place, boolean history) {
         Map<String, Object> ret = new HashMap<>();
 
         List<String> festivalGroup = new ArrayList<String>();
@@ -270,8 +270,12 @@ public class ParseDataCollector {
         query.include("band");
         query.include("stage");
         query.whereMatchesQuery("event", q);
-        if(endDate != null)
-            query.whereGreaterThan("toDate",endDate);
+        if(endDate != null) {
+            if(!history)
+                query.whereGreaterThan("toDate", endDate);
+            else
+                query.whereLessThan("toDate", endDate);
+        }
         query.orderByAscending("startDate");
         try {
             List<ParseObject> result = query.find();

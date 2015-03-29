@@ -36,7 +36,8 @@ public class FragmentBand extends MyFragment {
         ListView v = new ListView(context);
         bandData = FPApplication.getInstence().getBandData();
 
-        v.setAdapter(new BandViewAdapter(context, bandData));
+        bandViewAdapter = new BandViewAdapter(context, bandData);
+        v.setAdapter(bandViewAdapter);
 
         return v;
     }

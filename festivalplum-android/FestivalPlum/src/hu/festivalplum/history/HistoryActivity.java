@@ -10,22 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 import android.widget.SearchView;
-
 import java.util.List;
 import java.util.Map;
-
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
-import hu.festivalplum.favorite.FavoriteViewAdapter;
-import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
-import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
-import hu.festivalplum.utils.ParseDataCollector;
-import hu.festivalplum.utils.SQLiteUtil;
 
 /**
  * Created by viktor on 2015.03.27..

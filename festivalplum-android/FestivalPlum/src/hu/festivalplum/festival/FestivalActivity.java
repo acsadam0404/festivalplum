@@ -36,6 +36,10 @@ public class FestivalActivity extends FragmentActivity {
     private List<String> festivalGroup;
     private Map<String, List<FestivalObject>> festivalChild;
 
+    protected String eventId;
+    protected String place;
+    protected Map<String,Object> data;
+
     private FragmentAdapter fragmentAdapter;
 
     public static boolean modFavorite = false;
@@ -46,7 +50,9 @@ public class FestivalActivity extends FragmentActivity {
         setContentView(R.layout.activity_home);
 
         Intent intent = getIntent();
-        Map<String,Object> data = ParseDataCollector.collectFestivalData(intent.getStringExtra("eventId"), intent.getStringExtra("place"));
+        eventId = intent.getStringExtra("eventId");
+        place = intent.getStringExtra("place");
+        initFestival();
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
 
@@ -60,6 +66,10 @@ public class FestivalActivity extends FragmentActivity {
         tabs.setShouldExpand(true);
         tabs.setIndicatorColorResource(android.R.color.holo_purple);
 
+    }
+
+    protected void initFestival(){
+        data = ParseDataCollector.collectFestivalData(eventId, place, false);
     }
 
     public void likeHandler (View v) {
