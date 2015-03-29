@@ -7,6 +7,7 @@ import com.parse.ParseACL;
 import com.parse.ParseCrashReporting;
 import com.parse.ParseUser;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -25,6 +26,7 @@ public class FPApplication extends Application {
     private static List<String> timeGroup;
     private static Map<String, List<HomeObject>> timeChild;
     private static List<String> nameGroup;
+    private static List<HomeObject> nameList;
     private static Map<String, List<HomeObject>> nameChild;
     private static List<String> cityGroup;
     private static Map<String, List<HomeObject>> cityChild;
@@ -82,6 +84,10 @@ public class FPApplication extends Application {
 
     private static void orderParseData(){
         Collections.sort(nameGroup);
+        nameList = new ArrayList<>();
+        for(String key : nameGroup){
+            nameList.add(nameChild.get(key).get(0));
+        }
         if(cityGroup.contains(FIRST_CITY)){
             cityGroup.remove(FIRST_CITY);
             Collections.sort(cityGroup);
@@ -128,5 +134,9 @@ public class FPApplication extends Application {
 
     public Map<String, List<HomeObject>> getHistoryTimeChild() {
         return historyTimeChild;
+    }
+
+    public List<HomeObject> getNameList() {
+        return nameList;
     }
 }
