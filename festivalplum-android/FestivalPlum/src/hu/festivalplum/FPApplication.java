@@ -1,6 +1,10 @@
 package hu.festivalplum;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.res.Resources;
+import android.util.DisplayMetrics;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -10,11 +14,13 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
+import hu.festivalplum.utils.Utils;
 
 public class FPApplication extends Application {
 
@@ -49,7 +55,7 @@ public class FPApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Utils.setLanguage(this);
         // Initialize Crash Reporting.
         ParseCrashReporting.enable(this);
         Parse.enableLocalDatastore(this);
