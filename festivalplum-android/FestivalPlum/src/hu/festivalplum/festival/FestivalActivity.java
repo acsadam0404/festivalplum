@@ -1,7 +1,9 @@
 package hu.festivalplum.festival;
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -70,7 +72,7 @@ public class FestivalActivity extends FragmentActivity {
 
         LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
         TextView view = (TextView)layout.getChildAt(0);
-        view.setTextColor(getResources().getColor(android.R.color.white));
+        view.setTextColor(getResources().getColor(android.R.color.holo_purple));
 
         tabs.delegatePageListener = new ViewPager.OnPageChangeListener() {
 
@@ -84,7 +86,7 @@ public class FestivalActivity extends FragmentActivity {
                     view.setTextColor(0xFF666666);
                 }
                 TextView view = (TextView)layout.getChildAt(position);
-                view.setTextColor(FestivalActivity.this.getResources().getColor(android.R.color.white));
+                view.setTextColor(FestivalActivity.this.getResources().getColor(android.R.color.holo_purple));
             }
 
             @Override
@@ -105,12 +107,26 @@ public class FestivalActivity extends FragmentActivity {
         data = ParseDataCollector.collectFestivalData(eventId, place, false);
     }
 
-    public void likeHandler (View v) {
-        FestivalObject item = (FestivalObject)v.getTag();
-        SQLiteUtil.getInstence(this).addFavoriteId("Concert", item.getConcertId());
-        item.setFavorite(!item.isFavorite());
-        Utils.setFavoriteImage((ImageView) v, item.isFavorite());
-        fragmentAdapter.refreshView();
+    public void likeHandler (final View v) {
+        final FestivalObject item = (FestivalObject)v.getTag();
+        new AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_favorite_title)
+                .setMessage(R.string.dialog_delete_favorite_msg)
+                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        SQLiteUtil.getInstence(FestivalActivity.this).addFavoriteId("Concert", item.getConcertId());
+                        item.setFavorite(!item.isFavorite());
+                        Utils.setFavoriteImage((ImageView) v, item.isFavorite());
+                        fragmentAdapter.refreshView();
+                    }
+                })
+                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int which) {
+                        // do nothing
+                    }
+                })
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .show();
     }
 
     @Override

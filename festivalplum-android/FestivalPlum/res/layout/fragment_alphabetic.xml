@@ -10,7 +10,7 @@
     <hu.festivalplum.utils.SideBar
         android:id = "@+id/sideBar"
         android:layout_height="fill_parent"
-        android:layout_width="22px"
+        android:layout_width="22dp"
         android:layout_alignParentRight="true"
         />
 </RelativeLayout>

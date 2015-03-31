@@ -29,6 +29,14 @@
             android:parentActivityName=".home.HomeActivity" >
         </activity>
         <activity
+            android:name=".BandInfoActivity"
+            android:parentActivityName=".home.HomeActivity" >
+        </activity>
+        <activity
+            android:name=".band.BandActivity"
+            android:parentActivityName=".home.HomeActivity" >
+        </activity>
+        <activity
             android:name=".history.FestivalActivity"
             android:label="@string/title_activity_festival"
             android:launchMode="singleTop"

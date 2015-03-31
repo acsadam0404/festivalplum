@@ -53,7 +53,7 @@ public class HomeActivity extends FragmentActivity {
         tabs.setViewPager(p);
         LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
         TextView view = (TextView)layout.getChildAt(1);
-        view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.white));
+        view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.holo_purple));
 
         tabs.delegatePageListener = new ViewPager.OnPageChangeListener() {
 
@@ -67,7 +67,7 @@ public class HomeActivity extends FragmentActivity {
                     view.setTextColor(0xFF666666);
                 }
                 TextView view = (TextView)layout.getChildAt(position);
-                view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.white));
+                view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.holo_purple));
             }
 
             @Override

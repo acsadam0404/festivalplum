@@ -1,18 +1,16 @@
-package hu.festivalplum.festival.fragment;
+package hu.festivalplum.band.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ListView;
 
 import hu.festivalplum.R;
-import hu.festivalplum.festival.FestivalActivity;
-import hu.festivalplum.festival.fragment.MyFragment;
+import hu.festivalplum.band.BandActivity;
 
 /**
- * Created by viktor on 2015.03.26..
+ * Created by viktor on 2015.03.31..
  */
 public class InfoFragment extends MyFragment {
 
@@ -24,7 +22,7 @@ public class InfoFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String info = "<html><header></header><body><p>Teszt Info</p></body></html>"; //((FestivalActivity)getActivity()).getFestivalInfo();
+        String info = ((BandActivity)getActivity()).getInfo();
         WebView view = new WebView(getActivity());
         view.getSettings().setJavaScriptEnabled(false);
         view.loadData(info, "text/html", "UTF-8");

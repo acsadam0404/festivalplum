@@ -10,6 +10,7 @@ public class BandObject {
     private String nationality;
     private String style;
     private byte[] bandImg;
+    private String htmlInfo;
 
     public BandObject(){
         //
@@ -53,5 +54,13 @@ public class BandObject {
 
     public void setBandImg(byte[] bandImg) {
         this.bandImg = bandImg;
+    }
+
+    public String getHtmlInfo() {
+        return htmlInfo;
+    }
+
+    public void setHtmlInfo(String htmlInfo) {
+        this.htmlInfo = htmlInfo;
     }
 }

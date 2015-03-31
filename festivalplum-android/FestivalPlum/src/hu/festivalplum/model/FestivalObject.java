@@ -9,11 +9,13 @@ public class FestivalObject {
 
     private String concertId;
     private String bandName;
+    private String bandHtmlInfo;
     private byte[] image;
     private String StageName;
     private Date startDate;
     private Date toDate;
     private boolean favorite;
+    private String placeName;
 
     public FestivalObject(){
         //
@@ -73,5 +75,21 @@ public class FestivalObject {
 
     public void setConcertId(String concertId) {
         this.concertId = concertId;
+    }
+
+    public String getBandHtmlInfo() {
+        return bandHtmlInfo;
+    }
+
+    public void setBandHtmlInfo(String bandHtmlInfo) {
+        this.bandHtmlInfo = bandHtmlInfo;
+    }
+
+    public String getPlaceName() {
+        return placeName;
+    }
+
+    public void setPlaceName(String placeName) {
+        this.placeName = placeName;
     }
 }

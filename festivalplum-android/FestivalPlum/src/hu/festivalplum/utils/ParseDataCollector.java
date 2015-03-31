@@ -223,6 +223,7 @@ public class ParseDataCollector {
                     String bandId = band.getObjectId();
                     String name = band.getString("name");
                     String style = band.getString("style");
+                    String info = band.getString("info");
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
@@ -233,12 +234,109 @@ public class ParseDataCollector {
                         bandObject.setStyle(style);
                         bandObject.setBandImg(bandImg);
                         bandObject.setBandId(bandId);
+                        bandObject.setHtmlInfo(info);
                         distinctHelper.add(name);
                         ret.add(bandObject);
                     }
                 }
             }
         }catch (Exception e){
+            //
+        }
+
+        return ret;
+    }
+
+    public static List<FestivalObject> collectBandConcerts(String bandId){
+        List<FestivalObject> ret = new ArrayList<>();
+
+        Date date = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(date);
+        int year = cal.get(Calendar.YEAR);
+        int month = cal.get(Calendar.MONTH) + 1;
+        int day = cal.get(Calendar.DAY_OF_MONTH);
+        Date endDate = null;
+        try {
+            endDate = Utils.sdf.parse(year + "." + month + "." + day + ".06:00");
+        }catch (Exception e){
+            //
+        }
+
+        ParseQuery<ParseObject> q = ParseQuery.getQuery("Band");
+        q.whereEqualTo("objectId", bandId);
+        ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+        query.include("band");
+        query.include("stage");
+        query.include("event.place");
+        query.whereMatchesQuery("band", q);
+        if(endDate != null)
+            query.whereGreaterThan("toDate", endDate);
+        query.orderByAscending("startDate");
+
+        try {
+            List<ParseObject> result = query.find();
+            if (result.size() > 0) {
+                cal.setTime(result.get(0).getDate("startDate"));
+                int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
+
+                for (int i = 0; i < result.size(); i++) {
+                    ParseObject concert = result.get(i);
+                    String concertId = concert.getObjectId();
+                    ParseObject band = concert.getParseObject("band");
+                    if(band == null)
+                        continue;
+                    ParseObject stage = concert.getParseObject("stage");
+                    if(stage == null)
+                        continue;
+                    ParseObject event = concert.getParseObject("event");
+                    if(event == null)
+                        continue;
+                    ParseObject place = event.getParseObject("place");
+                    if(place == null)
+                        continue;
+                    Date startDate = concert.getDate("startDate");
+                    if(startDate == null)
+                        continue;
+                    Date toDate = concert.getDate("toDate");
+                    if(toDate == null)
+                        continue;
+                    cal.setTime(startDate);
+
+                    int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
+                    String title = Utils.sdfDate.format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
+                    ParseFile imageFile = (ParseFile) band.get("image");
+                    if(imageFile == null)
+                        continue;
+                    byte[] bandImg = imageFile.getData();
+
+                    String stageName = stage.getString("name");
+                    if(stageName == null)
+                        continue;
+                    String bandName = band.getString("name");
+                    if(bandName == null)
+                        continue;
+                    String bandInfo = band.getString("info");
+                    String placeName = place.getString("name");
+                    if(placeName == null)
+                        continue;
+
+                    FestivalObject festivalObject = new FestivalObject();
+                    festivalObject.setStartDate(startDate);
+                    festivalObject.setBandName(bandName);
+                    festivalObject.setImage(bandImg);
+                    festivalObject.setStageName(stageName);
+                    festivalObject.setToDate(toDate);
+                    festivalObject.setConcertId(concertId);
+                    festivalObject.setBandHtmlInfo(bandInfo);
+                    festivalObject.setPlaceName(placeName);
+
+                   ret.add(festivalObject);
+
+                }
+            }
+
+        } catch (ParseException e) {
             //
         }
 
@@ -313,6 +411,8 @@ public class ParseDataCollector {
                     String bandName = band.getString("name");
                     if(bandName == null)
                         continue;
+                    String bandInfo = band.getString("info");
+
                     FestivalObject festivalObject = new FestivalObject();
                     festivalObject.setStartDate(startDate);
                     festivalObject.setBandName(bandName);
@@ -320,6 +420,8 @@ public class ParseDataCollector {
                     festivalObject.setStageName(stageName);
                     festivalObject.setToDate(toDate);
                     festivalObject.setConcertId(concertId);
+                    festivalObject.setBandHtmlInfo(bandInfo);
+                    festivalObject.setPlaceName(place);
 
                     if (!festivalChild.containsKey(title)) {
                         festivalGroup.add(title);
