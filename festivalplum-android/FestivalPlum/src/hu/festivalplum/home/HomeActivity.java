@@ -51,10 +51,10 @@ public class HomeActivity extends FragmentActivity {
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
-        tabs.setShouldExpand(true);
-        tabs.setIndicatorColorResource(android.R.color.holo_purple);
+        LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
+        TextView view = (TextView)layout.getChildAt(1);
+        view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.white));
 
-        // TODO  #18
         tabs.delegatePageListener = new ViewPager.OnPageChangeListener() {
 
             @Override
@@ -64,10 +64,10 @@ public class HomeActivity extends FragmentActivity {
 
                 for (int i = 0; i < tabNum; i++) {
                     TextView view = (TextView)layout.getChildAt(i);
-                    // alaphelyzet
+                    view.setTextColor(0xFF666666);
                 }
                 TextView view = (TextView)layout.getChildAt(position);
-                // kiválasztott megkülönböztetése
+                view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.white));
             }
 
             @Override

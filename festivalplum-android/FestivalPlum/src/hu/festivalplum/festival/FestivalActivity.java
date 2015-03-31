@@ -13,7 +13,9 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ExpandableListView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 
 import com.astuetz.PagerSlidingTabStrip;
 
@@ -41,6 +43,7 @@ public class FestivalActivity extends FragmentActivity {
     protected Map<String,Object> data;
 
     private FragmentAdapter fragmentAdapter;
+    private PagerSlidingTabStrip tabs;
 
     public static boolean modFavorite = false;
 
@@ -62,10 +65,39 @@ public class FestivalActivity extends FragmentActivity {
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(fragmentAdapter);
 
-        PagerSlidingTabStrip tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
+        tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
-        tabs.setShouldExpand(true);
-        tabs.setIndicatorColorResource(android.R.color.holo_purple);
+
+        LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
+        TextView view = (TextView)layout.getChildAt(0);
+        view.setTextColor(getResources().getColor(android.R.color.white));
+
+        tabs.delegatePageListener = new ViewPager.OnPageChangeListener() {
+
+            @Override
+            public void onPageSelected(int position) {
+                LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
+                int tabNum = layout.getChildCount();
+
+                for (int i = 0; i < tabNum; i++) {
+                    TextView view = (TextView)layout.getChildAt(i);
+                    view.setTextColor(0xFF666666);
+                }
+                TextView view = (TextView)layout.getChildAt(position);
+                view.setTextColor(FestivalActivity.this.getResources().getColor(android.R.color.white));
+            }
+
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                //
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+                // Code goes here
+            }
+        };
+
 
     }
 
