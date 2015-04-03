@@ -18,7 +18,7 @@ import hu.festivalplum.StarterActivity;
  */
 public class Utils {
 
-    public static final SimpleDateFormat sdfDate = new SimpleDateFormat("yyyy.MM.dd");
+    public static final SimpleDateFormat sdfDate = new SimpleDateFormat("yy.MM.dd");
     public static final SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
     public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH:mm");
 

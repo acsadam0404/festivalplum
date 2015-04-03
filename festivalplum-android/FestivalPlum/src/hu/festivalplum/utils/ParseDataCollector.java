@@ -55,9 +55,9 @@ public class ParseDataCollector {
                     continue;
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(startDate);
-                int year = cal.get(Calendar.YEAR);
+                Integer year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                String title = year + ". " + Utils.getMonthName(month);
+                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(month);
                 String eventId = event.getObjectId();
                 Date endDate = event.getDate("endDate");
                 if(endDate == null)
@@ -149,9 +149,9 @@ public class ParseDataCollector {
                     continue;
                 Calendar cal = Calendar.getInstance();
                 cal.setTime(startDate);
-                int year = cal.get(Calendar.YEAR);
+                Integer year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                String title = year + ". " + Utils.getMonthName(month);
+                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(month);
                 String eventId = event.getObjectId();
                 Date endDate = event.getDate("endDate");
                 if(endDate == null)
