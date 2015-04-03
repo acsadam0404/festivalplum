@@ -37,6 +37,7 @@ public class FPApplication extends Application {
     private static List<String> cityGroup;
     private static Map<String, List<HomeObject>> cityChild;
     private static List<BandObject> bandData;
+    private static Map<String,Object> bandMap;
     //HISTORY
     private static List<String> historyTimeGroup;
     private static Map<String, List<HomeObject>> historyTimeChild;
@@ -65,12 +66,12 @@ public class FPApplication extends Application {
         ParseACL defaultACL = new ParseACL();
         //defaultACL.setPublicReadAccess(true);
         ParseACL.setDefaultACL(defaultACL, true);
-        initParseData();
+
     }
 
     public static void initParseData(){
 
-        bandData = ParseDataCollector.collectBandData();
+        bandMap = ParseDataCollector.collectBandData();
         Map<String, Object> data =  ParseDataCollector.collectHomeData();
         timeGroup = (List<String>)data.get("timeGroup");
         timeChild = (Map<String, List<HomeObject>>)data.get("timeChild");
@@ -101,7 +102,13 @@ public class FPApplication extends Application {
             cityGroup.add(FIRST_CITY);
             Collections.reverse(cityGroup);
         }
-
+        List<String> tmpList = (List<String>) bandMap.get("list");
+        Map<String, BandObject> tmpMap = (Map<String, BandObject>) bandMap.get("map");
+        bandData = new ArrayList<>();
+        Collections.sort(tmpList);
+        for(String key : tmpList){
+            bandData.add(tmpMap.get(key));
+        }
 
 
     }

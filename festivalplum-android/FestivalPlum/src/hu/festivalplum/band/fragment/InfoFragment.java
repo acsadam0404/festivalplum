@@ -21,12 +21,14 @@ public class InfoFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+/*
         String info = ((BandActivity)getActivity()).getInfo();
         WebView view = new WebView(getActivity());
         view.getSettings().setJavaScriptEnabled(false);
-        view.loadData(info, "text/html", "UTF-8");
+        view.loadData(info, "text/html", null);
         return view;
+        */
+        return new View(getActivity());
     }
     @Override
     public int getName() {

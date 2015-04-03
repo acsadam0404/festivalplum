@@ -23,12 +23,14 @@ public class InfoFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
-        String info = "<html><header></header><body><p>Teszt Info</p></body></html>"; //((FestivalActivity)getActivity()).getFestivalInfo();
+/*
+        String info = "<html><body><p>Teszt Info</p></body></html>"; //((FestivalActivity)getActivity()).getFestivalInfo();
         WebView view = new WebView(getActivity());
         view.getSettings().setJavaScriptEnabled(false);
         view.loadData(info, "text/html", "UTF-8");
         return view;
+        */
+        return new View(getActivity());
     }
     @Override
     public int getName() {

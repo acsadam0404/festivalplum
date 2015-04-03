@@ -200,15 +200,13 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static List<BandObject> collectBandData(){
-        List<BandObject> ret = new ArrayList<>();
+    public static  Map<String, Object> collectBandData(){
+        Map<String, Object> ret = new HashMap<>();
+        Map<String, BandObject> bandObjectMap = new HashMap<>();
         List<String> distinctHelper = new ArrayList<>();
         Date date = new Date();
-        ParseQuery<ParseObject> q = ParseQuery.getQuery("Band");
-        q.orderByAscending("name");
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
         query.include("band");
-        query.whereMatchesQuery("band", q);
         query.whereGreaterThan("startDate", date);
 
 
@@ -236,14 +234,15 @@ public class ParseDataCollector {
                         bandObject.setBandId(bandId);
                         bandObject.setHtmlInfo(info);
                         distinctHelper.add(name);
-                        ret.add(bandObject);
+                        bandObjectMap.put(name,bandObject);
                     }
                 }
             }
         }catch (Exception e){
             //
         }
-
+        ret.put("list",distinctHelper);
+        ret.put("map",bandObjectMap);
         return ret;
     }
 

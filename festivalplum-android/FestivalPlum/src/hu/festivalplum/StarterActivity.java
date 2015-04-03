@@ -18,7 +18,7 @@ public class StarterActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        FPApplication.getInstence().initParseData();
         LayoutInflater infalInflater = (LayoutInflater) this.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View contentView = infalInflater.inflate(R.layout.activity_starter, null);
 

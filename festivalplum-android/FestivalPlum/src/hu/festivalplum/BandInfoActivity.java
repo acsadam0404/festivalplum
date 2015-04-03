@@ -14,15 +14,14 @@ public class BandInfoActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.webview);
-
+/*
         Intent intent = getIntent();
         String info = intent.getStringExtra("info");
         String band  = intent.getStringExtra("band");
         getActionBar().setTitle(band);
 
         WebView view = (WebView) findViewById(R.id.webView1);
-        view.getSettings().setJavaScriptEnabled(false);
         view.loadData(info, "text/html", "UTF-8");
-
+*/
     }
 }
