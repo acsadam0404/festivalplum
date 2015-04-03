@@ -16,6 +16,7 @@ import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
+import hu.festivalplum.home.adapter.CityViewAdapter;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
 import hu.festivalplum.model.HomeObject;
 
@@ -41,7 +42,7 @@ public class FragmentCity extends MyFragment {
         expandableListView = new ExpandableListView(context);
         childTitles = FPApplication.getInstence().getCityChild();
         headerTitles = FPApplication.getInstence().getCityGroup();
-        homeViewAdapter = new HomeViewAdapter(context, headerTitles, childTitles);
+        homeViewAdapter = new CityViewAdapter(context, headerTitles, childTitles);
         expandableListView.setAdapter(homeViewAdapter);
 
 

@@ -20,7 +20,7 @@ import hu.festivalplum.utils.Utils;
 
 public class HomeViewAdapter extends BaseExpandableListAdapter {
 
-    private Context context;
+    protected Context context;
 
     private List<String> baseHeaderTitles;
     private Map<String, List<HomeObject>> baseChildTitles;
