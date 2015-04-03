@@ -438,6 +438,7 @@ public class ParseDataCollector {
         query.whereContainedIn("objectId", concertIds);
         query.include("band");
         query.include("stage");
+        query.include("event.place");
         query.whereGreaterThan("toDate", new Date());
         query.orderByAscending("startDate");
 
@@ -462,6 +463,12 @@ public class ParseDataCollector {
                     ParseObject stage = concert.getParseObject("stage");
                     if (stage == null)
                         continue;
+                    ParseObject event = concert.getParseObject("event");
+                    if(event == null)
+                        continue;
+                    ParseObject place = event.getParseObject("place");
+                    if(place == null)
+                        continue;
                     Date startDate = concert.getDate("startDate");
                     if (startDate == null)
                         continue;
@@ -483,6 +490,9 @@ public class ParseDataCollector {
                     String bandName = band.getString("name");
                     if (bandName == null)
                         continue;
+                    String placeName = place.getString("name");
+                    if(placeName == null)
+                        continue;
                     FestivalObject festivalObject = new FestivalObject();
                     festivalObject.setStartDate(startDate);
                     festivalObject.setBandName(bandName);
@@ -490,6 +500,7 @@ public class ParseDataCollector {
                     festivalObject.setStageName(stageName);
                     festivalObject.setToDate(toDate);
                     festivalObject.setConcertId(concertId);
+                    festivalObject.setPlaceName(placeName);
                     ret.add(festivalObject);
                 }
             }

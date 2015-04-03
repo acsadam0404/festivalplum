@@ -79,7 +79,7 @@ public class FavoriteViewAdapter extends BaseAdapter {
         Utils.setFavoriteImage(like,child.isFavorite());
         like.setTag(child);
 
-        name.setText(child.getBandName() + " - " + child.getStageName());
+        name.setText(child.getBandName() + "\n" + child.getPlaceName() + " - " + child.getStageName());
         date.setText(Utils.sdfDate.format(child.getStartDate()) + " (" +Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()) + ")");
 
         if (mSelection.get(i) != null) {
