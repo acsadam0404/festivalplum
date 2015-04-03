@@ -37,7 +37,6 @@ public class ParseDataCollector {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.include("place");
-        query.include("place.address");
         query.whereGreaterThanOrEqualTo("startDate", date);
         query.orderByAscending("startDate");
 
@@ -48,8 +47,8 @@ public class ParseDataCollector {
                 ParseObject place = event.getParseObject("place");
                 if(place == null)
                     continue;
-                ParseObject city = place.getParseObject("address");
-                if(city == null)
+                String cityName = place.getString("city");
+                if(cityName == null)
                     continue;
                 Date startDate = event.getDate("startDate");
                 if(startDate == null)
@@ -69,9 +68,6 @@ public class ParseDataCollector {
                 byte[] placeImg = imageFile.getData();
                 String placeName = place.getString("name");
                 if(placeName == null)
-                    continue;
-                String cityName = city.getString("city");
-                if(cityName == null)
                     continue;
                 HomeObject homeObject = new HomeObject();
                 homeObject.setCityName(cityName);
@@ -135,7 +131,6 @@ public class ParseDataCollector {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.include("place");
-        query.include("place.address");
         query.whereLessThanOrEqualTo("startDate", date);
         query.orderByAscending("startDate");
 
@@ -146,8 +141,8 @@ public class ParseDataCollector {
                 ParseObject place = event.getParseObject("place");
                 if(place == null)
                     continue;
-                ParseObject city = place.getParseObject("address");
-                if(city == null)
+                String cityName = place.getString("city");
+                if(cityName == null)
                     continue;
                 Date startDate = event.getDate("startDate");
                 if(startDate == null)
@@ -167,9 +162,6 @@ public class ParseDataCollector {
                 byte[] placeImg = imageFile.getData();
                 String placeName = place.getString("name");
                 if(placeName == null)
-                    continue;
-                String cityName = city.getString("city");
-                if(cityName == null)
                     continue;
                 HomeObject homeObject = new HomeObject();
                 homeObject.setCityName(cityName);
@@ -506,22 +498,12 @@ public class ParseDataCollector {
         }
         return ret;
     }
-/*
-    public static List<HomeObject> collectFavoriteData(List<String> eventIds){
-        ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
-        query.whereContainedIn("objectId", eventIds);
-        query.include("place");
-        query.include("place.address");
 
-        return getHomeList(query);
-    }
-*/
     public static List<HomeObject> collectSearchData(String name){
         ParseQuery<ParseObject> q = ParseQuery.getQuery("Place");
         q.whereMatches("name", name);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.include("place");
-        query.include("place.address");
         query.whereMatchesQuery("place", q);
 
         return getHomeList(query);
@@ -536,13 +518,12 @@ public class ParseDataCollector {
                 ParseObject place = event.getParseObject("place");
                 if (place == null)
                     continue;
-                ParseObject city = place.getParseObject("address");
-                if (city == null)
+                String cityName = place.getString("city");
+                if (cityName == null)
                     continue;
                 Date startDate = event.getDate("startDate");
                 if (startDate == null)
                     continue;
-
                 String eventId = event.getObjectId();
                 Date endDate = event.getDate("endDate");
                 if (endDate == null)
@@ -554,9 +535,7 @@ public class ParseDataCollector {
                 String placeName = place.getString("name");
                 if (placeName == null)
                     continue;
-                String cityName = city.getString("city");
-                if (cityName == null)
-                    continue;
+
                 HomeObject homeObject = new HomeObject();
                 homeObject.setCityName(cityName);
                 homeObject.setStartDate(startDate);
