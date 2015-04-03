@@ -43,7 +43,7 @@ public class CityViewAdapter extends HomeViewAdapter {
         image.setImageBitmap(bitmap);
 
         name.setText(child.getPlaceName());
-        date.setText(Utils.sdfDate.format(child.getStartDate()) + " - " + Utils.sdfDate.format(child.getEndDate()));
+        date.setText(Utils.sdfDate.format(child.getStartDate()));
         return convertView;
     }
 

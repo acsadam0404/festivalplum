@@ -68,7 +68,7 @@ public class NameViewAdapter  extends BaseAdapter implements SectionIndexer {
         image.setImageBitmap(bitmap);
 
         name.setText(object.getPlaceName() + " - " + object.getCityName());
-        date.setText(Utils.sdfDate.format(object.getStartDate()) + " - " + Utils.sdfDate.format(object.getEndDate()));
+        date.setText(Utils.sdfDate.format(object.getStartDate()));
 
         return view;
     }
