@@ -62,6 +62,11 @@ public class FragmentTime extends MyFragment {
     @Override
     public void onResume() {
         super.onResume();
+        expendGroup();
+    }
+
+    @Override
+    public void expendGroup(){
         for (int i = 0; i < homeViewAdapter.getGroupCount(); i++) {
             expandableListView.expandGroup(i);
         }

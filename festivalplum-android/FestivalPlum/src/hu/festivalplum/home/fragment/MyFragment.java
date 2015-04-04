@@ -43,4 +43,8 @@ public abstract class MyFragment extends Fragment {
             }
         }
     }
+
+    public void expendGroup(){
+        //
+    }
 }

@@ -43,6 +43,12 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         }
     }
 
+    public void expendGroup(){
+        for (MyFragment f : fragments){
+                f.expendGroup();
+        }
+    }
+
     @Override
     public Fragment getItem(int position) {
         return fragments.get(position);

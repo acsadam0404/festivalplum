@@ -39,6 +39,7 @@ public class HomeActivity extends FragmentActivity {
 
     private PagerSlidingTabStrip tabs;
     private FragmentAdapter fragmentAdapter;
+    private SearchView searchView;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -60,6 +61,10 @@ public class HomeActivity extends FragmentActivity {
 
             @Override
             public void onPageSelected(int position) {
+                if(!HomeActivity.this.searchView.isIconified()){
+                    HomeActivity.this.searchView.setIconified(true);
+                }
+
                 LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
                 int tabNum = layout.getChildCount();
 
@@ -69,6 +74,7 @@ public class HomeActivity extends FragmentActivity {
                 }
                 TextView view = (TextView)layout.getChildAt(position);
                 view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.holo_purple));
+
             }
 
             @Override
@@ -90,7 +96,7 @@ public class HomeActivity extends FragmentActivity {
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
-        SearchView searchView =
+        searchView =
                 (SearchView) menu.findItem(R.id.action_search).getActionView();
 
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -103,6 +109,7 @@ public class HomeActivity extends FragmentActivity {
             @Override
             public boolean onQueryTextChange(String s) {
                 fragmentAdapter.filterInView(s);
+                fragmentAdapter.expendGroup();
                 return false;
             }
         });
@@ -136,16 +143,7 @@ public class HomeActivity extends FragmentActivity {
                 i = new Intent(this, LanguageActivity.class);
                 this.startActivity(i);
                 break;
-            /*
-            case R.id.action_tmp_hu:
-                Utils.setLanguageCode(this,"hu");
-                this.finish();
-                break;
-            case R.id.action_tmp_en:
-                Utils.setLanguageCode(this,"en");
-                this.finish();
-                break;
-                */
+
         }
 
         return super.onOptionsItemSelected(item);
