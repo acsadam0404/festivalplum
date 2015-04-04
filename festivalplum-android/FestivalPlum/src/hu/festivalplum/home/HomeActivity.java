@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.FPApplication;
+import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.history.HistoryActivity;
@@ -131,6 +132,11 @@ public class HomeActivity extends FragmentActivity {
                 i = new Intent(this, HistoryActivity.class);
                 this.startActivity(i);
                 break;
+            case R.id.action_language:
+                i = new Intent(this, LanguageActivity.class);
+                this.startActivity(i);
+                break;
+            /*
             case R.id.action_tmp_hu:
                 Utils.setLanguageCode(this,"hu");
                 this.finish();
@@ -139,6 +145,7 @@ public class HomeActivity extends FragmentActivity {
                 Utils.setLanguageCode(this,"en");
                 this.finish();
                 break;
+                */
         }
 
         return super.onOptionsItemSelected(item);

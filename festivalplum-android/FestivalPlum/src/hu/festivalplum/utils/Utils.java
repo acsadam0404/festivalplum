@@ -58,7 +58,7 @@ public class Utils {
         res.updateConfiguration(conf, dm);
     }
 
-    private static String getLanguageCode(Context context){
+    public static String getLanguageCode(Context context){
         SharedPreferences prefs = context.getSharedPreferences("hu.festivalplum", Context.MODE_PRIVATE);
         return prefs.getString(LANGUAGE_CODE, "en");
     }

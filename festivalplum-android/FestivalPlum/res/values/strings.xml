@@ -52,4 +52,9 @@
         <item>December</item>
     </string-array>
 
+    <string name="action_language">Language</string>
+
+    <string name="lang_hu">Magyar</string>
+    <string name="lang_en">Angol</string>
+
 </resources>
