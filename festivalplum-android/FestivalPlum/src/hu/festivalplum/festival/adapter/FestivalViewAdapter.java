@@ -1,9 +1,11 @@
 package hu.festivalplum.festival.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,11 +14,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
+import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -35,6 +40,8 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
 
     private List<String> favoriteIds;
 
+    private  Map<String, List<FestivalObject>> firstGroupChildInStage;
+
     public FestivalViewAdapter(Context context, List<String> headerTitles, Map<String, List<FestivalObject>> childTitles) {
         this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
         this.context = context;
@@ -42,6 +49,8 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         this.childTitles = childTitles;
         this.baseHeaderTitles = headerTitles;
         this.baseChildTitles = childTitles;
+        setChildInStage();
+        liveTime();
     }
 
     @Override
@@ -57,6 +66,15 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, final int childPosition,boolean isLastChild, View convertView, ViewGroup parent) {
         FestivalObject child = (FestivalObject) getChild(groupPosition, childPosition);
+        /*
+        if(childPosition == 0 && groupPosition == 0) {
+            String childDate = Utils.getSdf(context, Utils.sdfDate).format(child.getStartDate());
+            String date = Utils.getSdf(context, Utils.sdfDate).format(new Date());
+            if (childDate.equals(date)) {
+                liveTime();
+            }
+        }
+        */
         if(favoriteIds.contains(child.getConcertId())){
             child.setFavorite(true);
         }else{
@@ -163,4 +181,111 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         }
         notifyDataSetChanged();
     }
+
+    private void liveTime(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                // Új
+                if(getGroupCount() > 0 && getChildrenCount(0) > 0){
+                    for (Object key : firstGroupChildInStage.keySet()) {
+                        if(firstGroupChildInStage.get(key.toString()).size() > 1){
+                            checkNextStart(firstGroupChildInStage.get(key.toString()).get(0),firstGroupChildInStage.get(key.toString()).get(1));
+                        }else if(firstGroupChildInStage.get(key.toString()).size() > 0){
+                            checkTwoHour(firstGroupChildInStage.get(key.toString()).get(0));
+                        }
+                    }
+                } else if(getGroupCount() > 0){
+                    removeFirstGroup();
+                }
+                // Régi
+                /*
+                if(getGroupCount() > 0 && getChildrenCount(0) > 0){
+                    FestivalObject child = (FestivalObject)FestivalViewAdapter.this.getChild(0, 0);
+                    Calendar cal = Calendar.getInstance();
+                    cal.setTime(new Date());
+                    cal.add(Calendar.HOUR_OF_DAY, -2);
+                    Calendar childCal = Calendar.getInstance();
+                    childCal.setTime(child.getStartDate());
+                    if(cal.after(childCal)){
+                        removeFirstChild();
+                    }
+
+                } else if(getGroupCount() > 0){
+                    removeFirstGroup();
+                }
+                */
+                liveTime();
+            }
+        }, 10000);
+    }
+
+    private void checkTwoHour(FestivalObject child){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        cal.add(Calendar.HOUR_OF_DAY, -2);
+        Calendar childCal = Calendar.getInstance();
+        childCal.setTime(child.getStartDate());
+        if(cal.after(childCal)){
+            removeChild(child);
+        }
+    }
+
+    private void checkNextStart(FestivalObject child, FestivalObject nextChild){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Calendar nextCal = Calendar.getInstance();
+        nextCal.setTime(nextChild.getStartDate());
+        if(cal.after(nextCal)){
+            removeChild(child);
+        }else{
+            checkTwoHour(child);
+        }
+    }
+
+    private void removeChild(FestivalObject child){
+        String key = (String) getGroup(0);
+
+        this.baseChildTitles.get(key).remove(child);
+        this.childTitles.get(key).remove(child);
+
+        setChildInStage();
+        notifyDataSetChanged();
+    }
+
+    private void removeFirstChild(){
+        String key = (String) getGroup(0);
+        FestivalObject firstChild = (FestivalObject) getChild(0, 0);
+        this.baseChildTitles.get(key).remove(firstChild);
+        this.childTitles.get(key).remove(firstChild);
+        notifyDataSetChanged();
+    }
+
+    private void removeFirstGroup(){
+        String key = (String) getGroup(0);
+        this.baseChildTitles.remove(key);
+        this.childTitles.remove(key);
+        this.baseHeaderTitles.remove(key);
+        this.headerTitles.remove(key);
+        setChildInStage();
+        notifyDataSetChanged();
+    }
+
+    private void setChildInStage(){
+        if(getGroupCount() > 0){
+            firstGroupChildInStage = new HashMap<>();
+            String key = (String) getGroup(0);
+            List<FestivalObject> firstGroupChildList = this.baseChildTitles.get(key);
+            for(FestivalObject o : firstGroupChildList){
+                if(firstGroupChildInStage.containsKey(o.getStageName())){
+                    firstGroupChildInStage.get(o.getStageName()).add(o);
+                }else{
+                    List<FestivalObject> tmpList = new ArrayList<>();
+                    tmpList.add(o);
+                    firstGroupChildInStage.put(o.getStageName(),tmpList);
+                }
+            }
+        }
+    }
+
 }

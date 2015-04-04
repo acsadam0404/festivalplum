@@ -39,7 +39,7 @@ public class ParseDataCollector {
 
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
         query.include("place");
-        query.whereGreaterThanOrEqualTo("startDate", date);
+        query.whereGreaterThanOrEqualTo("endDate", date);
         query.orderByAscending("startDate");
 
         try {
@@ -345,33 +345,27 @@ public class ParseDataCollector {
         Date date = new Date();
         Calendar cal = Calendar.getInstance();
         cal.setTime(date);
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH) + 1;
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        Date endDate = null;
-        try {
-            endDate = Utils.getSdf(context, Utils.sdf).parse(year + "." + month + "." + day + ".06:00");
-        }catch (Exception e){
-            //
-        }
+        cal.add(Calendar.HOUR_OF_DAY, -2);
+        Date newDate = cal.getTime();
 
         ParseQuery<ParseObject> q = ParseQuery.getQuery("Event");
         q.whereEqualTo("objectId", eventId);
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
         query.include("band");
         query.include("stage");
+        query.include("event");
         query.whereMatchesQuery("event", q);
-        if(endDate != null) {
+        if(newDate != null) {
             if(!history)
-                query.whereGreaterThan("toDate", endDate);
+                query.whereGreaterThan("startDate", newDate);
             else
-                query.whereLessThan("toDate", endDate);
+                query.whereLessThan("startDate", date);
         }
         query.orderByAscending("startDate");
         try {
             List<ParseObject> result = query.find();
             if (result.size() > 0) {
-                cal.setTime(result.get(0).getDate("startDate"));
+                cal.setTime(result.get(0).getParseObject("event").getDate("startDate"));
                 int minDayOfYear = cal.get(Calendar.DAY_OF_YEAR);
 
                 for (int i = 0; i < result.size(); i++) {
@@ -390,9 +384,15 @@ public class ParseDataCollector {
                     if(toDate == null)
                         continue;
                     cal.setTime(startDate);
+                    Date titleStartDate = startDate;
+                    int hour = cal.get(Calendar.HOUR_OF_DAY);
+                    if(hour < 6){
+                        cal.add(Calendar.DAY_OF_MONTH, -1);
+                        titleStartDate = cal.getTime();
+                    }
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = Utils.getSdf(context, Utils.sdfDate).format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
+                    String title = Utils.getSdf(context, Utils.sdfDate).format(titleStartDate) + " (" + festDay + ". nap)";
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
