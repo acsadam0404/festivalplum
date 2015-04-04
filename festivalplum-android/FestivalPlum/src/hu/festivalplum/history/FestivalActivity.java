@@ -18,7 +18,7 @@ public class FestivalActivity extends hu.festivalplum.festival.FestivalActivity 
 
     @Override
     protected void initFestival(){
-        data = ParseDataCollector.collectFestivalData(eventId, place, true);
+        data = ParseDataCollector.collectFestivalData(this, eventId, place, true);
     }
 
 }

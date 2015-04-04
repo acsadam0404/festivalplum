@@ -80,7 +80,7 @@ public class FavoriteViewAdapter extends BaseAdapter {
         like.setTag(child);
 
         name.setText(child.getBandName() + "\n" + child.getPlaceName() + " - " + child.getStageName());
-        date.setText(Utils.sdfDate.format(child.getStartDate()) + " (" +Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()) + ")");
+        date.setText(Utils.getSdf(context, Utils.sdfDate).format(child.getStartDate()) + " (" + Utils.getSdf(context, Utils.sdfTime).format(child.getStartDate()) + " - " + Utils.getSdf(context, Utils.sdfTime).format(child.getToDate()) + ")");
 
         if (mSelection.get(i) != null) {
             convertView.setBackgroundColor(context.getResources().getColor(android.R.color.holo_purple));

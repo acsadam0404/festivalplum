@@ -81,7 +81,7 @@ public class FestivalViewAdapter  extends BaseExpandableListAdapter {
         like.setTag(child);
 
         name.setText(child.getBandName() + " - " + child.getStageName());
-        date.setText(Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()));
+        date.setText(Utils.getSdf(context, Utils.sdfTime).format(child.getStartDate()) + " - " + Utils.getSdf(context, Utils.sdfTime).format(child.getToDate()));
         return convertView;
     }
 

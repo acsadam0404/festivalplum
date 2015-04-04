@@ -11,6 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 import hu.festivalplum.FPApplication;
+import hu.festivalplum.R;
 import hu.festivalplum.StarterActivity;
 
 /**
@@ -18,19 +19,24 @@ import hu.festivalplum.StarterActivity;
  */
 public class Utils {
 
-    public static final SimpleDateFormat sdfDate = new SimpleDateFormat("yy.MM.dd");
-    public static final SimpleDateFormat sdfTime = new SimpleDateFormat("HH:mm");
-    public static final SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MM.dd.HH:mm");
+    public static final int sdfDate = R.string.sdfDate;
+    public static final int sdfTime = R.string.sdfTime;
+    public static final int sdf = R.string.sdf;
 
     private static final String LANGUAGE_CODE = "hu.festivalplum.language";
 
-    public static final String[] month = new String[]{"Január","Február","Március","Április","Május","Június","Július","Augusztus","Szeptember","Október","November","December"};
+    private static final int months = R.array.months;
 
-    public static String getMonthName(int m){
+    public static String getMonthName(Context context, int m){
+        String [] monthArray = context.getResources().getStringArray(months);
         if(m >= 0 && m < 12){
-            return month[m];
+            return monthArray[m];
         }
         return "";
+    }
+
+    public static SimpleDateFormat getSdf(Context context, int key){
+        return new SimpleDateFormat(context.getResources().getString(key));
     }
 
     public static void setFavoriteImage(ImageView v, boolean favorite){
@@ -63,7 +69,7 @@ public class Utils {
         Utils.setLanguage(context);
         Intent i = new Intent(context, StarterActivity.class);
         context.startActivity(i);
-        FPApplication.initParseData();
+        FPApplication.initParseData(context);
     }
 
 }

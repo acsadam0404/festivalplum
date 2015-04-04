@@ -33,4 +33,23 @@
     <string name="tab_map">Térkép</string>
     <string name="tab_info">Infó</string>
 
+    <string name="sdf">yyyy.MM.dd.HH:mm</string>
+    <string name="sdfDate">yy.MM.dd</string>
+    <string name="sdfTime">HH:mm</string>
+
+    <string-array name="months">
+        <item>Január</item>
+        <item>Február</item>
+        <item>Március</item>
+        <item>Április</item>
+        <item>Május</item>
+        <item>Június</item>
+        <item>Július</item>
+        <item>Augusztus</item>
+        <item>Szeptember</item>
+        <item>Október</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
 </resources>

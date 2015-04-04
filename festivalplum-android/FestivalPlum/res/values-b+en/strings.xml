@@ -32,4 +32,23 @@
     <string name="tab_map">Map</string>
     <string name="tab_info">Info</string>
 
+    <string name="sdf">yyyy.MM.dd.HH:mm</string>
+    <string name="sdfDate">dd/MM/yy</string>
+    <string name="sdfTime">hh:mm a</string>
+
+    <string-array name="months">
+        <item>Január</item>
+        <item>Február</item>
+        <item>Március</item>
+        <item>Április</item>
+        <item>Május</item>
+        <item>Június</item>
+        <item>Jú</item>
+        <item>Aug</item>
+        <item>Szeptember</item>
+        <item>Október</item>
+        <item>November</item>
+        <item>December</item>
+    </string-array>
+
 </resources>

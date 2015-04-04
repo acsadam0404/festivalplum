@@ -104,7 +104,7 @@ public class FestivalActivity extends FragmentActivity {
     }
 
     protected void initFestival(){
-        data = ParseDataCollector.collectFestivalData(eventId, place, false);
+        data = ParseDataCollector.collectFestivalData(this, eventId, place, false);
     }
 
     public void likeHandler (final View v) {

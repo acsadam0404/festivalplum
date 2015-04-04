@@ -45,7 +45,7 @@ public class BandActivity extends FragmentActivity {
         info = intent.getStringExtra("info");
         String name = intent.getStringExtra("name");
         getActionBar().setTitle(name);
-        concertList = ParseDataCollector.collectBandConcerts(bandId);
+        concertList = ParseDataCollector.collectBandConcerts(this, bandId);
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this);
 

@@ -76,7 +76,7 @@ public class BandViewAdapter extends BaseAdapter {
         like.setTag(child);
 
         name.setText(child.getPlaceName() + " - " + child.getStageName());
-        date.setText(Utils.sdfDate.format(child.getStartDate()) + " (" +Utils.sdfTime.format(child.getStartDate()) + " - " + Utils.sdfTime.format(child.getToDate()) + ")");
+        date.setText(Utils.getSdf(context, Utils.sdfDate).format(child.getStartDate()) + " (" +Utils.getSdf(context, Utils.sdfTime).format(child.getStartDate()) + " - " + Utils.getSdf(context, Utils.sdfTime).format(child.getToDate()) + ")");
 
         return convertView;
     }

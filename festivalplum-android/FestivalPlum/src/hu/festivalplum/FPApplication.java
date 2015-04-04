@@ -69,10 +69,10 @@ public class FPApplication extends Application {
 
     }
 
-    public static void initParseData(){
+    public static void initParseData(Context context){
 
         bandMap = ParseDataCollector.collectBandData();
-        Map<String, Object> data =  ParseDataCollector.collectHomeData();
+        Map<String, Object> data =  ParseDataCollector.collectHomeData(context);
         timeGroup = (List<String>)data.get("timeGroup");
         timeChild = (Map<String, List<HomeObject>>)data.get("timeChild");
         nameGroup = (List<String>)data.get("nameGroup");
@@ -80,7 +80,7 @@ public class FPApplication extends Application {
         cityGroup = (List<String>)data.get("cityGroup");
         cityChild = (Map<String, List<HomeObject>>)data.get("cityChild");
 
-        Map<String, Object> historyData =  ParseDataCollector.collectHistoryData();
+        Map<String, Object> historyData =  ParseDataCollector.collectHistoryData(context);
         historyTimeGroup = (List<String>)historyData.get("timeGroup");
         historyTimeChild = (Map<String, List<HomeObject>>)historyData.get("timeChild");
 

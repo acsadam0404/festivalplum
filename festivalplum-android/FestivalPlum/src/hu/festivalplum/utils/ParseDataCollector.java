@@ -1,5 +1,7 @@
 package hu.festivalplum.utils;
 
+import android.content.Context;
+
 import com.parse.ParseException;
 import com.parse.ParseFile;
 import com.parse.ParseObject;
@@ -23,7 +25,7 @@ import hu.festivalplum.model.HomeObject;
 public class ParseDataCollector {
 
     // Jelenleg ha hiányzik egy megjelenítendő érték akkor adott Event kimarad a listából
-    public static Map<String, Object> collectHomeData(){
+    public static Map<String, Object> collectHomeData(Context context){
         Map<String, Object> ret = new HashMap<>();
 
         List<String> timeGroup = new ArrayList<String>();
@@ -57,7 +59,7 @@ public class ParseDataCollector {
                 cal.setTime(startDate);
                 Integer year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(month);
+                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(context, month);
                 String eventId = event.getObjectId();
                 Date endDate = event.getDate("endDate");
                 if(endDate == null)
@@ -121,7 +123,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static Map<String, Object> collectHistoryData(){
+    public static Map<String, Object> collectHistoryData(Context context){
         Map<String, Object> ret = new HashMap<>();
 
         List<String> timeGroup = new ArrayList<String>();
@@ -151,7 +153,7 @@ public class ParseDataCollector {
                 cal.setTime(startDate);
                 Integer year = cal.get(Calendar.YEAR);
                 int month = cal.get(Calendar.MONTH);
-                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(month);
+                String title = "'" + year.toString().substring(2,4) + " " + Utils.getMonthName(context, month);
                 String eventId = event.getObjectId();
                 Date endDate = event.getDate("endDate");
                 if(endDate == null)
@@ -238,7 +240,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static List<FestivalObject> collectBandConcerts(String bandId){
+    public static List<FestivalObject> collectBandConcerts(Context context, String bandId){
         List<FestivalObject> ret = new ArrayList<>();
 
         Date date = new Date();
@@ -249,7 +251,7 @@ public class ParseDataCollector {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         Date endDate = null;
         try {
-            endDate = Utils.sdf.parse(year + "." + month + "." + day + ".06:00");
+            endDate = Utils.getSdf(context, Utils.sdf).parse(year + "." + month + "." + day + ".06:00");
         }catch (Exception e){
             //
         }
@@ -295,7 +297,7 @@ public class ParseDataCollector {
                     cal.setTime(startDate);
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = Utils.sdfDate.format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
+                    //String title = Utils.sdfDate.format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
@@ -334,7 +336,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static Map<String, Object> collectFestivalData(String eventId, final String place, boolean history) {
+    public static Map<String, Object> collectFestivalData(Context context, String eventId, final String place, boolean history) {
         Map<String, Object> ret = new HashMap<>();
 
         List<String> festivalGroup = new ArrayList<String>();
@@ -348,7 +350,7 @@ public class ParseDataCollector {
         int day = cal.get(Calendar.DAY_OF_MONTH);
         Date endDate = null;
         try {
-            endDate = Utils.sdf.parse(year + "." + month + "." + day + ".06:00");
+            endDate = Utils.getSdf(context, Utils.sdf).parse(year + "." + month + "." + day + ".06:00");
         }catch (Exception e){
             //
         }
@@ -390,7 +392,7 @@ public class ParseDataCollector {
                     cal.setTime(startDate);
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = Utils.sdfDate.format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
+                    String title = Utils.getSdf(context, Utils.sdfDate).format(startDate) + /*" " + place +*/ " (" + festDay + ". nap)";
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
