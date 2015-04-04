@@ -24,10 +24,12 @@ import com.astuetz.PagerSlidingTabStrip;
 import java.util.List;
 import java.util.Map;
 
+import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.festival.adapter.FestivalViewAdapter;
 import hu.festivalplum.festival.adapter.FragmentAdapter;
+import hu.festivalplum.history.HistoryActivity;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
@@ -172,8 +174,16 @@ public class FestivalActivity extends FragmentActivity {
             case R.id.action_favourite:
                 i = new Intent(this, FavoriteActivity.class);
                 this.startActivity(i);
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                 break;
+            case R.id.action_history:
+                i = new Intent(this, HistoryActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_language:
+                i = new Intent(this, LanguageActivity.class);
+                this.startActivity(i);
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);

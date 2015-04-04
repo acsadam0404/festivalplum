@@ -14,6 +14,7 @@ import android.widget.SearchView;
 import java.util.List;
 import java.util.Map;
 import hu.festivalplum.FPApplication;
+import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
@@ -108,8 +109,15 @@ public class HistoryActivity extends Activity {
             case R.id.action_favourite:
                 i = new Intent(this, FavoriteActivity.class);
                 this.startActivity(i);
-                overridePendingTransition( R.anim.slide_in_up, R.anim.slide_out_up );
                 break;
+            case R.id.action_history:
+                //
+                break;
+            case R.id.action_language:
+                i = new Intent(this, LanguageActivity.class);
+                this.startActivity(i);
+                break;
+
         }
 
         return super.onOptionsItemSelected(item);
