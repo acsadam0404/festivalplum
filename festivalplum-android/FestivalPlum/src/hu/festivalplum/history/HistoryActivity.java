@@ -61,6 +61,10 @@ public class HistoryActivity extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+        expendGroup();
+    }
+
+    public void expendGroup(){
         for (int i = 0; i < mAdapter.getGroupCount(); i++) {
             expandableListView.expandGroup(i);
         }
@@ -85,6 +89,7 @@ public class HistoryActivity extends Activity {
             @Override
             public boolean onQueryTextChange(String s) {
                 mAdapter.filter(s);
+                expendGroup();
                 return false;
             }
         });
