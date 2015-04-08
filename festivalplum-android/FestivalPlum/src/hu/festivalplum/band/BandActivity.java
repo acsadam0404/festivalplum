@@ -89,27 +89,11 @@ public class BandActivity extends FragmentActivity {
     }
 
     public void likeHandler (final View v) {
-        final FestivalObject item = (FestivalObject)v.getTag();
-        new AlertDialog.Builder(this)
-                .setTitle(R.string.dialog_delete_favorite_title)
-                .setMessage(R.string.dialog_delete_favorite_msg)
-                .setPositiveButton(R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        SQLiteUtil.getInstence(BandActivity.this).addFavoriteId("Concert", item.getConcertId());
-                        item.setFavorite(!item.isFavorite());
-                        Utils.setFavoriteImage((ImageView) v, item.isFavorite());
-                        fragmentAdapter.notifyDataSetChanged();
-                    }
-                })
-                .setNegativeButton(R.string.no, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        // do nothing
-                    }
-                })
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .show();
-
-
+        FestivalObject item = (FestivalObject)v.getTag();
+        SQLiteUtil.getInstence(BandActivity.this).addFavoriteId("Concert", item.getConcertId());
+        item.setFavorite(!item.isFavorite());
+        Utils.setFavoriteImage((ImageView) v, item.isFavorite());
+        fragmentAdapter.notifyDataSetChanged();
     }
 
     public String getInfo() {
