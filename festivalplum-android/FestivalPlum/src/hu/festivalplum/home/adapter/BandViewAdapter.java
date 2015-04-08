@@ -21,6 +21,7 @@ import java.util.List;
 import hu.festivalplum.R;
 import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.Utils;
 
 /**
  * Created by viktor on 2015.03.28..
@@ -63,7 +64,7 @@ public class BandViewAdapter extends BaseAdapter implements SectionIndexer {
         byte[] img = band.getBandImg();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) view.findViewById(R.id.image);
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(Utils.getResizedBitmap(bitmap));
 
         TextView name = (TextView) view.findViewById(R.id.name);
         TextView style = (TextView) view.findViewById(R.id.style);

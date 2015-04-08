@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.res.Resources;
+import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.util.DisplayMetrics;
 import android.widget.ImageView;
 
@@ -70,6 +72,23 @@ public class Utils {
         Intent i = new Intent(context, StarterActivity.class);
         context.startActivity(i);
         FPApplication.initParseData(context);
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bitmap, int newWidth, int newHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+        float scaleWidth = ((float) newWidth) / width;
+        float scaleHeight = ((float) newHeight) / height;
+
+        Matrix matrix = new Matrix();
+        matrix.postScale(scaleWidth, scaleHeight);
+
+        Bitmap resizedBitmap = Bitmap.createBitmap(bitmap, 0, 0, width, height, matrix, false);
+        return resizedBitmap;
+    }
+
+    public static Bitmap getResizedBitmap(Bitmap bitmap) {
+        return getResizedBitmap(bitmap, 100, 100);
     }
 
 }

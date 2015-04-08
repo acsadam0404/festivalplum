@@ -69,7 +69,7 @@ public class BandViewAdapter extends BaseAdapter {
         byte[] img = child.getImage();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(Utils.getResizedBitmap(bitmap));
 
         ImageView like = (ImageView)convertView.findViewById(R.id.like);
         Utils.setFavoriteImage(like,child.isFavorite());

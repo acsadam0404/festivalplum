@@ -65,7 +65,7 @@ public class NameViewAdapter  extends BaseAdapter implements SectionIndexer {
         byte[] img = object.getPlaceImg();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) view.findViewById(R.id.image);
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(Utils.getResizedBitmap(bitmap));
 
         name.setText(object.getPlaceName() + " - " + object.getCityName());
         date.setText(Utils.getSdf(context, Utils.sdfDate).format(object.getStartDate()));

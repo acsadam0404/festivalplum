@@ -60,7 +60,7 @@ public class HomeViewAdapter extends BaseExpandableListAdapter {
         byte[] img = child.getPlaceImg();
         Bitmap bitmap= BitmapFactory.decodeByteArray(img, 0, img.length);
         ImageView image = (ImageView) convertView.findViewById(R.id.image);
-        image.setImageBitmap(bitmap);
+        image.setImageBitmap(Utils.getResizedBitmap(bitmap));
 
         name.setText(child.getPlaceName() + " - " + child.getCityName());
         date.setText(Utils.getSdf(context, Utils.sdfDate).format(child.getStartDate()));
