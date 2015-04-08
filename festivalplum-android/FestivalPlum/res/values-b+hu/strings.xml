@@ -35,6 +35,7 @@
 
     <string name="sdf">yyyy.MM.dd.HH:mm</string>
     <string name="sdfDate">yy.MM.dd</string>
+    <string name="sdfMMdd">MM.dd</string>
     <string name="sdfTime">HH:mm</string>
 
     <string-array name="months">

@@ -22,6 +22,7 @@ import hu.festivalplum.StarterActivity;
 public class Utils {
 
     public static final int sdfDate = R.string.sdfDate;
+    public static final int sdfMMdd = R.string.sdfMMdd;
     public static final int sdfTime = R.string.sdfTime;
     public static final int sdf = R.string.sdf;
 

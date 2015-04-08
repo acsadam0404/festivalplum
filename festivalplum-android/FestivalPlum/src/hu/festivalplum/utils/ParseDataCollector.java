@@ -392,7 +392,7 @@ public class ParseDataCollector {
                     }
 
                     int festDay = cal.get(Calendar.DAY_OF_YEAR) - minDayOfYear + 1;
-                    String title = Utils.getSdf(context, Utils.sdfDate).format(titleStartDate) + " (" + festDay + ". nap)";
+                    String title = Utils.getSdf(context, Utils.sdfMMdd).format(titleStartDate) + " (" + festDay + ". nap)";
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
