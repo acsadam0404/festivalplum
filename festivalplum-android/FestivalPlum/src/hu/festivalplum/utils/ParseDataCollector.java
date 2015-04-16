@@ -215,7 +215,7 @@ public class ParseDataCollector {
                     String bandId = band.getObjectId();
                     String name = band.getString("name");
                     String style = band.getString("style");
-                    String info = band.getString("info");
+                    String info = band.getString("description");
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
@@ -404,7 +404,7 @@ public class ParseDataCollector {
                     String bandName = band.getString("name");
                     if(bandName == null)
                         continue;
-                    String bandInfo = band.getString("info");
+                    String bandInfo = band.getString("description");
 
                     FestivalObject festivalObject = new FestivalObject();
                     festivalObject.setStartDate(startDate);

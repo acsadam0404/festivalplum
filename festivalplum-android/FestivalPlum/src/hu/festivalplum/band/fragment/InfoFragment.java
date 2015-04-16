@@ -1,6 +1,7 @@
 package hu.festivalplum.band.fragment;
 
 import android.os.Bundle;
+import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,14 +22,20 @@ public class InfoFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-/*
+
         String info = ((BandActivity)getActivity()).getInfo();
         WebView view = new WebView(getActivity());
         view.getSettings().setJavaScriptEnabled(false);
-        view.loadData(info, "text/html", null);
+
+        String base64 = "";
+        try {
+            base64 = android.util.Base64.encodeToString(info.getBytes("UTF-8"), android.util.Base64.DEFAULT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        view.loadData(base64, "text/html; charset=utf-8", "base64");
+
         return view;
-        */
-        return new View(getActivity());
     }
     @Override
     public int getName() {
