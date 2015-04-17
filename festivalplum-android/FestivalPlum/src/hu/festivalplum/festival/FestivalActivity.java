@@ -43,6 +43,7 @@ public class FestivalActivity extends FragmentActivity {
 
     protected String eventId;
     protected String place;
+    private Boolean isFestival;
     protected Map<String,Object> data;
 
     private FragmentAdapter fragmentAdapter;
@@ -58,7 +59,9 @@ public class FestivalActivity extends FragmentActivity {
         Intent intent = getIntent();
         eventId = intent.getStringExtra("eventId");
         place = intent.getStringExtra("place");
+        isFestival = intent.getBooleanExtra("isFestival", true);
         getActionBar().setTitle(place);
+
         initFestival();
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
@@ -189,5 +192,9 @@ public class FestivalActivity extends FragmentActivity {
 
     public Map<String, List<FestivalObject>> getFestivalChild() {
         return festivalChild;
+    }
+
+    public Boolean isFestival() {
+        return isFestival;
     }
 }

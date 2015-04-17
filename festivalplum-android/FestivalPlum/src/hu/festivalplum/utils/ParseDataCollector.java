@@ -71,6 +71,9 @@ public class ParseDataCollector {
                 String placeName = place.getString("name");
                 if(placeName == null)
                     continue;
+                Boolean isFestival = event.getBoolean("isFestival");
+                if(isFestival == null)
+                    continue;
                 HomeObject homeObject = new HomeObject();
                 homeObject.setCityName(cityName);
                 homeObject.setStartDate(startDate);
@@ -78,7 +81,7 @@ public class ParseDataCollector {
                 homeObject.setEventId(eventId);
                 homeObject.setPlaceImg(placeImg);
                 homeObject.setPlaceName(placeName);
-
+                homeObject.setFestival(isFestival);
                 if(!timeChild.containsKey(title)){
                     timeGroup.add(title);
                     List<HomeObject> list = new ArrayList<HomeObject>();

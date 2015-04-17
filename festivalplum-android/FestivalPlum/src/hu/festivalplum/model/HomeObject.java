@@ -13,6 +13,7 @@ public class HomeObject {
     private byte[] placeImg;
     private String placeName;
     private String cityName;
+    private Boolean festival;
 
     public HomeObject(){
         //
@@ -66,4 +67,11 @@ public class HomeObject {
         this.endDate = endDate;
     }
 
+    public Boolean isFestival() {
+        return festival;
+    }
+
+    public void setFestival(Boolean isFestival) {
+        this.festival = isFestival;
+    }
 }

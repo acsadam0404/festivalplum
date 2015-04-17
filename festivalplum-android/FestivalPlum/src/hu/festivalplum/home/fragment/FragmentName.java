@@ -54,10 +54,11 @@ public class FragmentName extends MyFragment {
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(context, FestivalActivity.class);
                 HomeObject object = (HomeObject) list.getAdapter().getItem(i);
+                Intent intent = new Intent(context, FestivalActivity.class);
                 intent.putExtra("eventId", object.getEventId());
                 intent.putExtra("place", object.getPlaceName());
+                intent.putExtra("isFestival", object.isFestival());
                 context.startActivity(intent);
             }
         });

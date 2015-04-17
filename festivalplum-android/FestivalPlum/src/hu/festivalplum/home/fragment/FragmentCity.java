@@ -53,6 +53,7 @@ public class FragmentCity extends MyFragment {
                 HomeObject object = (HomeObject) expandableListView.getExpandableListAdapter().getChild(i, i2);
                 intent.putExtra("eventId", object.getEventId());
                 intent.putExtra("place", object.getPlaceName());
+                intent.putExtra("isFestival", object.isFestival());
                 context.startActivity(intent);
                 return true;
             }

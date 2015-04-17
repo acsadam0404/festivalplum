@@ -10,15 +10,16 @@ import android.widget.AdapterView;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.BandInfoActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
+import hu.festivalplum.festival.adapter.FestivalExpViewAdapter;
 import hu.festivalplum.festival.adapter.FestivalViewAdapter;
 import hu.festivalplum.model.FestivalObject;
-import hu.festivalplum.model.HomeObject;
 
 /**
  * Created by viktor on 2015.03.26..
@@ -29,6 +30,7 @@ public class ProgramFragment extends MyFragment {
     private Map<String, List<FestivalObject>> childTitles;
 
     private ExpandableListView expandableListView;
+    private ListView listView;
 
     public ProgramFragment() {
 
@@ -39,32 +41,62 @@ public class ProgramFragment extends MyFragment {
                              Bundle savedInstanceState) {
 
         final Context context = getActivity();
-        expandableListView = new ExpandableListView(context);
+
+
+        Boolean isFestival = ((FestivalActivity)context).isFestival();
+
         childTitles = ((FestivalActivity)context).getFestivalChild();
         headerTitles = ((FestivalActivity)context).getFestivalGroup();
-        festivalViewAdapter = new FestivalViewAdapter(context, headerTitles, childTitles);
-        expandableListView.setAdapter(festivalViewAdapter);
+        if(isFestival){
+            festivalExpViewAdapter = new FestivalExpViewAdapter(context, headerTitles, childTitles);
+            expandableListView = new ExpandableListView(context);
+            expandableListView.setAdapter(festivalExpViewAdapter);
 
-        expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
-            @Override
-            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
-                Intent intent = new Intent(context, BandInfoActivity.class);
-                FestivalObject object = (FestivalObject) expandableListView.getExpandableListAdapter().getChild(i, i2);
-                intent.putExtra("info", object.getBandHtmlInfo());
-                intent.putExtra("band", object.getBandName());
-                context.startActivity(intent);
-                return true;
+            expandableListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+                @Override
+                public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
+                    Intent intent = new Intent(context, BandInfoActivity.class);
+                    FestivalObject object = (FestivalObject) expandableListView.getExpandableListAdapter().getChild(i, i2);
+                    intent.putExtra("info", object.getBandHtmlInfo());
+                    intent.putExtra("band", object.getBandName());
+                    context.startActivity(intent);
+                    return true;
+                }
+            });
+
+            return expandableListView;
+        }else{
+            List<FestivalObject> list = new ArrayList<>();
+            for(String key : headerTitles){
+                list.addAll(childTitles.get(key));
             }
-        });
 
-        return expandableListView;
+            festivalViewAdapter = new FestivalViewAdapter(context, list);
+            listView = new ListView(context);
+            listView.setAdapter(festivalViewAdapter);
+
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                    Intent intent = new Intent(context, BandInfoActivity.class);
+                    FestivalObject object = (FestivalObject) listView.getAdapter().getItem(i);
+                    intent.putExtra("info", object.getBandHtmlInfo());
+                    intent.putExtra("band", object.getBandName());
+                    context.startActivity(intent);
+                }
+            });
+
+            return listView;
+        }
     }
 
     @Override
     public void onResume() {
         super.onResume();
-        for (int i = 0; i < festivalViewAdapter.getGroupCount(); i++) {
-            expandableListView.expandGroup(i);
+        if(expandableListView != null){
+            for (int i = 0; i < festivalExpViewAdapter.getGroupCount(); i++) {
+                expandableListView.expandGroup(i);
+            }
         }
     }
 
