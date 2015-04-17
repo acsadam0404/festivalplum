@@ -21,7 +21,7 @@
 
     <string name="dialog_delete_favorite_title">Kedvenc törlése</string>
     <string name="dialog_delete_favorite_msg">Biztosan törölni akarod a koncertet a kedvencek közül?</string>
-
+    <string name="openGate">Kapunyitás</string>
     <string name="yes">Igen</string>
     <string name="no">Nem</string>
 

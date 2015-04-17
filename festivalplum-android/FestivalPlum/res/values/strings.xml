@@ -38,6 +38,9 @@
     <string name="sdfMMdd">MM.dd</string>
     <string name="sdfTime">HH:mm</string>
 
+    <string name="openGate">Kapunyitás</string>
+
+
     <string-array name="months">
         <item>Január</item>
         <item>Február</item>
