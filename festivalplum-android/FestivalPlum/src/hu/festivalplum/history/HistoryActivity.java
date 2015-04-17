@@ -16,7 +16,6 @@ import java.util.Map;
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
-import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
 import hu.festivalplum.model.HomeObject;
 
@@ -72,7 +71,7 @@ public class HistoryActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_main, menu);
+        getMenuInflater().inflate(R.menu.history_menu, menu);
 
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -105,24 +104,9 @@ public class HistoryActivity extends Activity {
         int id = item.getItemId();
         Intent i;
         switch (id){
-            case R.id.action_settings:
-                //
-                break;
             case R.id.action_search:
                 //
                 break;
-            case R.id.action_favourite:
-                i = new Intent(this, FavoriteActivity.class);
-                this.startActivity(i);
-                break;
-            case R.id.action_history:
-                //
-                break;
-            case R.id.action_language:
-                i = new Intent(this, LanguageActivity.class);
-                this.startActivity(i);
-                break;
-
         }
 
         return super.onOptionsItemSelected(item);

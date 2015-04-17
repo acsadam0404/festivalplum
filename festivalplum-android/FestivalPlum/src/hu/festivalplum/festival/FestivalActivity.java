@@ -26,10 +26,9 @@ import java.util.Map;
 
 import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
-import hu.festivalplum.favorite.FavoriteActivity;
-import hu.festivalplum.festival.adapter.FestivalViewAdapter;
+import hu.festivalplum.history.FavoriteActivity;
 import hu.festivalplum.festival.adapter.FragmentAdapter;
-import hu.festivalplum.history.HistoryActivity;
+import hu.festivalplum.festival.HistoryActivity;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;

@@ -23,6 +23,11 @@
             android:parentActivityName=".home.HomeActivity">
         </activity>
         <activity
+            android:name=".festival.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".festival.HistoryActivity">
+        </activity>
+        <activity
             android:name=".festival.FestivalActivity"
             android:label="@string/title_activity_festival"
             android:launchMode="singleTop"
@@ -45,6 +50,16 @@
             android:label="@string/title_activity_festival"
             android:launchMode="singleTop"
             android:parentActivityName=".history.HistoryActivity" >
+        </activity>
+        <activity
+            android:name=".history.FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:parentActivityName=".history.HistoryActivity" >
+        </activity>
+        <activity
+            android:name=".festival.FavoriteActivity"
+            android:label="@string/title_activity_favorite"
+            android:parentActivityName=".festival.FestivalActivity" >
         </activity>
         <activity
             android:name=".StarterActivity"
