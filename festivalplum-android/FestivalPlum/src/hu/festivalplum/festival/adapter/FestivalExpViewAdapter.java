@@ -50,7 +50,7 @@ public class FestivalExpViewAdapter extends BaseExpandableListAdapter {
         this.baseHeaderTitles = headerTitles;
         this.baseChildTitles = childTitles;
         setChildInStage();
-        liveTime();
+        //liveTime();
     }
 
     @Override

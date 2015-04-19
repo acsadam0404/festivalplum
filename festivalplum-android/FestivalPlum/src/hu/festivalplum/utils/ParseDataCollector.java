@@ -444,7 +444,7 @@ public class ParseDataCollector {
         query.include("band");
         query.include("stage");
         query.include("event.place");
-        query.whereGreaterThan("toDate", new Date());
+        //query.whereGreaterThan("toDate", new Date());
         query.orderByAscending("startDate");
 
         return getFestivalList(query);

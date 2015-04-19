@@ -3,6 +3,7 @@ package hu.festivalplum.favorite;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +12,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -36,6 +39,7 @@ public class FavoriteViewAdapter extends BaseAdapter {
         this.favoriteIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
         this.context = context;
         this.list = list;
+        //liveTime();
     }
 
     @Override
@@ -64,7 +68,7 @@ public class FavoriteViewAdapter extends BaseAdapter {
 
         if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater) this.context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = infalInflater.inflate(R.layout.festivalview_item, null);
+            convertView = infalInflater.inflate(R.layout.favoriteview_item, null);
         }
 
         TextView name = (TextView) convertView.findViewById(R.id.name);
@@ -78,6 +82,13 @@ public class FavoriteViewAdapter extends BaseAdapter {
         ImageView like = (ImageView)convertView.findViewById(R.id.like);
         Utils.setFavoriteImage(like,child.isFavorite());
         like.setTag(child);
+
+        ImageView active = (ImageView)convertView.findViewById(R.id.active);
+        if(isOnline(child)){
+            active.setImageResource(android.R.drawable.presence_online);
+        }else{
+            active.setImageResource(0);
+        }
 
         name.setText(child.getBandName() + "\n" + child.getPlaceName() + " - " + child.getStageName());
         date.setText(Utils.getSdf(context, Utils.sdfMMdd).format(child.getStartDate()) + " " + Utils.getSdf(context, Utils.sdfTime).format(child.getStartDate()));
@@ -121,4 +132,29 @@ public class FavoriteViewAdapter extends BaseAdapter {
         this.list = ParseDataCollector.collectFavoriteData(concertIds);
         super.notifyDataSetChanged();
     }
+
+    private void liveTime(){
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            public void run() {
+                notifyDataSetChanged();
+                liveTime();
+            }
+        }, 10000);
+    }
+
+    private Boolean isOnline(FestivalObject child){
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(new Date());
+        Calendar cal2 = Calendar.getInstance();
+        cal2.setTime(new Date());
+        cal.add(Calendar.HOUR_OF_DAY, +2);
+        Calendar childCal = Calendar.getInstance();
+        childCal.setTime(child.getStartDate());
+        if(cal.after(childCal) && childCal.before(cal2)){
+           return true;
+        }
+        return false;
+    }
+
 }
