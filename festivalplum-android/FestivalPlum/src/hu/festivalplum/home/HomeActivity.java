@@ -1,8 +1,10 @@
 package hu.festivalplum.home;
 
 
+import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -27,10 +29,12 @@ import hu.festivalplum.FPApplication;
 import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
+import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.history.HistoryActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
 import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -140,8 +144,11 @@ public class HomeActivity extends FragmentActivity {
                 this.startActivity(i);
                 break;
             case R.id.action_language:
-                i = new Intent(this, LanguageActivity.class);
-                this.startActivity(i);
+
+                new LanguageDialog(this).show();
+
+                //i = new Intent(this, LanguageActivity.class);
+                //this.startActivity(i);
                 break;
 
         }
