@@ -59,6 +59,8 @@ public class FragmentName extends MyFragment {
                 intent.putExtra("eventId", object.getEventId());
                 intent.putExtra("place", object.getPlaceName());
                 intent.putExtra("isFestival", object.isFestival());
+                intent.putExtra("info", object.getPlaceInfo());
+                intent.putExtra("map", object.getPlaceMap());
                 context.startActivity(intent);
             }
         });

@@ -8,6 +8,7 @@ import android.webkit.WebView;
 import android.widget.ListView;
 
 import hu.festivalplum.R;
+import hu.festivalplum.band.BandActivity;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.festival.fragment.MyFragment;
 
@@ -23,14 +24,20 @@ public class InfoFragment extends MyFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-/*
-        String info = "<html><body><p>Teszt Info</p></body></html>"; //((FestivalActivity)getActivity()).getFestivalInfo();
+
+        String info = ((FestivalActivity)getActivity()).getInfo();
         WebView view = new WebView(getActivity());
-        view.getSettings().setJavaScriptEnabled(false);
-        view.loadData(info, "text/html", "UTF-8");
+
+        String base64 = "";
+        try {
+            base64 = android.util.Base64.encodeToString(info.getBytes("UTF-8"), android.util.Base64.DEFAULT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        view.loadData(base64, "text/html; charset=utf-8", "base64");
+
         return view;
-        */
-        return new View(getActivity());
+
     }
     @Override
     public int getName() {

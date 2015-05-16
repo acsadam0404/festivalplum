@@ -41,6 +41,9 @@ public class FestivalActivity extends FragmentActivity {
     private List<String> festivalGroup;
     private Map<String, List<FestivalObject>> festivalChild;
 
+    private String info;
+    private String map;
+
     protected String eventId;
     protected String place;
     private Boolean isFestival;
@@ -60,13 +63,17 @@ public class FestivalActivity extends FragmentActivity {
         eventId = intent.getStringExtra("eventId");
         place = intent.getStringExtra("place");
         isFestival = intent.getBooleanExtra("isFestival", true);
+
+        info = intent.getStringExtra("info");
+        map = intent.getStringExtra("map");
+
         getActionBar().setTitle(place);
 
         initFestival();
         festivalGroup = (List<String>)data.get("festivalGroup");
         festivalChild = (Map<String, List<FestivalObject>>)data.get("festivalChild");
 
-        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this);
+        fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this, map != null);
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(fragmentAdapter);
@@ -184,6 +191,14 @@ public class FestivalActivity extends FragmentActivity {
             modFavorite = false;
         }
         super.onResume();
+    }
+
+    public String getInfo() {
+        return info;
+    }
+
+    public String getMap() {
+        return map;
     }
 
     public List<String> getFestivalGroup() {

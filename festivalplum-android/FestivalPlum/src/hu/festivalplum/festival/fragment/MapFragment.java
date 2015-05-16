@@ -4,9 +4,11 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebView;
 import android.widget.ListView;
 
 import hu.festivalplum.R;
+import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.festival.fragment.MyFragment;
 
 /**
@@ -22,8 +24,19 @@ public class MapFragment extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        View v = new ListView(getActivity());
-        return v;
+        String map = ((FestivalActivity)getActivity()).getMap();
+        WebView view = new WebView(getActivity());
+        view.getSettings().setBuiltInZoomControls(true);
+
+        String base64 = "";
+        try {
+            base64 = android.util.Base64.encodeToString(map.getBytes("UTF-8"), android.util.Base64.DEFAULT);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        view.loadData(base64, "text/html; charset=utf-8", "base64");
+
+        return view;
     }
     @Override
     public int getName() {

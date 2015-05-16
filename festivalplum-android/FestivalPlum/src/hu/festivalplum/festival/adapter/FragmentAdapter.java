@@ -23,11 +23,12 @@ public class FragmentAdapter extends FragmentPagerAdapter {
     private ArrayList<MyFragment> fragments;
     private String[] titles;
 
-    public FragmentAdapter(FragmentManager fm, Context context) {
+    public FragmentAdapter(FragmentManager fm, Context context, boolean createMap) {
         super(fm);
         fragments = new ArrayList<MyFragment>();
         fragments.add(new ProgramFragment());
-        fragments.add(new MapFragment());
+        if(createMap)
+            fragments.add(new MapFragment());
         fragments.add(new InfoFragment());
         titles = new String[fragments.size()];
         for(int i = 0; i < fragments.size(); i++){

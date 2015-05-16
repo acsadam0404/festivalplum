@@ -25,7 +25,6 @@ public class InfoFragment extends MyFragment {
 
         String info = ((BandActivity)getActivity()).getInfo();
         WebView view = new WebView(getActivity());
-        view.getSettings().setJavaScriptEnabled(false);
 
         String base64 = "";
         try {

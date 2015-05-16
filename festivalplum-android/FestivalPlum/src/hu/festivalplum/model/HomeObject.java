@@ -12,6 +12,8 @@ public class HomeObject {
     private Date endDate;
     private byte[] placeImg;
     private String placeName;
+    private String placeMap;
+    private String placeInfo;
     private String cityName;
     private Boolean festival;
 
@@ -73,5 +75,21 @@ public class HomeObject {
 
     public void setFestival(Boolean isFestival) {
         this.festival = isFestival;
+    }
+
+    public String getPlaceMap() {
+        return placeMap;
+    }
+
+    public void setPlaceMap(String placeMap) {
+        this.placeMap = placeMap;
+    }
+
+    public String getPlaceInfo() {
+        return placeInfo;
+    }
+
+    public void setPlaceInfo(String placeInfo) {
+        this.placeInfo = placeInfo;
     }
 }
