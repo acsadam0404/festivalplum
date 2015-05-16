@@ -29,21 +29,31 @@ public class NameViewAdapter  extends BaseAdapter implements SectionIndexer {
     private Context context;
     private List<HomeObject> list;
     private List<HomeObject> baseList;
+    private List<HomeObject> priorityList;
+    private Boolean priorityFilter;
 
-    public NameViewAdapter(Context context, List<HomeObject> list){
+    public NameViewAdapter(Context context, List<HomeObject> list, Boolean priorityFilter){
         this.context = context;
         this.list = list;
         this.baseList = list;
+        this.priorityFilter = priorityFilter;
+        priorityFilter();
     }
 
     @Override
     public int getCount() {
-        return list.size();
+        if(priorityFilter)
+            return priorityList.size();
+        else
+            return list.size();
     }
 
     @Override
     public Object getItem(int i) {
-        return list.get(i);
+        if(priorityFilter)
+            return priorityList.get(i);
+        else
+            return list.get(i);
     }
 
     @Override
@@ -112,7 +122,24 @@ public class NameViewAdapter  extends BaseAdapter implements SectionIndexer {
                 this.list.add(o);
             }
         }
-
+        priorityFilter();
         notifyDataSetChanged();
+    }
+
+    public void notifyDataSetChanged(Boolean priorityFilter){
+        this.priorityFilter = priorityFilter;
+        priorityFilter();
+        super.notifyDataSetChanged();
+    }
+
+    private void priorityFilter(){
+        this.priorityList = new ArrayList<>();
+        if(priorityFilter){
+            for(HomeObject o : this.list){
+                if (o.getHighPriority()){
+                    this.priorityList.add(o);
+                }
+            }
+        }
     }
 }

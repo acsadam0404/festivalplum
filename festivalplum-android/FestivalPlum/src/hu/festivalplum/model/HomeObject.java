@@ -16,6 +16,7 @@ public class HomeObject {
     private String placeInfo;
     private String cityName;
     private Boolean festival;
+    private Boolean highPriority;
 
     public HomeObject(){
         //
@@ -91,5 +92,13 @@ public class HomeObject {
 
     public void setPlaceInfo(String placeInfo) {
         this.placeInfo = placeInfo;
+    }
+
+    public Boolean getHighPriority() {
+        return highPriority;
+    }
+
+    public void setHighPriority(Boolean highPriority) {
+        this.highPriority = highPriority;
     }
 }

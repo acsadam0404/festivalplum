@@ -28,8 +28,8 @@ public class FragmentAdapter extends FragmentPagerAdapter {
         super(fm);
         fragments = new ArrayList<>();
         fragments.add(new FragmentName());
-        fragments.add(new FragmentTime());
-        fragments.add(new FragmentCity());
+        //fragments.add(new FragmentTime());
+        //fragments.add(new FragmentCity());
         fragments.add(new FragmentBand());
         titles = new String[fragments.size()];
         for(int i = 0; i < fragments.size(); i++){

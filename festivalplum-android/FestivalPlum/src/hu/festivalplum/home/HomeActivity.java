@@ -49,12 +49,12 @@ public class HomeActivity extends FragmentActivity {
 
         ViewPager p = (ViewPager) findViewById(R.id.pager);
         p.setAdapter(fragmentAdapter);
-        p.setCurrentItem(1);
+        //p.setCurrentItem(1);
 
         tabs = (PagerSlidingTabStrip) findViewById(R.id.tabs);
         tabs.setViewPager(p);
         LinearLayout layout =  (LinearLayout)tabs.getChildAt(0);
-        TextView view = (TextView)layout.getChildAt(1);
+        TextView view = (TextView)layout.getChildAt(0);
         view.setTextColor(HomeActivity.this.getResources().getColor(android.R.color.holo_purple));
 
         tabs.delegatePageListener = new ViewPager.OnPageChangeListener() {

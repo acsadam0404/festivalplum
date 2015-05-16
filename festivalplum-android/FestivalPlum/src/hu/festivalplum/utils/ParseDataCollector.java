@@ -54,6 +54,7 @@ public class ParseDataCollector {
                     continue;
                 String placeInfo = place.getString("description");
                 String placeMap = place.getString("map");
+                Boolean highPriority =  place.getBoolean("highPriority");
                 Date startDate = event.getDate("startDate");
                 if(startDate == null)
                     continue;
@@ -86,6 +87,7 @@ public class ParseDataCollector {
                 homeObject.setFestival(isFestival);
                 homeObject.setPlaceMap(placeMap);
                 homeObject.setPlaceInfo(placeInfo);
+                homeObject.setHighPriority(highPriority);
                 if(!timeChild.containsKey(title)){
                     timeGroup.add(title);
                     List<HomeObject> list = new ArrayList<HomeObject>();

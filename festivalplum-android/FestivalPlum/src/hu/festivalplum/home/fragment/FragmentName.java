@@ -4,12 +4,16 @@ package hu.festivalplum.home.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.CompoundButton;
+import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.ListView;
+import android.widget.Switch;
 
 import java.util.List;
 import java.util.Map;
@@ -41,12 +45,20 @@ public class FragmentName extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final Context context = getActivity();
 
-        View contentView = inflater.inflate(R.layout.fragment_alphabetic, container, false);
+        View contentView = inflater.inflate(R.layout.fragment_ctrl_alphabetic, container, false);
         list = (ListView) contentView.findViewById(R.id.myListView);
 
         homeData = FPApplication.getInstence().getNameList();
 
-        nameViewAdapter = new NameViewAdapter(context, homeData);
+        Switch priority = (Switch) contentView.findViewById(R.id.switch1);
+        priority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                nameViewAdapter.notifyDataSetChanged(isChecked);
+            }
+        });
+
+        nameViewAdapter = new NameViewAdapter(context, homeData, priority.isChecked());
         list.setAdapter(nameViewAdapter);
         SideBar indexBar = (SideBar) contentView.findViewById(R.id.sideBar);
         indexBar.setListView(list);
