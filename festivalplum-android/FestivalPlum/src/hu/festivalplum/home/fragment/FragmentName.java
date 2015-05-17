@@ -1,6 +1,7 @@
 package hu.festivalplum.home.fragment;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ExpandableListView;
+import android.widget.GridView;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 
@@ -23,6 +26,7 @@ import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
+import hu.festivalplum.home.adapter.NameGridViewAdapter;
 import hu.festivalplum.home.adapter.NameViewAdapter;
 import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
@@ -35,7 +39,8 @@ public class FragmentName extends MyFragment {
 
     private List<HomeObject> homeData;
 
-    private ListView list;
+    private AdapterView list;
+    private boolean isList;
 
     public FragmentName() {
 
@@ -45,12 +50,12 @@ public class FragmentName extends MyFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final Context context = getActivity();
 
-        View contentView = inflater.inflate(R.layout.fragment_ctrl_alphabetic, container, false);
-        list = (ListView) contentView.findViewById(R.id.myListView);
-
         homeData = FPApplication.getInstence().getNameList();
-
-        Switch priority = (Switch) contentView.findViewById(R.id.switch1);
+        isList = ((HomeActivity)context).isList();
+        boolean highPriority = ((HomeActivity)context).isHighPriority();
+        View contentView = inflater.inflate(R.layout.fragment_ctrl_alphabetic, container, false);
+        final Switch priority = (Switch) contentView.findViewById(R.id.switch1);
+        priority.setChecked(highPriority);
         priority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -58,10 +63,34 @@ public class FragmentName extends MyFragment {
             }
         });
 
-        nameViewAdapter = new NameViewAdapter(context, homeData, priority.isChecked());
+        if(isList){
+            list = (ListView) contentView.findViewById(R.id.myListView);
+            nameViewAdapter = new NameViewAdapter(context, homeData, priority.isChecked());
+        }
+        else{
+            list = (GridView) contentView.findViewById(R.id.myGridView);
+            nameViewAdapter = new NameGridViewAdapter(context, homeData, priority.isChecked());
+        }
+
+        ImageButton listButton = (ImageButton) contentView.findViewById(R.id.imageListButton);
+        listButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((HomeActivity)context).reload(true, priority.isChecked());
+            }
+        });
+
+        ImageButton gridButton = (ImageButton) contentView.findViewById(R.id.imageGridButton);
+        gridButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                ((HomeActivity)context).reload(false, priority.isChecked());
+            }
+        });
+
         list.setAdapter(nameViewAdapter);
         SideBar indexBar = (SideBar) contentView.findViewById(R.id.sideBar);
-        indexBar.setListView(list);
+        indexBar.setView(list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

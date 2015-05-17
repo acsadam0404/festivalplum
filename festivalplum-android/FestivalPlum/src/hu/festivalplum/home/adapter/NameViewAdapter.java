@@ -26,11 +26,11 @@ import hu.festivalplum.utils.Utils;
  */
 public class NameViewAdapter  extends BaseAdapter implements SectionIndexer {
 
-    private Context context;
-    private List<HomeObject> list;
-    private List<HomeObject> baseList;
-    private List<HomeObject> priorityList;
-    private Boolean priorityFilter;
+    protected Context context;
+    protected List<HomeObject> list;
+    protected List<HomeObject> baseList;
+    protected List<HomeObject> priorityList;
+    protected Boolean priorityFilter;
 
     public NameViewAdapter(Context context, List<HomeObject> list, Boolean priorityFilter){
         this.context = context;

@@ -4,7 +4,7 @@
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <LinearLayout
+    <RelativeLayout
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="40dp"
@@ -13,14 +13,33 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:id="@+id/imageListButton"
+            android:src="@android:drawable/btn_radio"
+            android:layout_gravity="center_horizontal" />
+
+        <ImageButton
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/sym_call_missed"
+            android:id="@+id/imageGridButton"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/imageListButton"
+            android:layout_toEndOf="@+id/imageListButton" />
+
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/priority"
             android:id="@+id/switch1"
             android:checked="true"
-            android:layout_gravity="right" />
-    </LinearLayout>
+            android:layout_gravity="right"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
     <ListView android:id="@+id/myListView"
         android:layout_width="fill_parent"
@@ -28,10 +47,26 @@
         android:layout_toLeftOf="@+id/sideBar"
         android:layout_toStartOf="@+id/sideBar"
         android:layout_below="@+id/controll" />
+
+    <GridView android:id="@+id/myGridView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:columnWidth="90dp"
+        android:numColumns="auto_fit"
+        android:verticalSpacing="10dp"
+        android:horizontalSpacing="10dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/sideBar"
+        android:layout_toStartOf="@+id/sideBar"
+        android:layout_below="@+id/controll" />
+
+
     <hu.festivalplum.utils.SideBar
         android:id = "@+id/sideBar"
         android:layout_height="match_parent"
         android:layout_width="22dp"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/controll" />
+
 </RelativeLayout>

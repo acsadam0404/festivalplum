@@ -44,7 +44,7 @@ public class FragmentBand extends MyFragment {
         bandViewAdapter = new BandViewAdapter(context, bandData);
         list.setAdapter(bandViewAdapter);
         SideBar indexBar = (SideBar) contentView.findViewById(R.id.sideBar);
-        indexBar.setListView(list);
+        indexBar.setView(list);
 
         list.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

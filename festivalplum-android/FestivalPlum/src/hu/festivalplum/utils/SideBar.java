@@ -10,6 +10,8 @@ import android.util.AttributeSet;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.GridView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
@@ -17,7 +19,7 @@ import android.widget.SectionIndexer;
 public class SideBar extends View {
     private char[] l;
     private SectionIndexer sectionIndexter = null;
-    private ListView list;
+    private AdapterView view;
     private int m_nItemHeight = 29;
     private int textSize = 20;
     public SideBar(Context context) {
@@ -49,9 +51,9 @@ public class SideBar extends View {
         calculate();
     }
 
-    public void setListView(ListView _list) {
-        list = _list;
-        sectionIndexter = (SectionIndexer) _list.getAdapter();
+    public void setView(AdapterView view) {
+        this.view = view;
+        sectionIndexter = (SectionIndexer) view.getAdapter();
     }
 
     public boolean onTouchEvent(MotionEvent event) {
@@ -65,13 +67,14 @@ public class SideBar extends View {
         }
         if (event.getAction() == MotionEvent.ACTION_DOWN || event.getAction() == MotionEvent.ACTION_MOVE) {
             if (sectionIndexter == null) {
-                sectionIndexter = (SectionIndexer) list.getAdapter();
+               sectionIndexter = (SectionIndexer) view.getAdapter();
+
             }
             int position = sectionIndexter.getPositionForSection(l[idx]);
             if (position == -1) {
                 return true;
             }
-            list.setSelection(position);
+            view.setSelection(position);
         }
         return true;
     }

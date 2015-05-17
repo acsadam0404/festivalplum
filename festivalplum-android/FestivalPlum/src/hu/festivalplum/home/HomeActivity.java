@@ -45,10 +45,15 @@ public class HomeActivity extends FragmentActivity {
     private PagerSlidingTabStrip tabs;
     private FragmentAdapter fragmentAdapter;
     private SearchView searchView;
+    private boolean isList;
+    private boolean highPriority;
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home);
+
+        isList = getIntent().getBooleanExtra("isList", true);
+        highPriority = getIntent().getBooleanExtra("highPriority", true);
 
         fragmentAdapter = new FragmentAdapter(getSupportFragmentManager(), this);
 
@@ -155,5 +160,23 @@ public class HomeActivity extends FragmentActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public boolean isList(){
+        return isList;
+    }
+
+    public boolean isHighPriority(){
+        return highPriority;
+    }
+
+    public void reload(boolean isList, boolean highPriority){
+        Intent intent = getIntent();
+        intent.putExtra("isList", isList);
+        intent.putExtra("highPriority", highPriority);
+        finish();
+        overridePendingTransition(0, 0);
+        startActivity(intent);
+        overridePendingTransition(0, 0);
     }
 }
