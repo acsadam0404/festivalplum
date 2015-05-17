@@ -14,10 +14,10 @@ import android.widget.SearchView;
 import java.util.List;
 import java.util.Map;
 import hu.festivalplum.FPApplication;
-import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.home.adapter.HomeViewAdapter;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.LanguageDialog;
 
 /**
  * Created by viktor on 2015.03.27..
@@ -104,8 +104,18 @@ public class HistoryActivity extends Activity {
         int id = item.getItemId();
         Intent i;
         switch (id){
+            case R.id.action_settings:
+                //
+                break;
             case R.id.action_search:
                 //
+                break;
+            case R.id.action_favourite:
+                i = new Intent(this, FavoriteActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_language:
+                new LanguageDialog(this).show();
                 break;
         }
 

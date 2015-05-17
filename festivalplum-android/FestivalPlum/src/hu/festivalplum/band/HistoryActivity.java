@@ -1,4 +1,4 @@
-package hu.festivalplum.history;
+package hu.festivalplum.band;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -7,9 +7,9 @@ import hu.festivalplum.R;
 import hu.festivalplum.utils.LanguageDialog;
 
 /**
- * Created by viktor on 2015.04.17..
+ * Created by viktor on 2015.05.17..
  */
-public class FavoriteActivity extends hu.festivalplum.favorite.FavoriteActivity{
+public class HistoryActivity extends hu.festivalplum.history.HistoryActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
@@ -21,14 +21,13 @@ public class FavoriteActivity extends hu.festivalplum.favorite.FavoriteActivity{
             case R.id.action_search:
                 //
                 break;
-            case R.id.action_history:
-                i = new Intent(this, HistoryActivity.class);
+            case R.id.action_favourite:
+                i = new Intent(this, FavoriteActivity.class);
                 this.startActivity(i);
                 break;
             case R.id.action_language:
                 new LanguageDialog(this).show();
                 break;
-
         }
 
         return super.onOptionsItemSelected(item);

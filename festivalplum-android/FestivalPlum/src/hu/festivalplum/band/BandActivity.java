@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -18,6 +20,7 @@ import java.util.List;
 import hu.festivalplum.R;
 import hu.festivalplum.band.adapter.FragmentAdapter;
 import hu.festivalplum.model.FestivalObject;
+import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -102,5 +105,39 @@ public class BandActivity extends FragmentActivity {
 
     public List<FestivalObject> getConcertList() {
         return concertList;
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.band_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent i;
+        switch (id){
+            case R.id.action_settings:
+                //
+                break;
+            case R.id.action_search:
+                //
+                break;
+            case R.id.action_favourite:
+                i = new Intent(this, FavoriteActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_history:
+                i = new Intent(this, HistoryActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_language:
+                new LanguageDialog(this).show();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }

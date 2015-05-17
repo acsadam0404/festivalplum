@@ -23,6 +23,7 @@ import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -121,4 +122,35 @@ public class FavoriteActivity extends Activity {
 
 
     }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.favorite_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent i;
+        switch (id){
+            case R.id.action_settings:
+                //
+                break;
+            case R.id.action_search:
+                //
+                break;
+            case R.id.action_history:
+                i = new Intent(this, HistoryActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_language:
+                new LanguageDialog(this).show();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
 }

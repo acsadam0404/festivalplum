@@ -42,8 +42,14 @@
             android:parentActivityName=".home.HomeActivity" >
         </activity>
         <activity
-            android:name=".LanguageActivity"
-            android:parentActivityName=".home.HomeActivity" >
+            android:name=".band.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".band.BandActivity" >
+        </activity>
+        <activity
+            android:name=".band.FavoriteActivity"
+            android:label="@string/title_activity_festival"
+            android:parentActivityName=".band.BandActivity" >
         </activity>
         <activity
             android:name=".history.FestivalActivity"
@@ -73,6 +79,11 @@
             android:name=".favorite.FavoriteActivity"
             android:label="@string/title_activity_favorite"
             android:parentActivityName=".home.HomeActivity" >
+        </activity>
+        <activity
+            android:name=".favorite.HistoryActivity"
+            android:label="@string/title_activity_history"
+            android:parentActivityName=".favorite.FavoriteActivity" >
         </activity>
         <activity
             android:name=".MapActivity"

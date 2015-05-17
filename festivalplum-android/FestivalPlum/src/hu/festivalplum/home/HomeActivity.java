@@ -26,7 +26,6 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.FPApplication;
-import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
 import hu.festivalplum.festival.FestivalActivity;
@@ -144,11 +143,7 @@ public class HomeActivity extends FragmentActivity {
                 this.startActivity(i);
                 break;
             case R.id.action_language:
-
                 new LanguageDialog(this).show();
-
-                //i = new Intent(this, LanguageActivity.class);
-                //this.startActivity(i);
                 break;
 
         }

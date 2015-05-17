@@ -1,4 +1,4 @@
-package hu.festivalplum.history;
+package hu.festivalplum.band;
 
 import android.content.Intent;
 import android.view.MenuItem;
@@ -7,9 +7,9 @@ import hu.festivalplum.R;
 import hu.festivalplum.utils.LanguageDialog;
 
 /**
- * Created by viktor on 2015.04.17..
+ * Created by viktor on 2015.05.17..
  */
-public class FavoriteActivity extends hu.festivalplum.favorite.FavoriteActivity{
+public class FavoriteActivity extends hu.festivalplum.favorite.FavoriteActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();

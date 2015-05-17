@@ -1,36 +1,26 @@
 package hu.festivalplum.festival;
 
-import android.app.AlertDialog;
+
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
-import android.widget.ExpandableListView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-
 import com.astuetz.PagerSlidingTabStrip;
-
 import java.util.List;
 import java.util.Map;
-
-import hu.festivalplum.LanguageActivity;
 import hu.festivalplum.R;
-import hu.festivalplum.history.FavoriteActivity;
 import hu.festivalplum.festival.adapter.FragmentAdapter;
-import hu.festivalplum.festival.HistoryActivity;
 import hu.festivalplum.model.FestivalObject;
-import hu.festivalplum.model.HomeObject;
+import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;
@@ -175,8 +165,7 @@ public class FestivalActivity extends FragmentActivity {
                 this.startActivity(i);
                 break;
             case R.id.action_language:
-                i = new Intent(this, LanguageActivity.class);
-                this.startActivity(i);
+                new LanguageDialog(this).show();
                 break;
 
         }

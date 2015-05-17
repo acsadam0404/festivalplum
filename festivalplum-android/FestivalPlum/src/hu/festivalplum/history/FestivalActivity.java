@@ -1,9 +1,13 @@
 package hu.festivalplum.history;
 
+import android.content.Intent;
+import android.view.MenuItem;
 import android.view.View;
 
 import java.util.Map;
 
+import hu.festivalplum.R;
+import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
 
 /**
@@ -19,6 +23,34 @@ public class FestivalActivity extends hu.festivalplum.festival.FestivalActivity 
     @Override
     protected void initFestival(){
         data = ParseDataCollector.collectFestivalData(this, eventId, place, true);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent i;
+        switch (id){
+            case R.id.action_settings:
+                //
+                break;
+            case R.id.action_search:
+                //
+                break;
+            case R.id.action_favourite:
+                i = new Intent(this, FavoriteActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_history:
+                i = new Intent(this, HistoryActivity.class);
+                this.startActivity(i);
+                break;
+            case R.id.action_language:
+                new LanguageDialog(this).show();
+                break;
+
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
 }
