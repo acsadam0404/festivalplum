@@ -53,7 +53,12 @@ public class FragmentName extends MyFragment {
         homeData = FPApplication.getInstence().getNameList();
         isList = ((HomeActivity)context).isList();
         boolean highPriority = ((HomeActivity)context).isHighPriority();
-        View contentView = inflater.inflate(R.layout.fragment_ctrl_alphabetic, container, false);
+        View contentView;
+        if(isList){
+            contentView = inflater.inflate(R.layout.fragment_ctrl_alphabetic, container, false);
+        }else{
+            contentView = inflater.inflate(R.layout.fragment_ctrl_grid_alphabetic, container, false);
+        }
         final Switch priority = (Switch) contentView.findViewById(R.id.switch1);
         priority.setChecked(highPriority);
         priority.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
