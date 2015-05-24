@@ -1,0 +1,42 @@
+package crud.vaadin;
+
+import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
+import com.vaadin.navigator.Navigator;
+import com.vaadin.server.VaadinRequest;
+import com.vaadin.spring.annotation.SpringUI;
+import com.vaadin.ui.UI;
+import crud.vaadin.view.MainView;
+import org.parse4j.Parse;
+
+
+/**
+ *
+ */
+@Title("FestivalPlum")
+@Theme("valo")
+@SpringUI
+public class MainUI extends UI {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private static final String MAIN = "main";
+	private static final String APP_ID = "EHBh2sz9yo6a99A5UMDjYBKPGWD9zpl35JhSZQG8";
+	private static final String APP_REST_API_ID = "5UmFXA63snvwWjXjyofJ8QSZt2mVHRFJ36FSvPEc";
+	
+	private Navigator navigator;
+	
+	@Override
+    protected void init(VaadinRequest request) {
+
+		navigator = new Navigator(this, this);
+		navigator.addView(MAIN, new MainView());
+		navigator.navigateTo(MAIN);
+		
+		Parse.initialize(APP_ID, APP_REST_API_ID);
+	}
+	
+}
