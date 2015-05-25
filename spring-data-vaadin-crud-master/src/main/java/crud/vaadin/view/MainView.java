@@ -1,5 +1,6 @@
 package crud.vaadin.view;
 
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;
@@ -15,6 +16,8 @@ import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
 
+import crud.backend.entity.Band;
+import crud.backend.entity.Festival;
 import crud.vaadin.component.BandListComp;
 import crud.vaadin.component.FestivalListComp;
 import crud.vaadin.window.BandWindow;
@@ -69,7 +72,7 @@ public class MainView extends VerticalLayout implements View {
 					
 					@Override
 					public void buttonClick(ClickEvent event) {
-						//UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása"));
+						UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása"));
 					}
 				});
 				content.addComponent(add);
@@ -78,7 +81,9 @@ public class MainView extends VerticalLayout implements View {
 
 				    @Override
 				    public void itemClick(ItemClickEvent event) {
-				    	//UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása"));
+				    	BeanItem<Band> item = (BeanItem) event.getItem();
+				    	Band band = item.getBean();
+				    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band));
 				    }
 				});
 				content.addComponent(data);
@@ -107,7 +112,9 @@ public class MainView extends VerticalLayout implements View {
 
 				    @Override
 				    public void itemClick(ItemClickEvent event) {
-				    	UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Módosítása", event.getItem()));
+				    	BeanItem<Festival> item = (BeanItem) event.getItem();
+				    	Festival festival = item.getBean();
+				    	UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Módosítása", festival));
 				    }
 				});
 				content.addComponent(data);

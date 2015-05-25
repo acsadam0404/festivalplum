@@ -29,7 +29,7 @@ public class Festival {
 	private Date endDate;
 	private String description;
 	private byte[] image;
-	private byte[] map;
+	private String map;
 	
 	public String getName() {
 		return place.getString("name");
@@ -103,7 +103,7 @@ public class Festival {
 		this.postcode = postcode;
 	}
 
-	public boolean isPriority() {
+	public boolean getPriority() {
 		return place.getBoolean("highPriority");
 	}
 
@@ -143,12 +143,12 @@ public class Festival {
 		this.image = image;
 	}
 
-	public byte[] getMap() {
-		return map;
+	public String getMap() {
+		return place.getString("map");
 	}
 
-	public void setMap(byte[] map) {
-		this.map = map;
+	public void setMap(String map) {
+		place.put("map", map);
 	}
 
 	//DATA
@@ -217,9 +217,8 @@ public class Festival {
                 ParseQuery<ParseObject> stageQuery = ParseQuery.getQuery("Stage");
                 stageQuery.whereMatchesQuery("place", q);
                 List<ParseObject> stageResult = stageQuery.find();
-                List<ParseObject> stageList = null;
+                List<ParseObject> stageList = new LinkedList<ParseObject>();;
                 if(stageResult != null){
-                	stageList = new LinkedList<ParseObject>();
 	                for(int j = 0; j < stageResult.size(); j++) {
 	                	ParseObject stageParseObject = result.get(j);
 	                	stageList.add(stageParseObject);
@@ -246,6 +245,7 @@ public class Festival {
 		place.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException parseException) {
+				event.put("place", place);
 				event.saveInBackground();
 				
 			}
@@ -267,13 +267,6 @@ public class Festival {
 	
 	public void create(){
 		place = new ParseObject("Place");
-		place.saveInBackground(new SaveCallback() {
-			@Override
-			public void done(ParseException parseException) {
-				event = new ParseObject("Event");
-				event.put("place", place);
-				event.saveInBackground();
-			}
-		});
+		event = new ParseObject("Event");
 	}
 }

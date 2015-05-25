@@ -21,7 +21,7 @@ public class Band {
 	}
 
 	public void setName(String name) {
-		this.name = name;
+		band.put("name", name);
 	}
 
 	public String getNationality() {
@@ -29,7 +29,7 @@ public class Band {
 	}
 
 	public void setNationality(String nationality) {
-		this.nationality = nationality;
+		band.put("nationality", nationality);
 	}
 
 	public String getStyle() {
@@ -37,7 +37,7 @@ public class Band {
 	}
 
 	public void setStyle(String style) {
-		this.style = style;
+		band.put("style", style);
 	}
 
 	public String getDescription() {
@@ -45,7 +45,7 @@ public class Band {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		band.put("description", description);
 	}
 
 	public byte[] getImage() {
