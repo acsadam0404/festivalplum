@@ -1,11 +1,15 @@
 package crud.backend.entity;
 
+import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
 
 import org.parse4j.ParseException;
+import org.parse4j.ParseFile;
 import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
+
+import crud.utils.Utils;
 
 public class Band {
 	
@@ -52,8 +56,22 @@ public class Band {
 		return image;
 	}
 
-	public void setImage(byte[] image) {
-		this.image = image;
+	public void setImage(String name, byte[] image) {
+		byte[] resizedImage;
+		try {
+			resizedImage = Utils.imageResize(image);
+			ParseFile file = new ParseFile(name, resizedImage);
+			try {
+				file.save();
+			} catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			band.put("image", file);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 	}
 
 	//DATA

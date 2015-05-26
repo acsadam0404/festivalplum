@@ -72,7 +72,7 @@ public class MainView extends VerticalLayout implements View {
 					
 					@Override
 					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása"));
+						UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása", false));
 					}
 				});
 				content.addComponent(add);
@@ -103,7 +103,7 @@ public class MainView extends VerticalLayout implements View {
 					
 					@Override
 					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Létrehozása"));
+						UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Létrehozása", false));
 					}
 				});
 				content.addComponent(add);
