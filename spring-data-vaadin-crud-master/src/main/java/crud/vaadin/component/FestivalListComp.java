@@ -11,19 +11,20 @@ public class FestivalListComp extends CustomComponent {
 	private Table table;
 	
 	public FestivalListComp() {
+		setSizeFull();
 		setCompositionRoot(build());
 		refresh();
 	}
 
 	private Component build() {
 		table = new Table();
+		table.setSizeFull();
 		table.setContainerDataSource(new BeanItemContainer(Festival.class));
 		table.setVisibleColumns("name", "festival", "email", "phone", "website", "country", "city", "address", "postcode", "priority", "startDate", "endDate");
 		table.setColumnHeader("name", "Név");
 		return table;
 	}
 	
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	private void refresh() {
 		BeanItemContainer container = (BeanItemContainer) table.getContainerDataSource();
 		container.removeAllItems();

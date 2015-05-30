@@ -15,6 +15,7 @@ import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.ValoTheme;
 
 import crud.backend.entity.Band;
 import crud.backend.entity.Festival;
@@ -29,6 +30,8 @@ public class MainView extends VerticalLayout implements View {
 	
 	public MainView() {
 		setSizeFull();
+		setSpacing(true);
+		setMargin(true);
 		buildMenu();
 		buildContent();
 	}
@@ -36,17 +39,14 @@ public class MainView extends VerticalLayout implements View {
 	private void buildMenu() {
 		HorizontalLayout menuLayout = new HorizontalLayout();
 		menuLayout.setWidth(100, Unit.PERCENTAGE);
-		menuLayout.setHeight(50, Unit.PIXELS);
-
+		menuLayout.setSpacing(true);
 		MenuBar menu = new MenuBar();
-
 		menu.addItem("Fellépő", null, bandCommand());
 		menu.addItem("Fesztivál", null, festivalCommand());
 		menu.addItem("Koncert", null, concertCommand());
 
 		menuLayout.addComponent(menu);
-		menuLayout.setExpandRatio(menu, 1.0f);
-		menuLayout.setComponentAlignment(menu, Alignment.MIDDLE_CENTER);
+		menuLayout.setComponentAlignment(menu, Alignment.MIDDLE_LEFT);
 
 		addComponent(menuLayout);
     }
@@ -54,6 +54,7 @@ public class MainView extends VerticalLayout implements View {
 	private void buildContent(){
 		content = new VerticalLayout();
 		content.setSizeFull();
+		content.setSpacing(true);
 		Button b = new Button("Alap");
 		content.addComponent(b);
 		addComponent(content);

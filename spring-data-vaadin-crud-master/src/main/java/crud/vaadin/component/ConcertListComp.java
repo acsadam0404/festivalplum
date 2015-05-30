@@ -10,6 +10,7 @@ public class ConcertListComp extends CustomComponent {
 	private Table table;
 	
 	public ConcertListComp() {
+		setSizeFull();
 		setCompositionRoot(build());
 		refresh();
 	}

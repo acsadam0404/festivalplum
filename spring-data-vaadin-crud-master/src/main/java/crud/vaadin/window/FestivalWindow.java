@@ -1,28 +1,20 @@
 package crud.vaadin.window;
 
-import java.util.Date;
-
-import javax.xml.crypto.Data;
-
 import pl.exsio.plupload.Plupload;
 import pl.exsio.plupload.PluploadError;
 import pl.exsio.plupload.PluploadFile;
 import pl.exsio.plupload.handler.memory.ByteArrayChunkHandlerFactory;
 
-import com.vaadin.data.Item;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 import crud.backend.entity.Festival;
 import crud.utils.Utils;
@@ -56,7 +48,6 @@ public class FestivalWindow extends BaseWindow {
 	
 	public FestivalWindow(String title, boolean exist){
 		super(title, 600, 400);
-		setSizeFull();
 		this.exist = exist;
 		if(!exist){
 			festival = new Festival();

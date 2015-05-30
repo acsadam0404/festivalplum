@@ -1,21 +1,15 @@
 package crud.vaadin.window;
 
-import org.apache.commons.io.FilenameUtils;
-
 import pl.exsio.plupload.Plupload;
 import pl.exsio.plupload.PluploadError;
 import pl.exsio.plupload.PluploadFile;
 import pl.exsio.plupload.handler.memory.ByteArrayChunkHandlerFactory;
 
-import com.vaadin.data.Item;
-import com.vaadin.data.Validator.InvalidValueException;
 import com.vaadin.server.FontAwesome;
-import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 
 import crud.backend.entity.Band;
 import crud.utils.Utils;

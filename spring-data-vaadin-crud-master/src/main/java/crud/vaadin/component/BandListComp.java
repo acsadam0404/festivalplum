@@ -11,12 +11,14 @@ public class BandListComp extends CustomComponent {
 	private Table table;
 	
 	public BandListComp() {
+		setSizeFull();
 		setCompositionRoot(build());
 		refresh();
 	}
 
 	private Component build() {
 		table = new Table();
+		table.setSizeFull();
 		table.setContainerDataSource(new BeanItemContainer(Band.class));
 		table.setVisibleColumns("name", "style", "nationality");
 		table.setColumnHeader("name", "Név");

@@ -32,6 +32,8 @@ abstract class BaseWindow extends Window{
 	private void initForm(){
 		form = new FormLayout();
 		form.setSizeFull();
+		form.setSpacing(true);
+		form.setMargin(true);
 		buildForm();
 		mainLayout.addComponent(form);
 	}

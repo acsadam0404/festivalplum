@@ -12,6 +12,7 @@ public class StageListComp  extends CustomComponent {
 	private Table table;
 	
 	public StageListComp(List<Stage> stageList) {
+		setSizeFull();
 		setCompositionRoot(build());
 		refresh(stageList);
 	}
