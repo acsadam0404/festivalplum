@@ -27,9 +27,10 @@ abstract class BaseWindow extends Window{
 		setHeight(100, Unit.PERCENTAGE);
 		setModal(true);
 		mainLayout = new VerticalLayout();
+		mainLayout.setMargin(true);
 		setContent(mainLayout);
 		center();
-		initButton();
+		//initButton();
 		initForm();
 	}
 	
@@ -52,11 +53,11 @@ abstract class BaseWindow extends Window{
 		mainLayout.addComponent(grid);
 	}
 	
-	private void initButton(){
+	protected void initButton(){
 		buttonContainer = new HorizontalLayout();
-		buttonContainer.setWidth(200, Unit.PIXELS);
-		buttonContainer.setHeight(40, Unit.PIXELS);
-		
+		//buttonContainer.setWidth(200, Unit.PIXELS);
+		//buttonContainer.setHeight(40, Unit.PIXELS);
+		buttonContainer.setMargin(true);
 		saveButton = new Button("Mentés");
 		saveButton.addClickListener(new ClickListener() {
 			@Override

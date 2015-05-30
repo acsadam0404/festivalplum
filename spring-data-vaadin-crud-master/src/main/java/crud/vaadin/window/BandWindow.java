@@ -40,6 +40,7 @@ public class BandWindow extends BaseWindow {
 			band = new Band();
 			buildUpload();
 			createCkEditor();
+			initButton();
 		}
 	}
 	
@@ -50,6 +51,7 @@ public class BandWindow extends BaseWindow {
 		buildUpload();
 		createCkEditor();
 		updateCkEditor();
+		initButton();
 	}
 	
 	private void setFormData(){

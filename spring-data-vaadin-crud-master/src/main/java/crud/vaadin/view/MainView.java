@@ -55,6 +55,7 @@ public class MainView extends VerticalLayout implements View {
 		content = new VerticalLayout();
 		content.setSizeFull();
 		content.setSpacing(true);
+		loadBand();
 		addComponent(content);
 		setExpandRatio(content, 1.0f);
 		setComponentAlignment(content, Alignment.TOP_LEFT);
@@ -65,30 +66,34 @@ public class MainView extends VerticalLayout implements View {
 
 		    @Override
 		    public void menuSelected(MenuItem selectedItem) {
-		    	content.removeAllComponents();
-		    	Button add = new Button("Hozzáad");
-		    	add.addClickListener(new ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása", false));
-					}
-				});
-				content.addComponent(add);
-				BandListComp data = new BandListComp();
-				data.getTable().addItemClickListener(new ItemClickListener() {
-
-				    @Override
-				    public void itemClick(ItemClickEvent event) {
-				    	BeanItem<Band> item = (BeanItem) event.getItem();
-				    	Band band = item.getBean();
-				    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band));
-				    }
-				});
-				content.addComponent(data);
-				content.setExpandRatio(data, 1.0f);
+		    	loadBand();
 		    }
 		};
+	}
+	
+	private void loadBand(){
+		content.removeAllComponents();
+    	Button add = new Button("Hozzáad");
+    	add.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása", false));
+			}
+		});
+		content.addComponent(add);
+		BandListComp data = new BandListComp();
+		data.getTable().addItemClickListener(new ItemClickListener() {
+
+		    @Override
+		    public void itemClick(ItemClickEvent event) {
+		    	BeanItem<Band> item = (BeanItem) event.getItem();
+		    	Band band = item.getBean();
+		    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band));
+		    }
+		});
+		content.addComponent(data);
+		content.setExpandRatio(data, 1.0f);
 	}
 	
 	private Command festivalCommand(){
