@@ -55,8 +55,6 @@ public class MainView extends VerticalLayout implements View {
 		content = new VerticalLayout();
 		content.setSizeFull();
 		content.setSpacing(true);
-		Button b = new Button("Alap");
-		content.addComponent(b);
 		addComponent(content);
 		setExpandRatio(content, 1.0f);
 		setComponentAlignment(content, Alignment.TOP_LEFT);

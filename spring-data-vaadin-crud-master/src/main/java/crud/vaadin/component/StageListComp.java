@@ -19,6 +19,7 @@ public class StageListComp  extends CustomComponent {
 
 	private Component build() {
 		table = new Table();
+		table.setSizeFull();
 		table.setContainerDataSource(new BeanItemContainer(Stage.class));
 		table.setVisibleColumns("name");
 		table.setColumnHeader("name", "Név");

@@ -1,16 +1,22 @@
 package crud.vaadin.window;
 
+import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
+import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
+
 import pl.exsio.plupload.Plupload;
 import pl.exsio.plupload.PluploadError;
 import pl.exsio.plupload.PluploadFile;
 import pl.exsio.plupload.handler.memory.ByteArrayChunkHandlerFactory;
 
 import com.vaadin.server.FontAwesome;
+import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
+import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
@@ -31,6 +37,9 @@ public class FestivalWindow extends BaseWindow {
 	private Plupload plUpload;
 	private Label infoLabel;
 	
+	private Plupload mapPlUpload;
+	private Label mapInfoLabel;
+	
 	private TextField name;
 	private CheckBox isFestival;
 	private TextField email;
@@ -43,15 +52,16 @@ public class FestivalWindow extends BaseWindow {
 	private CheckBox priority;
 	private DateField startDate;
 	private DateField endDate;
-	private TextField description;
-	private TextField map;
+	private CKEditorTextField description;
+	//private TextField map;
 	
 	public FestivalWindow(String title, boolean exist){
-		super(title, 600, 400);
+		super(title, 800);
 		this.exist = exist;
 		if(!exist){
 			festival = new Festival();
 			buildUpload();
+			createCkEditor();
 			initStage();
 		}
 	}
@@ -61,21 +71,29 @@ public class FestivalWindow extends BaseWindow {
 		this.festival = festival;
 		setFormData();
 		buildUpload();
+		createCkEditor();
+		updateCkEditor();
 		initStage();
 	}
 	
 	private void buildUpload(){
 		this.infoLabel = new Label();
-		this.plUpload = this.createUpload();
+		this.plUpload = this.createUpload(infoLabel, "Fesztivál kép feltöltése");
+		
+		this.mapInfoLabel = new Label();
+		this.mapPlUpload = this.createUpload(mapInfoLabel, "Térkép feltöltése");
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setHeight(50, Unit.PIXELS);
 		horizontalLayout.addComponent(this.plUpload);
 		horizontalLayout.addComponent(this.infoLabel);
+		horizontalLayout.addComponent(this.mapPlUpload);
+		horizontalLayout.addComponent(this.mapInfoLabel);
 		mainLayout.addComponent(horizontalLayout);
 	}
 	
-	private Plupload createUpload() {
-		final Plupload upload = new Plupload("Feltöltés", FontAwesome.FILES_O);
+	private Plupload createUpload(Label infoLabel, String uploadText) {
+		final Plupload upload = new Plupload(uploadText, FontAwesome.FILES_O);
 		upload.setChunkHandlerFactory(new ByteArrayChunkHandlerFactory());
 
 		upload.setMaxFileSize(MAX_FILE_SITE);
@@ -146,67 +164,82 @@ public class FestivalWindow extends BaseWindow {
 		Utils.setValue(priority, festival.getPriority());
 		Utils.setValue(startDate, festival.getStartDate());
 		Utils.setValue(endDate, festival.getEndDate());
+
+		//Utils.setValue(map, festival.getMap());
+	}
+	
+	private void createCkEditor(){
+		CKEditorConfig config = new CKEditorConfig();
+        config.useCompactTags();
+        config.disableElementsPath();
+        config.disableSpellChecker();
+        config.enableVaadinSavePlugin();
+        config.setHeight("400px");
+        
+        description = new CKEditorTextField(config);
+        mainLayout.addComponent(description);
+
+	}
+	
+	private void updateCkEditor(){
 		Utils.setValue(description, festival.getDescription());
-		Utils.setValue(map, festival.getMap());
 	}
 	
 	@Override 
 	protected void buildForm(){
-
-		name = new TextField("Név");
-		form.addComponent(name);
 		
 		isFestival = new CheckBox("Fesztivál");
 		form.addComponent(isFestival);
 		
-		email = new TextField("Email");
-		form.addComponent(email);
+		priority = new CheckBox("Prioritás");
+		form2.addComponent(priority);
+		
+		name = new TextField("Név");
+		form.addComponent(name);
 		
 		phone = new TextField("Telefon");
-		form.addComponent(phone);
+		form2.addComponent(phone);
 		
 		website = new TextField("Weboldal");
 		form.addComponent(website);
 		
 		country = new TextField("Ország");
-		form.addComponent(country);
+		form2.addComponent(country);
 		
 		city = new TextField("Város");
 		form.addComponent(city);
 		
 		address = new TextField("Cím");
-		form.addComponent(address);
+		form2.addComponent(address);
 		
 		postcode = new TextField("Irányítószám");
 		form.addComponent(postcode);
 		
-		priority = new CheckBox("Prioritás");
-		form.addComponent(priority);
+		email = new TextField("Email");
+		form2.addComponent(email);
 		
 		startDate = new DateField("Kezdődik");
 		form.addComponent(startDate);
 		
 		endDate = new DateField("Vége");
-		form.addComponent(endDate);
+		form2.addComponent(endDate);
 		
-		//CKEDIT
-		description = new TextField("Web");
-		form.addComponent(description);
-		
-		//CKEDIT
-		map = new TextField("Térkép");
-		form.addComponent(map);
+//		map = new TextField("Térkép");
+//		form.addComponent(map);
 
 	}
 	
 	private void initStage(){
-		HorizontalLayout addStageForm = new HorizontalLayout();
-		addStageForm.setWidth(100, Unit.PERCENTAGE);
-		addStageForm.setHeight(100, Unit.PIXELS);
-		TextField stageName = new TextField("Színpad neve");
-		addStageForm.addComponent(stageName);
+		HorizontalLayout addStageLayout = new HorizontalLayout();
+		addStageLayout.setWidth(100, Unit.PERCENTAGE);
+		addStageLayout.setHeight(100, Unit.PIXELS);
+		TextField stageName = new TextField("Új színpad");
+		FormLayout form = new FormLayout();
+		form.addComponent(stageName);
+		addStageLayout.addComponent(form);
 		Button addStageButton = new Button("Hozzáadás");
-		addStageForm.addComponent(addStageButton);
+		addStageLayout.addComponent(addStageButton);
+		addStageLayout.setComponentAlignment(addStageButton, Alignment.MIDDLE_LEFT);
 		
 		addStageButton.addClickListener(new ClickListener() {
 			@Override
@@ -218,11 +251,11 @@ public class FestivalWindow extends BaseWindow {
 			}
 		});
 		
-		mainLayout.addComponent(addStageForm);
-		
+		mainLayout.addComponent(addStageLayout);
+
 		stageData = new StageListComp(festival.getStageList());
 		stageData.setWidth(100, Unit.PERCENTAGE);
-		stageData.setHeight(300, Unit.PIXELS);
+		//stageData.setHeight(300, Unit.PIXELS);
 		mainLayout.addComponent(stageData);
 	}
 
@@ -253,7 +286,7 @@ public class FestivalWindow extends BaseWindow {
 		festival.setStartDate(Utils.getValue(startDate));
 		festival.setEndDate(Utils.getValue(endDate));
 		festival.setDescription(Utils.getValue(description));
-		festival.setMap(Utils.getValue(map));
+		//festival.setMap(Utils.getValue(map));
 		
 		festival.save();
 		close();

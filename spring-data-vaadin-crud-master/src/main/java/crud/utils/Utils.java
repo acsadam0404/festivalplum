@@ -12,6 +12,8 @@ import java.util.Date;
 
 import javax.imageio.ImageIO;
 
+import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
+
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
@@ -22,6 +24,12 @@ public class Utils {
     private static int IMAGE_HEIGHT = 100;
 	
 	public static void setValue(TextField field, String value) {
+		if (value != null) {
+		    field.setValue(value);
+		}
+    }
+	
+	public static void setValue(CKEditorTextField field, String value) {
 		if (value != null) {
 		    field.setValue(value);
 		}
@@ -40,6 +48,10 @@ public class Utils {
     }
     
     public static String getValue(TextField field){
+    	return field.getValue();
+    }
+    
+    public static String getValue(CKEditorTextField field){
     	return field.getValue();
     }
     

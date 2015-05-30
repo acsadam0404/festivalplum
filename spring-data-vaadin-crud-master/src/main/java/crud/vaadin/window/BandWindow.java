@@ -1,5 +1,8 @@
 package crud.vaadin.window;
 
+import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
+import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
+
 import pl.exsio.plupload.Plupload;
 import pl.exsio.plupload.PluploadError;
 import pl.exsio.plupload.PluploadFile;
@@ -28,14 +31,15 @@ public class BandWindow extends BaseWindow {
 	private TextField name;
 	private TextField nationality;
 	private TextField style;
-	private TextField description;
+	private CKEditorTextField description;
 
 	public BandWindow(String title, boolean exist) {
-		super(title, 600, 600);
+		super(title, 800);
 		this.exist = exist;
 		if(!exist){
 			band = new Band();
 			buildUpload();
+			createCkEditor();
 		}
 	}
 	
@@ -44,13 +48,14 @@ public class BandWindow extends BaseWindow {
 		this.band = band;
 		setFormData();
 		buildUpload();
+		createCkEditor();
+		updateCkEditor();
 	}
 	
 	private void setFormData(){
 		Utils.setValue(name, band.getName());
 		Utils.setValue(nationality, band.getNationality());
 		Utils.setValue(style, band.getStyle());
-		Utils.setValue(description, band.getDescription());
 	}
 	
 	@Override
@@ -65,10 +70,23 @@ public class BandWindow extends BaseWindow {
 		style = new TextField("Stílus");
 		form.addComponent(style);
 		
-		//CKEDIT
-		description = new TextField("Web");
-		form.addComponent(description);
-		
+	}
+	
+	private void createCkEditor(){
+		CKEditorConfig config = new CKEditorConfig();
+        config.useCompactTags();
+        config.disableElementsPath();
+        config.disableSpellChecker();
+        config.enableVaadinSavePlugin();
+        config.setHeight("400px");
+        
+        description = new CKEditorTextField(config);
+        mainLayout.addComponent(description);
+
+	}
+	
+	private void updateCkEditor(){
+		Utils.setValue(description, band.getDescription());
 	}
 	
 	private void buildUpload(){
@@ -76,6 +94,7 @@ public class BandWindow extends BaseWindow {
 		this.plUpload = this.createUpload();
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setHeight(50, Unit.PIXELS);
 		horizontalLayout.addComponent(this.plUpload);
 		horizontalLayout.addComponent(this.infoLabel);
 		mainLayout.addComponent(horizontalLayout);
@@ -92,7 +111,7 @@ public class BandWindow extends BaseWindow {
 	}
 	
 	private Plupload createUpload() {
-		final Plupload upload = new Plupload("Feltöltés", FontAwesome.FILES_O);
+		final Plupload upload = new Plupload("Előadó feltöltése", FontAwesome.USER);
 		upload.setChunkHandlerFactory(new ByteArrayChunkHandlerFactory());
 
 		upload.setMaxFileSize(MAX_FILE_SITE);

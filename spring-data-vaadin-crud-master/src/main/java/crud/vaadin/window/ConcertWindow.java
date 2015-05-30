@@ -5,7 +5,7 @@ import com.vaadin.ui.TextField;
 public class ConcertWindow extends BaseWindow {
 	
 	public ConcertWindow(String title){
-		super(title, 200, 300);
+		super(title, 800);
 		
 	}
 	
