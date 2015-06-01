@@ -137,11 +137,16 @@ public class Band {
 	}
 	
 	public void delete(){
+		descriptionValue.delete(getDescriptionKey());
 		band.deleteInBackground();
 	}
 	
-	public void create(){
+	public void create(LanguageEnum lang){
 		band = new ParseObject("Band");
+		String key = UUID.randomUUID().toString();
+		setDescriptionKey(key);
+		descriptionValue = new Message();
+		descriptionValue.create(key, lang);
 	}
 
 }

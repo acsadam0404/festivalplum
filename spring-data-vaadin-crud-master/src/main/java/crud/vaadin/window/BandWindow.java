@@ -170,7 +170,7 @@ public class BandWindow extends BaseWindow {
 	@Override
 	protected void save() {
 		if(!exist)
-			band.create();
+			band.create(lang);
 
 		if ((this.plUpload.getQueuedFiles() != null) && (this.plUpload.getQueuedFiles().length > 0)) {
 			this.plUpload.start();

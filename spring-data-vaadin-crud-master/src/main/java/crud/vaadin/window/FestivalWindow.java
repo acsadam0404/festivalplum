@@ -188,7 +188,7 @@ public class FestivalWindow extends BaseWindow {
 	}
 	
 	private void updateCkEditor(){
-		Utils.setValue(description, festival.getDescription());
+		Utils.setValue(description, festival.getDescriptionValue());
 	}
 	
 	@Override 
@@ -269,7 +269,7 @@ public class FestivalWindow extends BaseWindow {
 	@Override
 	protected void save() {
 		if(!exist)
-			festival.create();
+			festival.create(lang);
 		
 		if ((this.plUpload.getQueuedFiles() != null) && (this.plUpload.getQueuedFiles().length > 0)) {
 			this.plUpload.start();
@@ -292,7 +292,7 @@ public class FestivalWindow extends BaseWindow {
 		festival.setPriority(Utils.getValue(priority));
 		festival.setStartDate(Utils.getValue(startDate));
 		festival.setEndDate(Utils.getValue(endDate));
-		festival.setDescription(Utils.getValue(description));
+		festival.setDescriptionValue(Utils.getValue(description));
 		//festival.setMap(Utils.getValue(map));
 		
 		festival.save();

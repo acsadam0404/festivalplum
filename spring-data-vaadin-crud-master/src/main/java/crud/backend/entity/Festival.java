@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.parse4j.ParseException;
 import org.parse4j.ParseFile;
@@ -132,12 +133,28 @@ public class Festival {
 		place.put("toDate", endDate);
 	}
 
-	public String getDescription() {
+	public String getDescriptionKey() {
 		return place.getString("description");
 	}
 
-	public void setDescription(String description) {
+	public void setDescriptionKey(String description) {
 		place.put("description", description);
+	}
+	
+	public String getDescriptionValue() {
+		if(getDescriptionKey() != null && !"".equals(getDescriptionKey())){
+			descriptionValue = Message.findByKeyAndLanguage(getDescriptionKey(), getLang());
+			return descriptionValue.getValue();
+		}
+		String key = UUID.randomUUID().toString();
+		setDescriptionKey(key);
+		descriptionValue = new Message();
+		descriptionValue.create(key, lang);
+		return descriptionValue.getValue();
+	}
+
+	public void setDescriptionValue(String descriptionValue) {
+		this.descriptionValue.setValue(descriptionValue);
 	}
 
 	public byte[] getImage() {
@@ -175,6 +192,7 @@ public class Festival {
 	private ParseObject event;
 	private ParseObject place;
 	private LanguageEnum lang;
+	private Message descriptionValue;
 
 	public List<Stage> getStageList() {
 		//STAGE LIST
@@ -203,7 +221,10 @@ public class Festival {
 		for(ParseObject o : stageList){
 			Stage s = new Stage();
 			s.setStage(o);
-			list.add(s);
+			s.setNameMessage(Message.findByKeyAndLanguage(s.getNameKey(), lang));
+			if(s.getName() != null && !"".equals(s.getName())){
+				list.add(s);
+			}
 		}
 		return list;
 	}
@@ -214,13 +235,19 @@ public class Festival {
 	
 	public void addStage(String name){
 		ParseObject stage = new ParseObject("Stage");
-		stage.put("name", name);
+		String key = UUID.randomUUID().toString();
+		stage.put("name", key);
 		stage.put("place", place);
 		stageList.add(stage);
 		stage.saveInBackground();
+		Message message = new Message();
+		message.create(key, lang);
+		message.setValue(name);
+		message.save();
 	}
 	
 	public void removeStage(ParseObject stage){
+		Message.delete(stage.getString("name"));
 		stageList.remove(stage);
 		stage.deleteInBackground();
 	}
@@ -287,6 +314,7 @@ public class Festival {
 	}
 	
 	public void save(){
+		descriptionValue.save();
 		place.saveInBackground(new SaveCallback() {
 			@Override
 			public void done(ParseException parseException) {
@@ -298,7 +326,9 @@ public class Festival {
 	}
 	
 	public void delete(){
+		descriptionValue.delete(getDescriptionKey());
 		for(ParseObject po : stageList){
+			Message.delete(po.getString("name"));
 			po.deleteInBackground();
 		}
 		event.deleteInBackground(new DeleteCallback() {
@@ -310,8 +340,12 @@ public class Festival {
 		
 	}
 	
-	public void create(){
+	public void create(LanguageEnum lang){
 		place = new ParseObject("Place");
 		event = new ParseObject("Event");
+		String key = UUID.randomUUID().toString();
+		setDescriptionKey(key);
+		descriptionValue = new Message();
+		descriptionValue.create(key, lang);
 	}
 }

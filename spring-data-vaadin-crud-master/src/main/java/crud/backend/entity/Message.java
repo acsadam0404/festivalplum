@@ -75,4 +75,20 @@ public class Message {
 		message.saveInBackground();
 	}
 	
+	public static void delete(String key){
+		Message message = new Message();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Message");
+		query.whereEqualTo("key", key);
+        try {
+            List<ParseObject> result = query.find();
+            for(int i = 0; i < result.size(); i++) {
+            	ParseObject messageParseObject = result.get(i);
+            	messageParseObject.deleteInBackground();
+            }
+
+        }catch(ParseException e){
+        	e.printStackTrace();
+        }
+	}
+	
 }
