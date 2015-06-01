@@ -18,5 +18,9 @@ public class Stage {
 	public void setStage(ParseObject stage) {
 		this.stage = stage;
 	}
+	
+	public void delete(){
+		stage.deleteInBackground();
+	}
 
 }

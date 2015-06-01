@@ -6,14 +6,15 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Table;
 
 import crud.backend.entity.Band;
+import crud.vaadin.LanguageEnum;
 
 public class BandListComp extends CustomComponent {
 	private Table table;
 	
-	public BandListComp() {
+	public BandListComp(LanguageEnum lang) {
 		setSizeFull();
 		setCompositionRoot(build());
-		refresh();
+		refresh(lang);
 	}
 
 	private Component build() {
@@ -27,10 +28,10 @@ public class BandListComp extends CustomComponent {
 		return table;
 	}
 
-	private void refresh() {
+	private void refresh(LanguageEnum lang) {
 		BeanItemContainer container = (BeanItemContainer) table.getContainerDataSource();
 		container.removeAllItems();
-		container.addAll(Band.findAll());
+		container.addAll(Band.findAll(lang));
 	}
 	
 	public Table getTable(){

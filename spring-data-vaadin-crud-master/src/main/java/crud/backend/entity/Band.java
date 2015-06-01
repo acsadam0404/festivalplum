@@ -3,6 +3,7 @@ package crud.backend.entity;
 import java.io.IOException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.UUID;
 
 import org.parse4j.ParseException;
 import org.parse4j.ParseFile;
@@ -10,6 +11,7 @@ import org.parse4j.ParseObject;
 import org.parse4j.ParseQuery;
 
 import crud.utils.Utils;
+import crud.vaadin.LanguageEnum;
 
 public class Band {
 	
@@ -44,11 +46,11 @@ public class Band {
 		band.put("style", style);
 	}
 
-	public String getDescription() {
+	public String getDescriptionKey() {
 		return band.getString("description");
 	}
 
-	public void setDescription(String description) {
+	public void setDescriptionKey(String description) {
 		band.put("description", description);
 	}
 
@@ -76,6 +78,8 @@ public class Band {
 
 	//DATA
 	private ParseObject band;
+	private Message descriptionValue;
+	private LanguageEnum lang;
 	
 	public ParseObject getBand() {
 		return band;
@@ -85,9 +89,32 @@ public class Band {
 		this.band = band;
 	}
 
-	public static List<Band> findAll() {
+	public LanguageEnum getLang() {
+		return lang;
+	}
+
+	public void setLang(LanguageEnum lang) {
+		this.lang = lang;
+	}
+	
+	public String getDescriptionValue() {
+		if(getDescriptionKey() != null && !"".equals(getDescriptionKey())){
+			descriptionValue = Message.findByKeyAndLanguage(getDescriptionKey(), getLang());
+			return descriptionValue.getValue();
+		}
+		String key = UUID.randomUUID().toString();
+		setDescriptionKey(key);
+		descriptionValue = new Message();
+		descriptionValue.create(key, lang);
+		return descriptionValue.getValue();
+	}
+
+	public void setDescriptionValue(String descriptionValue) {
+		this.descriptionValue.setValue(descriptionValue);
+	}
+
+	public static List<Band> findAll(LanguageEnum lang) {
 		List<Band> bandList = new LinkedList<Band>();
-		
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Band");
         try {
             List<ParseObject> result = query.find();
@@ -95,6 +122,7 @@ public class Band {
                 ParseObject bandParseObject = result.get(i);
                 Band band = new Band();
                 band.setBand(bandParseObject);
+                band.setLang(lang);
                 bandList.add(band);
             }
         }catch(ParseException e){
@@ -105,6 +133,7 @@ public class Band {
 	
 	public void save(){
 		band.saveInBackground();
+		descriptionValue.save();
 	}
 	
 	public void delete(){

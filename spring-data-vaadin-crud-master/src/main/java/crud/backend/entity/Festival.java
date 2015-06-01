@@ -14,6 +14,7 @@ import org.parse4j.callback.SaveCallback;
 import org.springframework.util.StopWatch;
 
 import crud.utils.Utils;
+import crud.vaadin.LanguageEnum;
 
 
 public class Festival {
@@ -56,7 +57,7 @@ public class Festival {
 	}
 
 	public void setEmail(String email) {
-		this.email = email;
+		place.put("Email", email);
 	}
 
 	public String getPhone() {
@@ -64,7 +65,7 @@ public class Festival {
 	}
 
 	public void setPhone(String phone) {
-		this.phone = phone;
+		place.put("Phone", phone);
 	}
 
 	public String getWebsite() {
@@ -72,7 +73,7 @@ public class Festival {
 	}
 
 	public void setWebsite(String website) {
-		this.website = website;
+		place.put("Website", website);
 	}
 
 	public String getCountry() {
@@ -80,7 +81,7 @@ public class Festival {
 	}
 
 	public void setCountry(String country) {
-		this.country = country;
+		place.put("country", country);
 	}
 
 	public String getCity() {
@@ -88,7 +89,7 @@ public class Festival {
 	}
 
 	public void setCity(String city) {
-		this.city = city;
+		place.put("city", city);
 	}
 
 	public String getAddress() {
@@ -96,7 +97,7 @@ public class Festival {
 	}
 
 	public void setAddress(String address) {
-		this.address = address;
+		place.put("Address", address);
 	}
 
 	public String getPostcode() {
@@ -104,7 +105,7 @@ public class Festival {
 	}
 
 	public void setPostcode(String postcode) {
-		this.postcode = postcode;
+		place.put("postal_code", postcode);
 	}
 
 	public boolean getPriority() {
@@ -112,7 +113,7 @@ public class Festival {
 	}
 
 	public void setPriority(boolean priority) {
-		this.priority = priority;
+		place.put("highPriority", priority);
 	}
 
 	public Date getStartDate() {
@@ -120,7 +121,7 @@ public class Festival {
 	}
 
 	public void setStartDate(Date startDate) {
-		this.startDate = startDate;
+		place.put("startDate", startDate);
 	}
 
 	public Date getEndDate() {
@@ -128,7 +129,7 @@ public class Festival {
 	}
 
 	public void setEndDate(Date endDate) {
-		this.endDate = endDate;
+		place.put("toDate", endDate);
 	}
 
 	public String getDescription() {
@@ -136,7 +137,7 @@ public class Festival {
 	}
 
 	public void setDescription(String description) {
-		this.description = description;
+		place.put("description", description);
 	}
 
 	public byte[] getImage() {
@@ -173,8 +174,31 @@ public class Festival {
 	private List<ParseObject> stageList = new LinkedList<ParseObject>();
 	private ParseObject event;
 	private ParseObject place;
+	private LanguageEnum lang;
 
 	public List<Stage> getStageList() {
+		//STAGE LIST
+		List<ParseObject> stageList = new LinkedList<ParseObject>();
+		if(place != null){
+	        ParseQuery<ParseObject> q = ParseQuery.getQuery("Place");
+	        q.whereEqualTo("objectId", place.getObjectId());
+	        ParseQuery<ParseObject> stageQuery = ParseQuery.getQuery("Stage");
+	        stageQuery.whereMatchesQuery("place", q);
+	        try{
+		        List<ParseObject> stageResult = stageQuery.find();
+		        if(stageResult != null){
+		            for(int j = 0; j < stageResult.size(); j++) {
+		            	ParseObject stageParseObject = stageResult.get(j);
+		            	stageList.add(stageParseObject);
+		            }
+		        }
+	        } catch (ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+        setStageList(stageList);
+		
 		List<Stage> list = new LinkedList<Stage>();
 		for(ParseObject o : stageList){
 			Stage s = new Stage();
@@ -217,9 +241,18 @@ public class Festival {
 		this.place = place;
 	}
 
-	public static List<Festival> findAll() {
+	public LanguageEnum getLang() {
+		return lang;
+	}
+
+	public void setLang(LanguageEnum lang) {
+		this.lang = lang;
+	}
+
+	public static List<Festival> findAll(LanguageEnum lang) {
 		StopWatch sw = new StopWatch();
 		sw.start();
+		//TODO lang Message -- Place.desc, Place.country
 		List<Festival> festivalList = new LinkedList<Festival>();
 		
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Event");
@@ -235,23 +268,11 @@ public class Festival {
                 if(placeResult != null)
                 	placeParseObject = placeResult.get(0);
                 
-                //STAGE LIST
-                ParseQuery<ParseObject> q = ParseQuery.getQuery("Place");
-                q.whereEqualTo("objectId", placeObjectId);
-                ParseQuery<ParseObject> stageQuery = ParseQuery.getQuery("Stage");
-                stageQuery.whereMatchesQuery("place", q);
-                List<ParseObject> stageResult = stageQuery.find();
-                List<ParseObject> stageList = new LinkedList<ParseObject>();;
-                if(stageResult != null){
-	                for(int j = 0; j < stageResult.size(); j++) {
-	                	ParseObject stageParseObject = stageResult.get(j);
-	                	stageList.add(stageParseObject);
-	                }
-                }
+                
                 Festival festival = new Festival();
                 festival.setEvent(eventParseObject);
                 festival.setPlace(placeParseObject);
-                festival.setStageList(stageList);
+                festival.setLang(lang);
                 
                 festivalList.add(festival);
                 

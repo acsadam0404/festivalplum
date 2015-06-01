@@ -6,14 +6,15 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Table;
 
 import crud.backend.entity.Festival;
+import crud.vaadin.LanguageEnum;
 
 public class FestivalListComp extends CustomComponent {
 	private Table table;
 	
-	public FestivalListComp() {
+	public FestivalListComp(LanguageEnum lang) {
 		setSizeFull();
 		setCompositionRoot(build());
-		refresh();
+		refresh(lang);
 	}
 
 	private Component build() {
@@ -25,10 +26,10 @@ public class FestivalListComp extends CustomComponent {
 		return table;
 	}
 	
-	private void refresh() {
+	private void refresh(LanguageEnum lang) {
 		BeanItemContainer container = (BeanItemContainer) table.getContainerDataSource();
 		container.removeAllItems();
-		container.addAll(Festival.findAll());
+		container.addAll(Festival.findAll(lang));
 	}
 
 	public Table getTable(){

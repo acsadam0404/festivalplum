@@ -24,6 +24,7 @@ import com.vaadin.ui.TextField;
 
 import crud.backend.entity.Festival;
 import crud.utils.Utils;
+import crud.vaadin.LanguageEnum;
 import crud.vaadin.component.StageListComp;
 
 public class FestivalWindow extends BaseWindow {
@@ -32,6 +33,7 @@ public class FestivalWindow extends BaseWindow {
 	
 	private Festival festival;
 	private boolean exist = false;
+	private LanguageEnum lang;
 	private StageListComp stageData;
 	
 	private Plupload plUpload;
@@ -55,25 +57,29 @@ public class FestivalWindow extends BaseWindow {
 	private CKEditorTextField description;
 	//private TextField map;
 	
-	public FestivalWindow(String title, boolean exist){
+	public FestivalWindow(String title, boolean exist, LanguageEnum lang){
 		super(title, 800);
 		this.exist = exist;
 		if(!exist){
 			festival = new Festival();
+			this.lang = lang;
 			buildUpload();
 			createCkEditor();
-			initStage();
+			//initStage();
+			initButton();
 		}
 	}
 	
-	public FestivalWindow(String title, Festival festival){
-		this(title, true);
+	public FestivalWindow(String title, Festival festival, LanguageEnum lang){
+		this(title, true, lang);
 		this.festival = festival;
+		this.lang = lang;
 		setFormData();
 		buildUpload();
 		createCkEditor();
 		updateCkEditor();
 		initStage();
+		initButton();
 	}
 	
 	private void buildUpload(){
@@ -246,6 +252,7 @@ public class FestivalWindow extends BaseWindow {
 			public void buttonClick(ClickEvent event) {
 				if(stageName.getValue() != null && !"".equals(stageName.getValue())){
 					festival.addStage(stageName.getValue());
+					stageName.clear();
 					stageData.refresh(festival.getStageList());
 				}
 			}

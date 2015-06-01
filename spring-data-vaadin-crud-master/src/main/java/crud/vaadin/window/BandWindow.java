@@ -16,6 +16,7 @@ import com.vaadin.ui.TextField;
 
 import crud.backend.entity.Band;
 import crud.utils.Utils;
+import crud.vaadin.LanguageEnum;
 
 
 public class BandWindow extends BaseWindow {
@@ -24,6 +25,7 @@ public class BandWindow extends BaseWindow {
 	
 	private Band band;
 	private boolean exist = false;
+	private LanguageEnum lang;
 	
 	private Plupload plUpload;
 	private Label infoLabel;
@@ -33,20 +35,22 @@ public class BandWindow extends BaseWindow {
 	private TextField style;
 	private CKEditorTextField description;
 
-	public BandWindow(String title, boolean exist) {
+	public BandWindow(String title, boolean exist, LanguageEnum lang) {
 		super(title, 800);
 		this.exist = exist;
 		if(!exist){
 			band = new Band();
+			this.lang = lang;
 			buildUpload();
 			createCkEditor();
 			initButton();
 		}
 	}
 	
-	public BandWindow(String title, Band band){
-		this(title, true);
+	public BandWindow(String title, Band band, LanguageEnum lang){
+		this(title, true, lang);
 		this.band = band;
+		this.lang = lang;
 		setFormData();
 		buildUpload();
 		createCkEditor();
@@ -88,7 +92,7 @@ public class BandWindow extends BaseWindow {
 	}
 	
 	private void updateCkEditor(){
-		Utils.setValue(description, band.getDescription());
+		Utils.setValue(description, band.getDescriptionValue());
 	}
 	
 	private void buildUpload(){
@@ -180,7 +184,7 @@ public class BandWindow extends BaseWindow {
 		band.setName(Utils.getValue(name));
 		band.setStyle(Utils.getValue(style));
 		band.setNationality(Utils.getValue(nationality));
-		band.setDescription(Utils.getValue(description));
+		band.setDescriptionValue(Utils.getValue(description));
 		
 		band.save();
 		close();

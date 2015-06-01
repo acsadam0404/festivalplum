@@ -1,5 +1,7 @@
 package crud.vaadin.view;
 
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
@@ -8,6 +10,7 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,6 +22,8 @@ import com.vaadin.ui.themes.ValoTheme;
 
 import crud.backend.entity.Band;
 import crud.backend.entity.Festival;
+import crud.vaadin.LanguageEnum;
+import crud.vaadin.MenuEnum;
 import crud.vaadin.component.BandListComp;
 import crud.vaadin.component.FestivalListComp;
 import crud.vaadin.window.BandWindow;
@@ -27,6 +32,8 @@ import crud.vaadin.window.FestivalWindow;
 public class MainView extends VerticalLayout implements View {
 	
 	private VerticalLayout content;
+	private LanguageEnum lang = LanguageEnum.HU;
+	private MenuEnum menu = MenuEnum.BAND;
 	
 	public MainView() {
 		setSizeFull();
@@ -47,9 +54,42 @@ public class MainView extends VerticalLayout implements View {
 
 		menuLayout.addComponent(menu);
 		menuLayout.setComponentAlignment(menu, Alignment.MIDDLE_LEFT);
+		
+		ComboBox combo = new ComboBox("");
+		combo.addItems(LanguageEnum.values());
+		combo.setValue(lang);
+		combo.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if(combo.getValue() != null && lang != (LanguageEnum) combo.getValue()){
+					lang = (LanguageEnum) combo.getValue();
+					switchLanguage();
+				}else{
+					combo.setValue(lang);
+				}
+			}
+		});
+		menuLayout.addComponent(combo);
+		menuLayout.setComponentAlignment(combo, Alignment.MIDDLE_RIGHT);
 
 		addComponent(menuLayout);
     }
+	
+	private void switchLanguage(){
+		switch (menu) {
+		case BAND:
+			loadBand();
+			break;
+		case FESTIVAL:
+			loadFestival();
+			break;
+		case CONCERT:
+			loadConcert();
+			break;
+		default:
+			break;
+		}
+	}
 	
 	private void buildContent(){
 		content = new VerticalLayout();
@@ -70,59 +110,13 @@ public class MainView extends VerticalLayout implements View {
 		    }
 		};
 	}
-	
-	private void loadBand(){
-		content.removeAllComponents();
-    	Button add = new Button("Hozzáad");
-    	add.addClickListener(new ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása", false));
-			}
-		});
-		content.addComponent(add);
-		BandListComp data = new BandListComp();
-		data.getTable().addItemClickListener(new ItemClickListener() {
 
-		    @Override
-		    public void itemClick(ItemClickEvent event) {
-		    	BeanItem<Band> item = (BeanItem) event.getItem();
-		    	Band band = item.getBean();
-		    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band));
-		    }
-		});
-		content.addComponent(data);
-		content.setExpandRatio(data, 1.0f);
-	}
-	
 	private Command festivalCommand(){
 		return new Command() {
 
 		    @Override
 		    public void menuSelected(MenuItem selectedItem) {
-		    	content.removeAllComponents();
-		    	Button add = new Button("Hozzáad");
-		    	add.addClickListener(new ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Létrehozása", false));
-					}
-				});
-				content.addComponent(add);
-				FestivalListComp data = new FestivalListComp();
-				data.getTable().addItemClickListener(new ItemClickListener() {
-
-				    @Override
-				    public void itemClick(ItemClickEvent event) {
-				    	BeanItem<Festival> item = (BeanItem) event.getItem();
-				    	Festival festival = item.getBean();
-				    	UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Módosítása", festival));
-				    }
-				});
-				content.addComponent(data);
-				content.setExpandRatio(data, 1.0f);
+		    	loadFestival();	
 		    }
 		};
 	}
@@ -132,9 +126,7 @@ public class MainView extends VerticalLayout implements View {
 
 		    @Override
 		    public void menuSelected(MenuItem selectedItem) {
-		    	Button b = new Button("Concert");
-		    	content.removeAllComponents();
-				content.addComponent(b);
+		    	loadConcert();
 		    }
 		};
 	}
@@ -143,6 +135,65 @@ public class MainView extends VerticalLayout implements View {
 	public void enter(ViewChangeEvent event) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	private void loadFestival(){
+		menu = MenuEnum.FESTIVAL;
+		content.removeAllComponents();
+    	Button add = new Button("Hozzáad");
+    	add.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Létrehozása", false, lang));
+			}
+		});
+		content.addComponent(add);
+		FestivalListComp data = new FestivalListComp(lang);
+		data.getTable().addItemClickListener(new ItemClickListener() {
+
+		    @Override
+		    public void itemClick(ItemClickEvent event) {
+		    	BeanItem<Festival> item = (BeanItem) event.getItem();
+		    	Festival festival = item.getBean();
+		    	UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Módosítása", festival, lang));
+		    }
+		});
+		content.addComponent(data);
+		content.setExpandRatio(data, 1.0f);
+	}
+	
+	private void loadBand(){
+		menu = MenuEnum.BAND;
+		content.removeAllComponents();
+    	Button add = new Button("Hozzáad");
+    	add.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				UI.getCurrent().addWindow(new BandWindow("Fellépő Létrehozása", false, lang));
+			}
+		});
+		content.addComponent(add);
+		BandListComp data = new BandListComp(lang);
+		data.getTable().addItemClickListener(new ItemClickListener() {
+
+		    @Override
+		    public void itemClick(ItemClickEvent event) {
+		    	BeanItem<Band> item = (BeanItem) event.getItem();
+		    	Band band = item.getBean();
+		    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band, lang));
+		    }
+		});
+		content.addComponent(data);
+		content.setExpandRatio(data, 1.0f);
+	}
+	
+	private void loadConcert(){
+		menu = MenuEnum.CONCERT;
+		Button b = new Button("Concert");
+    	content.removeAllComponents();
+		content.addComponent(b);
 	}
 
 }
