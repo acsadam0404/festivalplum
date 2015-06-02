@@ -1,8 +1,15 @@
 package crud.vaadin.view;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.event.Action;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;
@@ -10,20 +17,30 @@ import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Calendar;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClick;
+import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
+import com.vaadin.ui.components.calendar.CalendarDateRange;
+import com.vaadin.ui.components.calendar.event.BasicEvent;
+import com.vaadin.ui.components.calendar.event.CalendarEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
 import crud.backend.entity.Band;
 import crud.backend.entity.Festival;
 import crud.vaadin.LanguageEnum;
 import crud.vaadin.MenuEnum;
+import crud.vaadin.calendar.ConcertCalendar;
+import crud.vaadin.calendar.ConcertEvent;
 import crud.vaadin.component.BandListComp;
 import crud.vaadin.component.FestivalListComp;
 import crud.vaadin.window.BandWindow;
@@ -191,9 +208,8 @@ public class MainView extends VerticalLayout implements View {
 	
 	private void loadConcert(){
 		menu = MenuEnum.CONCERT;
-		Button b = new Button("Concert");
     	content.removeAllComponents();
-		content.addComponent(b);
+    	new ConcertCalendar(content);
 	}
 
 }
