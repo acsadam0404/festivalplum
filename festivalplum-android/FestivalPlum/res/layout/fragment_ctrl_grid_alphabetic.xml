@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:id="@+id/controll"
+        android:background="#787878"
         android:layout_below="@+id/tabs"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -16,18 +17,18 @@
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:id="@+id/imageListButton"
-            android:src="@android:drawable/btn_radio"
+            android:id="@+id/imageGridButton"
+            android:src="@drawable/fp_ikon_list_2"
             android:layout_gravity="center_horizontal" />
 
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@android:drawable/sym_call_missed"
-            android:id="@+id/imageGridButton"
+            android:src="@drawable/fp_ikon_list"
+            android:id="@+id/imageListButton"
             android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageListButton"
-            android:layout_toEndOf="@+id/imageListButton" />
+            android:layout_toRightOf="@+id/imageGridButton"
+            android:layout_toEndOf="@+id/imageGridButton" />
 
         <Switch
             android:layout_width="wrap_content"

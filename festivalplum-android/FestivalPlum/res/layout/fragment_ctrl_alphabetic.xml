@@ -9,6 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="40dp"
         android:id="@+id/controll"
+        android:background="#787878"
         android:layout_below="@+id/tabs"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
@@ -17,13 +18,13 @@
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:id="@+id/imageListButton"
-            android:src="@android:drawable/btn_radio"
+            android:src="@drawable/fp_ikon_list"
             android:layout_gravity="center_horizontal" />
 
         <ImageButton
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@android:drawable/sym_call_missed"
+            android:src="@drawable/fp_ikon_list_2"
             android:id="@+id/imageGridButton"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/imageListButton"

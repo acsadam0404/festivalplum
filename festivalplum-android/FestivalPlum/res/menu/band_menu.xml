@@ -3,7 +3,7 @@
     tools:context="hu.festivalplum.band.BandActivity">
     <item
         android:id="@+id/action_favourite"
-        android:icon="@android:drawable/btn_star_big_off"
+        android:icon="@drawable/fp_ikon_star"
         android:showAsAction="ifRoom"
         android:title="@string/action_favourite" />
     <item
