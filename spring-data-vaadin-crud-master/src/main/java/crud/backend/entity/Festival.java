@@ -279,6 +279,7 @@ public class Festival {
 	public static List<Festival> findAll(LanguageEnum lang) {
 		StopWatch sw = new StopWatch();
 		sw.start();
+		ParseCache parseCache = new ParseCache(ParseCache.PLACE);
 		//TODO lang Message -- Place.desc, Place.country
 		List<Festival> festivalList = new LinkedList<Festival>();
 		
@@ -287,18 +288,20 @@ public class Festival {
             List<ParseObject> result = query.find();
             for(int i = 0; i < result.size(); i++) {
                 ParseObject eventParseObject = result.get(i);
-                String placeObjectId = eventParseObject.getParseObject("place").getObjectId();
-                ParseQuery<ParseObject> placeQuery = ParseQuery.getQuery("Place");
-                placeQuery.whereEqualTo("objectId", placeObjectId);
-                List<ParseObject> placeResult = placeQuery.find();
-                ParseObject placeParseObject = null;
-                if(placeResult != null)
-                	placeParseObject = placeResult.get(0);
+//                String placeObjectId = eventParseObject.getParseObject("place").getObjectId();
+//                
+//                ParseQuery<ParseObject> placeQuery = ParseQuery.getQuery("Place");
+//                placeQuery.whereEqualTo("objectId", placeObjectId);
+//                List<ParseObject> placeResult = placeQuery.find();
+//                ParseObject placeParseObject = null;
+//                if(placeResult != null)
+//                	placeParseObject = placeResult.get(0);
                 
                 
                 Festival festival = new Festival();
                 festival.setEvent(eventParseObject);
-                festival.setPlace(placeParseObject);
+                festival.setPlace(parseCache.getPlaceMap().get(eventParseObject.getParseObject("place").getObjectId()));
+                //festival.setPlace(placeParseObject);
                 festival.setLang(lang);
                 
                 festivalList.add(festival);
