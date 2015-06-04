@@ -25,6 +25,7 @@ public class MainUI extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
+		Parse.initialize(APP_ID, APP_REST_API_ID);
 		setSizeFull();
 		VerticalLayout l = new VerticalLayout();
 		l.setSpacing(true);
@@ -36,7 +37,6 @@ public class MainUI extends UI {
 		navigator.addView(MAIN, new MainView());
 		navigator.navigateTo(MAIN);
 
-		Parse.initialize(APP_ID, APP_REST_API_ID);
 	}
 
 }
