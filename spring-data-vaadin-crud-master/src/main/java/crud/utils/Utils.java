@@ -4,8 +4,13 @@ import java.awt.AlphaComposite;
 import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
+import java.io.BufferedWriter;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Date;
@@ -25,6 +30,10 @@ public class Utils {
 	
     private static int IMAGE_WITH = 100;
     private static int IMAGE_HEIGHT = 100;
+    
+    public static final String MAX_FILE_SIZE = "20mb";
+    public static final String UPLOAD_FOLDER = "c:/tmp/";
+	public static final String FIX_URL = "http://www.ittafile.hu/";
 	
 	public static void setValue(TextField field, String value) {
 		if (value != null) {

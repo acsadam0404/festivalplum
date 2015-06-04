@@ -1,5 +1,11 @@
 package crud.vaadin.window;
 
+import java.io.File;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
+
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
@@ -7,6 +13,7 @@ import pl.exsio.plupload.Plupload;
 import pl.exsio.plupload.PluploadError;
 import pl.exsio.plupload.PluploadFile;
 import pl.exsio.plupload.handler.memory.ByteArrayChunkHandlerFactory;
+import pl.exsio.plupload.helper.resize.PluploadImageResize;
 
 import com.vaadin.server.FontAwesome;
 import com.vaadin.server.Sizeable.Unit;
@@ -23,13 +30,18 @@ import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 import crud.backend.entity.Festival;
+import crud.utils.FileUpload;
 import crud.utils.Utils;
 import crud.vaadin.LanguageEnum;
 import crud.vaadin.component.StageListComp;
 
 public class FestivalWindow extends BaseWindow {
 	
-	private static final String MAX_FILE_SITE = "20mb";
+	
+	
+	private static final String FESTIVAL_IMG = "Fesztivál kép feltöltése";
+	private static final String MAP_IMG = "Térkép feltöltése";
+	
 	
 	private Festival festival;
 	private boolean exist = false;
@@ -84,31 +96,44 @@ public class FestivalWindow extends BaseWindow {
 	
 	private void buildUpload(){
 		this.infoLabel = new Label();
-		this.plUpload = this.createUpload(infoLabel, "Fesztivál kép feltöltése");
+		this.plUpload = this.createUpload(infoLabel, FESTIVAL_IMG);
 		
 		this.mapInfoLabel = new Label();
-		this.mapPlUpload = this.createUpload(mapInfoLabel, "Térkép feltöltése");
+		this.mapPlUpload = this.createUpload(mapInfoLabel, MAP_IMG);
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setSpacing(true);
 		horizontalLayout.setHeight(50, Unit.PIXELS);
 		horizontalLayout.addComponent(this.plUpload);
 		horizontalLayout.addComponent(this.infoLabel);
 		horizontalLayout.addComponent(this.mapPlUpload);
 		horizontalLayout.addComponent(this.mapInfoLabel);
+		FileUpload fileUpload = new FileUpload();
+		horizontalLayout.addComponent(fileUpload);
 		mainLayout.addComponent(horizontalLayout);
 	}
 	
-	private Plupload createUpload(Label infoLabel, String uploadText) {
+	private Plupload createUpload(Label infoLabel, final String uploadText) {
 		final Plupload upload = new Plupload(uploadText, FontAwesome.FILES_O);
 		upload.setChunkHandlerFactory(new ByteArrayChunkHandlerFactory());
 
-		upload.setMaxFileSize(MAX_FILE_SITE);
+		upload.setMaxFileSize(Utils.MAX_FILE_SIZE);
 		upload.setMultiSelection(false);
 
 		upload.addFileUploadedListener(new Plupload.FileUploadedListener() {
 		    @Override
 		    public void onFileUploaded(PluploadFile file) {
-		    	saveDoc(file);
+		    	switch (uploadText) {
+				case FESTIVAL_IMG:
+					saveDoc(file);
+					break;
+				case MAP_IMG:
+					uploadFile(file);
+					break;
+				default:
+					break;
+				}
+		    	
 		    }
 		});
 
@@ -151,7 +176,23 @@ public class FestivalWindow extends BaseWindow {
 		try {
 		    byte[] data = file.getUploadedFileAs(byte[].class);
 		    festival.setImage(file.getName(), data);
-		    saveData();
+		    save();
+		} catch (Exception e) {
+		    Notification.show("Feltöltés NEM sikerült!");
+		}
+	}
+	
+	private void uploadFile(PluploadFile file) {
+		try {
+			String fileName = file.getName();
+			byte[] data = file.getUploadedFileAs(byte[].class);
+
+			Path uploadPath = Paths.get(Utils.UPLOAD_FOLDER);
+			Path filePath = uploadPath.resolve(fileName);
+			Files.write(filePath, data);
+			
+		    festival.setMap("<img src=\"" + Utils.FIX_URL + fileName + "\"></img>");
+		    save();
 		} catch (Exception e) {
 		    Notification.show("Feltöltés NEM sikerült!");
 		}
@@ -273,7 +314,10 @@ public class FestivalWindow extends BaseWindow {
 		
 		if ((this.plUpload.getQueuedFiles() != null) && (this.plUpload.getQueuedFiles().length > 0)) {
 			this.plUpload.start();
-		}else{
+		}else if ((this.mapPlUpload.getQueuedFiles() != null) && (this.mapPlUpload.getQueuedFiles().length > 0)) {
+			this.mapPlUpload.start();
+		}
+		else{
 			saveData();
 		}
 

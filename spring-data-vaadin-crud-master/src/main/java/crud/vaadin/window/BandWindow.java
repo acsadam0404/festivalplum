@@ -9,19 +9,19 @@ import pl.exsio.plupload.PluploadFile;
 import pl.exsio.plupload.handler.memory.ByteArrayChunkHandlerFactory;
 
 import com.vaadin.server.FontAwesome;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.TextField;
 
 import crud.backend.entity.Band;
+import crud.utils.FileUpload;
 import crud.utils.Utils;
 import crud.vaadin.LanguageEnum;
 
 
 public class BandWindow extends BaseWindow {
-	
-	private static final String MAX_FILE_SITE = "20mb";
 	
 	private Band band;
 	private boolean exist = false;
@@ -100,9 +100,12 @@ public class BandWindow extends BaseWindow {
 		this.plUpload = this.createUpload();
 		
 		HorizontalLayout horizontalLayout = new HorizontalLayout();
+		horizontalLayout.setSpacing(true);
 		horizontalLayout.setHeight(50, Unit.PIXELS);
 		horizontalLayout.addComponent(this.plUpload);
 		horizontalLayout.addComponent(this.infoLabel);
+		FileUpload fileUpload = new FileUpload();
+		horizontalLayout.addComponent(fileUpload);
 		mainLayout.addComponent(horizontalLayout);
 	}
 	
@@ -120,7 +123,7 @@ public class BandWindow extends BaseWindow {
 		final Plupload upload = new Plupload("Előadó feltöltése", FontAwesome.USER);
 		upload.setChunkHandlerFactory(new ByteArrayChunkHandlerFactory());
 
-		upload.setMaxFileSize(MAX_FILE_SITE);
+		upload.setMaxFileSize(Utils.MAX_FILE_SIZE);
 		upload.setMultiSelection(false);
 
 		upload.addFileUploadedListener(new Plupload.FileUploadedListener() {
