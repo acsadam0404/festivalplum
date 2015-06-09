@@ -20,7 +20,16 @@ public class Band {
 	private String nationality;
 	private String style;
 	private String description;
+	private boolean existImg;
 	private byte[] image;
+
+	public boolean getExistImg() {
+		ParseFile imageFile = (ParseFile) band.get("image");
+	    if(imageFile == null)
+	    	return false;
+	    else
+	    	return true;
+	}
 
 	public String getName() {
 		return band.getString("name");
@@ -132,7 +141,12 @@ public class Band {
 	}
 	
 	public void save(){
-		band.saveInBackground();
+		try {
+			band.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		descriptionValue.save();
 	}
 	

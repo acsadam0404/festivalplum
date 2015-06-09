@@ -56,9 +56,9 @@ public class FestivalWindow extends BaseWindow {
 	
 	private TextField name;
 	private CheckBox isFestival;
-	private TextField email;
-	private TextField phone;
-	private TextField website;
+	//private TextField email;
+	//private TextField phone;
+	//private TextField website;
 	private TextField country;
 	private TextField city;
 	private TextField address;
@@ -201,9 +201,9 @@ public class FestivalWindow extends BaseWindow {
 	private void setFormData(){
 		Utils.setValue(name, festival.getName());
 		Utils.setValue(isFestival, festival.getFestival());
-		Utils.setValue(email, festival.getEmail());
-		Utils.setValue(phone, festival.getPhone());
-		Utils.setValue(website, festival.getWebsite());
+//		Utils.setValue(email, festival.getEmail());
+//		Utils.setValue(phone, festival.getPhone());
+//		Utils.setValue(website, festival.getWebsite());
 		Utils.setValue(country, festival.getCountry());
 		Utils.setValue(city, festival.getCity());
 		Utils.setValue(address, festival.getAddress());
@@ -244,11 +244,11 @@ public class FestivalWindow extends BaseWindow {
 		name = new TextField("Név");
 		form.addComponent(name);
 		
-		phone = new TextField("Telefon");
-		form2.addComponent(phone);
-		
-		website = new TextField("Weboldal");
-		form.addComponent(website);
+//		phone = new TextField("Telefon");
+//		form2.addComponent(phone);
+//		
+//		website = new TextField("Weboldal");
+//		form.addComponent(website);
 		
 		country = new TextField("Ország");
 		form2.addComponent(country);
@@ -262,14 +262,14 @@ public class FestivalWindow extends BaseWindow {
 		postcode = new TextField("Irányítószám");
 		form.addComponent(postcode);
 		
-		email = new TextField("Email");
-		form2.addComponent(email);
+//		email = new TextField("Email");
+//		form2.addComponent(email);
 		
 		startDate = new DateField("Kezdődik");
-		form.addComponent(startDate);
+		form2.addComponent(startDate);
 		
 		endDate = new DateField("Vége");
-		form2.addComponent(endDate);
+		form.addComponent(endDate);
 		
 //		map = new TextField("Térkép");
 //		form.addComponent(map);
@@ -326,9 +326,9 @@ public class FestivalWindow extends BaseWindow {
 	private void saveData(){
 		festival.setName(Utils.getValue(name));
 		festival.setFestival(Utils.getValue(isFestival));
-		festival.setEmail(Utils.getValue(email));
-		festival.setPhone(Utils.getValue(phone));
-		festival.setWebsite(Utils.getValue(website));
+//		festival.setEmail(Utils.getValue(email));
+//		festival.setPhone(Utils.getValue(phone));
+//		festival.setWebsite(Utils.getValue(website));
 		festival.setCountry(Utils.getValue(country));
 		festival.setCity(Utils.getValue(city));
 		festival.setAddress(Utils.getValue(address));

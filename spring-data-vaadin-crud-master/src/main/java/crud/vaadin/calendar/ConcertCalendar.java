@@ -22,6 +22,7 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent;
 
 import crud.backend.entity.Concert;
 import crud.backend.entity.ParseCache;
+import crud.vaadin.LanguageEnum;
 import crud.vaadin.window.ConcertWindow;
 
 public class ConcertCalendar {
@@ -30,9 +31,9 @@ public class ConcertCalendar {
 	private Layout layout;
 	private ParseCache parseCache;
 	
-	public ConcertCalendar(Layout layout){
+	public ConcertCalendar(Layout layout, LanguageEnum lang){
 		this.layout = layout;
-		parseCache = new ParseCache();
+		parseCache = new ParseCache(lang);
 		init();
 	}
 	

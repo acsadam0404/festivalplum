@@ -72,7 +72,12 @@ public class Message {
 	}
 	
 	public void save(){
-		message.saveInBackground();
+		try {
+			message.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public static void delete(String key){

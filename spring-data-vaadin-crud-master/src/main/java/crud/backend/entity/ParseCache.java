@@ -11,6 +11,7 @@ import org.parse4j.ParseQuery;
 import org.parse4j.callback.FindCallback;
 import org.springframework.util.StopWatch;
 
+import crud.vaadin.LanguageEnum;
 import crud.vaadin.calendar.ComboBoxItem;
 
 public class ParseCache {
@@ -29,7 +30,10 @@ public class ParseCache {
 	private List<ComboBoxItem> stageItemList;
 	private List<ComboBoxItem> eventItemList;
 	
-	public ParseCache() {
+	private LanguageEnum language = LanguageEnum.HU;
+	
+	public ParseCache(LanguageEnum language) {
+		this.language = language;
 		findInBackgroundAll(BAND);
 		findInBackgroundAll(STAGE);
 		findInBackgroundAll(EVENT);
@@ -75,7 +79,8 @@ public class ParseCache {
 			stageItemList = new LinkedList<ComboBoxItem>();
 			for(ParseObject o : list){
 				stageMap.put(o.getObjectId(), o);
-				stageItemList.add(new ComboBoxItem(o.getObjectId(), o.getString("name")));
+				Message message = Message.findByKeyAndLanguage(o.getString("name"), language);
+				stageItemList.add(new ComboBoxItem(o.getObjectId(), message.getValue()));
 			}
 			break;
 		case EVENT:

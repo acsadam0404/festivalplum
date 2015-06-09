@@ -25,9 +25,11 @@ import com.vaadin.ui.MenuBar;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.MenuBar.Command;
 import com.vaadin.ui.MenuBar.MenuItem;
+import com.vaadin.ui.Window.CloseEvent;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window.CloseListener;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClick;
 import com.vaadin.ui.components.calendar.CalendarComponentEvents.EventClickHandler;
 import com.vaadin.ui.components.calendar.CalendarDateRange;
@@ -173,7 +175,16 @@ public class MainView extends VerticalLayout implements View {
 		    public void itemClick(ItemClickEvent event) {
 		    	BeanItem<Festival> item = (BeanItem) event.getItem();
 		    	Festival festival = item.getBean();
-		    	UI.getCurrent().addWindow(new FestivalWindow("Fesztivál Módosítása", festival, lang));
+		    	FestivalWindow festivalWindow = new FestivalWindow("Fesztivál Módosítása", festival, lang);
+		    	festivalWindow.addCloseListener(new CloseListener() {
+					
+					@Override
+					public void windowClose(CloseEvent e) {
+						loadFestival();
+						
+					}
+				});
+		    	UI.getCurrent().addWindow(festivalWindow);
 		    }
 		});
 		content.addComponent(data);
@@ -199,7 +210,16 @@ public class MainView extends VerticalLayout implements View {
 		    public void itemClick(ItemClickEvent event) {
 		    	BeanItem<Band> item = (BeanItem) event.getItem();
 		    	Band band = item.getBean();
-		    	UI.getCurrent().addWindow(new BandWindow("Fellépő Módosítása", band, lang));
+		    	BandWindow bandWindow = new BandWindow("Fellépő Módosítása", band, lang);
+		    	bandWindow.addCloseListener(new CloseListener() {
+					
+					@Override
+					public void windowClose(CloseEvent e) {
+						loadBand();
+						
+					}
+				});
+		    	UI.getCurrent().addWindow(bandWindow);
 		    }
 		});
 		content.addComponent(data);
@@ -209,7 +229,7 @@ public class MainView extends VerticalLayout implements View {
 	private void loadConcert(){
 		menu = MenuEnum.CONCERT;
     	content.removeAllComponents();
-    	new ConcertCalendar(content);
+    	new ConcertCalendar(content, lang);
 	}
 
 }

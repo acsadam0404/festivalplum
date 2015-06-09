@@ -32,7 +32,7 @@ public class Utils {
     private static int IMAGE_HEIGHT = 100;
     
     public static final String MAX_FILE_SIZE = "20mb";
-    public static final String UPLOAD_FOLDER = "c:/tmp/";
+    public static final String UPLOAD_FOLDER = "/root/tmp";
 	public static final String FIX_URL = "http://www.ittafile.hu/";
 	
 	public static void setValue(TextField field, String value) {

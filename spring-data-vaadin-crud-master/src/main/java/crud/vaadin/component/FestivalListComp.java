@@ -21,8 +21,16 @@ public class FestivalListComp extends CustomComponent {
 		table = new Table();
 		table.setSizeFull();
 		table.setContainerDataSource(new BeanItemContainer(Festival.class));
-		table.setVisibleColumns("name", "festival", "email", "phone", "website", "country", "city", "address", "postcode", "priority", "startDate", "endDate");
+		table.setVisibleColumns("name", "festival", "country", "city", "address", "postcode", "priority", "startDate", "endDate");
 		table.setColumnHeader("name", "Név");
+		table.setColumnHeader("festival", "Fesztivál");
+		table.setColumnHeader("country", "Ország");
+		table.setColumnHeader("city", "Város");
+		table.setColumnHeader("address", "Cím");
+		table.setColumnHeader("postcode", "Irányítószám");
+		table.setColumnHeader("priority", "Prioritásos");
+		table.setColumnHeader("startDate", "Kezdődik");
+		table.setColumnHeader("endDate", "Végetér");
 		return table;
 	}
 	
