@@ -9,6 +9,7 @@ import java.util.Map;
 import hu.festivalplum.R;
 import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;
+import hu.festivalplum.utils.Utils;
 
 /**
  * Created by viktor on 2015.03.29..
@@ -22,7 +23,7 @@ public class FestivalActivity extends hu.festivalplum.festival.FestivalActivity 
 
     @Override
     protected void initFestival(){
-        data = ParseDataCollector.collectFestivalData(this, eventId, place, true);
+        data = ParseDataCollector.collectFestivalData(this, eventId, place, true, Utils.getLanguageCode(this));
     }
 
     @Override

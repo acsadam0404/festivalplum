@@ -25,7 +25,7 @@ import hu.festivalplum.model.HomeObject;
 public class ParseDataCollector {
 
     // Jelenleg ha hiányzik egy megjelenítendő érték akkor adott Event kimarad a listából
-    public static Map<String, Object> collectHomeData(Context context){
+    public static Map<String, Object> collectHomeData(Context context, String language){
         Map<String, Object> ret = new HashMap<>();
 
         List<String> timeGroup = new ArrayList<String>();
@@ -52,7 +52,22 @@ public class ParseDataCollector {
                 String cityName = place.getString("city");
                 if(cityName == null)
                     continue;
-                String placeInfo = place.getString("description");
+
+                String placeInfo = null;
+                String infoCode = place.getString("description");
+                if(infoCode != null) {
+                    ParseQuery<ParseObject> messageQuery = ParseQuery.getQuery("Message");
+                    messageQuery.whereEqualTo("key", infoCode);
+                    messageQuery.whereEqualTo("language", language);
+                    List<ParseObject> messageResult = messageQuery.find();
+                    if (messageResult != null && messageResult.size() > 0) {
+                        ParseObject message = messageResult.get(0);
+                        if (message != null) {
+                            placeInfo = message.getString("value");
+                        }
+                    }
+                }
+
                 String placeMap = place.getString("map");
                 Boolean highPriority =  place.getBoolean("highPriority");
                 Date startDate = event.getDate("startDate");
@@ -203,7 +218,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static  Map<String, Object> collectBandData(){
+    public static  Map<String, Object> collectBandData(String language){
         Map<String, Object> ret = new HashMap<>();
         Map<String, BandObject> bandObjectMap = new HashMap<>();
         List<String> distinctHelper = new ArrayList<>();
@@ -224,7 +239,21 @@ public class ParseDataCollector {
                     String bandId = band.getObjectId();
                     String name = band.getString("name");
                     String style = band.getString("style");
-                    String info = band.getString("description");
+
+                    String info = null;
+                    String infoCode = band.getString("description");
+                    if(infoCode != null) {
+                        ParseQuery<ParseObject> messageQuery = ParseQuery.getQuery("Message");
+                        messageQuery.whereEqualTo("key", infoCode);
+                        messageQuery.whereEqualTo("language", language);
+                        List<ParseObject> messageResult = messageQuery.find();
+                        if (messageResult != null && messageResult.size() > 0) {
+                            ParseObject message = messageResult.get(0);
+                            if (message != null) {
+                                info = message.getString("value");
+                            }
+                        }
+                    }
                     ParseFile imageFile = (ParseFile) band.get("image");
                     if(imageFile == null)
                         continue;
@@ -249,7 +278,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static List<FestivalObject> collectBandConcerts(Context context, String bandId){
+    public static List<FestivalObject> collectBandConcerts(Context context, String bandId, String language){
         List<FestivalObject> ret = new ArrayList<>();
 
         Date date = new Date();
@@ -312,9 +341,23 @@ public class ParseDataCollector {
                         continue;
                     byte[] bandImg = imageFile.getData();
 
-                    String stageName = stage.getString("name");
+                    String stageNameCode = stage.getString("name");
+                    if(stageNameCode == null)
+                        continue;
+                    ParseQuery<ParseObject> messageQuery = ParseQuery.getQuery("Message");
+                    messageQuery.whereEqualTo("key", stageNameCode);
+                    messageQuery.whereEqualTo("language", language);
+                    List<ParseObject> messageResult = messageQuery.find();
+                    String stageName = null;
+                    if(messageResult != null && messageResult.size() > 0){
+                        ParseObject message = messageResult.get(0);
+                        if(message != null){
+                            stageName = message.getString("value");
+                        }
+                    }
                     if(stageName == null)
                         continue;
+
                     String bandName = band.getString("name");
                     if(bandName == null)
                         continue;
@@ -345,7 +388,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static Map<String, Object> collectFestivalData(Context context, String eventId, final String place, boolean history) {
+    public static Map<String, Object> collectFestivalData(Context context, String eventId, final String place, boolean history, String language) {
         Map<String, Object> ret = new HashMap<>();
 
         List<String> festivalGroup = new ArrayList<String>();
@@ -407,13 +450,40 @@ public class ParseDataCollector {
                         continue;
                     byte[] bandImg = imageFile.getData();
 
-                    String stageName = stage.getString("name");
+                    String stageNameCode = stage.getString("name");
+                    if(stageNameCode == null)
+                        continue;
+                    ParseQuery<ParseObject> messageQuery = ParseQuery.getQuery("Message");
+                    messageQuery.whereEqualTo("key", stageNameCode);
+                    messageQuery.whereEqualTo("language", language);
+                    List<ParseObject> messageResult = messageQuery.find();
+                    String stageName = null;
+                    if(messageResult != null && messageResult.size() > 0){
+                        ParseObject message = messageResult.get(0);
+                        if(message != null){
+                            stageName = message.getString("value");
+                        }
+                    }
                     if(stageName == null)
                         continue;
                     String bandName = band.getString("name");
                     if(bandName == null)
                         continue;
-                    String bandInfo = band.getString("description");
+
+                    String bandInfo = null;
+                    String infoCode = band.getString("description");
+                    if(infoCode != null) {
+                        ParseQuery<ParseObject> messageQuery2 = ParseQuery.getQuery("Message");
+                        messageQuery2.whereEqualTo("key", infoCode);
+                        messageQuery2.whereEqualTo("language", language);
+                        List<ParseObject> messageResult2 = messageQuery2.find();
+                        if (messageResult2 != null && messageResult2.size() > 0) {
+                            ParseObject message = messageResult2.get(0);
+                            if (message != null) {
+                                bandInfo = message.getString("value");
+                            }
+                        }
+                    }
 
                     FestivalObject festivalObject = new FestivalObject();
                     festivalObject.setStartDate(startDate);
@@ -444,7 +514,7 @@ public class ParseDataCollector {
         return ret;
     }
 
-    public static List<FestivalObject> collectFavoriteData(List<String> concertIds){
+    public static List<FestivalObject> collectFavoriteData(List<String> concertIds, String language){
         ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
         query.whereContainedIn("objectId", concertIds);
         query.include("band");
@@ -453,10 +523,10 @@ public class ParseDataCollector {
         //query.whereGreaterThan("toDate", new Date());
         query.orderByAscending("startDate");
 
-        return getFestivalList(query);
+        return getFestivalList(query, language);
     }
 
-    private static List<FestivalObject> getFestivalList(ParseQuery<ParseObject> query){
+    private static List<FestivalObject> getFestivalList(ParseQuery<ParseObject> query, String language){
         List<FestivalObject> ret = new ArrayList<>();
         try {
             List<ParseObject> result = query.find();
@@ -495,8 +565,21 @@ public class ParseDataCollector {
                         continue;
                     byte[] bandImg = imageFile.getData();
 
-                    String stageName = stage.getString("name");
-                    if (stageName == null)
+                    String stageNameCode = stage.getString("name");
+                    if(stageNameCode == null)
+                        continue;
+                    ParseQuery<ParseObject> messageQuery = ParseQuery.getQuery("Message");
+                    messageQuery.whereEqualTo("key", stageNameCode);
+                    messageQuery.whereEqualTo("language", language);
+                    List<ParseObject> messageResult = messageQuery.find();
+                    String stageName = null;
+                    if(messageResult != null && messageResult.size() > 0){
+                        ParseObject message = messageResult.get(0);
+                        if(message != null){
+                            stageName = message.getString("value");
+                        }
+                    }
+                    if(stageName == null)
                         continue;
                     String bandName = band.getString("name");
                     if (bandName == null)

@@ -71,8 +71,8 @@ public class FPApplication extends Application {
 
     public static void initParseData(Context context){
 
-        bandMap = ParseDataCollector.collectBandData();
-        Map<String, Object> data =  ParseDataCollector.collectHomeData(context);
+        bandMap = ParseDataCollector.collectBandData(Utils.getLanguageCode(context));
+        Map<String, Object> data =  ParseDataCollector.collectHomeData(context, Utils.getLanguageCode(context));
         timeGroup = (List<String>)data.get("timeGroup");
         timeChild = (Map<String, List<HomeObject>>)data.get("timeChild");
         nameGroup = (List<String>)data.get("nameGroup");

@@ -43,7 +43,7 @@ public class FavoriteActivity extends Activity {
         ListView v = (ListView) findViewById(R.id.listView);
 
         List<String> concertIds = SQLiteUtil.getInstence(this).getFavoriteIds("Concert");
-        List<FestivalObject> items = ParseDataCollector.collectFavoriteData(concertIds);
+        List<FestivalObject> items = ParseDataCollector.collectFavoriteData(concertIds, Utils.getLanguageCode(this));
 
         mAdapter = new FavoriteViewAdapter(this, items);
         v.setAdapter(mAdapter);

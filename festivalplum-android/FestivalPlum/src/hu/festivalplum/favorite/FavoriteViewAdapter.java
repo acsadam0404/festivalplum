@@ -129,7 +129,7 @@ public class FavoriteViewAdapter extends BaseAdapter {
     @Override
     public void notifyDataSetChanged() {
         List<String> concertIds = SQLiteUtil.getInstence(context).getFavoriteIds("Concert");
-        this.list = ParseDataCollector.collectFavoriteData(concertIds);
+        this.list = ParseDataCollector.collectFavoriteData(concertIds, Utils.getLanguageCode(context));
         super.notifyDataSetChanged();
     }
 
