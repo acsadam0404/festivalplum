@@ -2,6 +2,7 @@
 <resources>
     <string name="app_name">Festival Plum</string>
     <string name="action_favourite">Kedvencek</string>
+    <string name="action_sett">Elrendezés</string>
     <string name="action_search">Keresés</string>
     <string name="title_activity_festival">Fesztivál</string>
     <string name="hello_world">Hello world!</string>

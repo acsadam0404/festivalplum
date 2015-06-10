@@ -2,9 +2,6 @@ package hu.festivalplum;
 
 import android.app.Application;
 import android.content.Context;
-import android.content.SharedPreferences;
-import android.content.res.Resources;
-import android.util.DisplayMetrics;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -14,7 +11,6 @@ import com.parse.ParseUser;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import hu.festivalplum.model.BandObject;

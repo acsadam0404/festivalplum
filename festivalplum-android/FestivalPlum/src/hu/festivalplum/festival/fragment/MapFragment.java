@@ -5,11 +5,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebView;
-import android.widget.ListView;
 
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
-import hu.festivalplum.festival.fragment.MyFragment;
 
 /**
  * Created by viktor on 2015.03.26..

@@ -1,7 +1,6 @@
 package hu.festivalplum.band.fragment;
 
 import android.os.Bundle;
-import android.util.Xml;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;

@@ -14,7 +14,6 @@ import java.util.List;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.FestivalObject;
-import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.ParseDataCollector;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;

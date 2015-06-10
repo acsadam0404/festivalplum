@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.view.MenuItem;
 import android.view.View;
 
-import java.util.Map;
-
 import hu.festivalplum.R;
 import hu.festivalplum.utils.LanguageDialog;
 import hu.festivalplum.utils.ParseDataCollector;

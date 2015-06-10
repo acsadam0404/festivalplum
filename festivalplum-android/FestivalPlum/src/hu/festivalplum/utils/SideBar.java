@@ -3,6 +3,7 @@ package hu.festivalplum.utils;
 /**
  * Created by viktor on 2015.03.29..
  */
+
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
@@ -11,9 +12,6 @@ import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.GridView;
-import android.widget.ListView;
-import android.widget.RelativeLayout;
 import android.widget.SectionIndexer;
 
 public class SideBar extends View {

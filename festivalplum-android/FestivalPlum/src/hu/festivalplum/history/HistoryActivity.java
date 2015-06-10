@@ -17,6 +17,7 @@ import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 import java.util.Map;
+
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.home.adapter.HomeViewAdapter;

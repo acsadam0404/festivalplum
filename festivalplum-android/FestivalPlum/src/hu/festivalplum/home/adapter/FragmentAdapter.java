@@ -8,11 +8,8 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 import java.util.ArrayList;
 
-import hu.festivalplum.FPApplication;
 import hu.festivalplum.home.fragment.FragmentBand;
-import hu.festivalplum.home.fragment.FragmentCity;
 import hu.festivalplum.home.fragment.FragmentName;
-import hu.festivalplum.home.fragment.FragmentTime;
 import hu.festivalplum.home.fragment.MyFragment;
 
 

@@ -15,10 +15,8 @@ import java.util.List;
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.band.BandActivity;
-import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.adapter.BandViewAdapter;
 import hu.festivalplum.model.BandObject;
-import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.SideBar;
 
 /**

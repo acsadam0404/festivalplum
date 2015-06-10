@@ -13,6 +13,11 @@
         android:showAsAction="ifRoom"
         android:title="@string/action_favourite" />
     <item
+        android:id="@+id/action_sett"
+        android:icon="@drawable/fp_ikon_list"
+        android:showAsAction="ifRoom"
+        android:title="@string/action_sett" />
+    <item
         android:id="@+id/action_history"
         android:orderInCategory="100"
         android:showAsAction="never"

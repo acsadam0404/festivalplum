@@ -14,22 +14,6 @@
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true">
 
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:id="@+id/imageGridButton"
-            android:src="@drawable/fp_ikon_list_2"
-            android:layout_gravity="center_horizontal" />
-
-        <ImageButton
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:src="@drawable/fp_ikon_list"
-            android:id="@+id/imageListButton"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@+id/imageGridButton"
-            android:layout_toEndOf="@+id/imageGridButton" />
-
         <Switch
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

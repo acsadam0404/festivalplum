@@ -1,7 +1,6 @@
 package hu.festivalplum.festival.adapter;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
@@ -21,7 +20,6 @@ import java.util.List;
 import java.util.Map;
 
 import hu.festivalplum.R;
-import hu.festivalplum.home.HomeActivity;
 import hu.festivalplum.model.FestivalObject;
 import hu.festivalplum.utils.SQLiteUtil;
 import hu.festivalplum.utils.Utils;

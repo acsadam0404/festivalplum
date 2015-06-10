@@ -1,45 +1,27 @@
 package hu.festivalplum.home;
 
 
-import android.app.AlertDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
-
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdSize;
-import com.google.android.gms.ads.AdView;
-
 
 import com.astuetz.PagerSlidingTabStrip;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 
-import java.util.List;
-import java.util.Map;
-
-import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.favorite.FavoriteActivity;
-import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.history.HistoryActivity;
 import hu.festivalplum.home.adapter.FragmentAdapter;
-import hu.festivalplum.model.BandObject;
-import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.LanguageDialog;
-import hu.festivalplum.utils.ParseDataCollector;
-import hu.festivalplum.utils.SQLiteUtil;
-import hu.festivalplum.utils.Utils;
 
 public class HomeActivity extends FragmentActivity {
 
@@ -109,6 +91,13 @@ public class HomeActivity extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
+        MenuItem item = menu.findItem(R.id.action_sett);
+        if(!isList){
+            item.setIcon(R.drawable.fp_ikon_list);
+        }else{
+            item.setIcon(R.drawable.fp_ikon_list_2);
+        }
+
         SearchManager searchManager =
                 (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         searchView =
@@ -157,7 +146,9 @@ public class HomeActivity extends FragmentActivity {
             case R.id.action_language:
                 new LanguageDialog(this).show();
                 break;
-
+            case R.id.action_sett:
+                reload(!isList, highPriority);
+                break;
         }
 
         return super.onOptionsItemSelected(item);

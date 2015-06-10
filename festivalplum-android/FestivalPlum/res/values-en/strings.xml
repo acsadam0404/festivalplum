@@ -3,6 +3,7 @@
     <string name="app_name">Festival Plum</string>
     <string name="action_favourite">Favorite</string>
     <string name="action_search">Search</string>
+    <string name="action_sett">Elrendezés</string>
     <string name="title_activity_festival">Fesztivál</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>

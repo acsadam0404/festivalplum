@@ -14,12 +14,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
+
 import com.astuetz.PagerSlidingTabStrip;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
 
 import java.util.List;
 import java.util.Map;
+
 import hu.festivalplum.R;
 import hu.festivalplum.festival.adapter.FragmentAdapter;
 import hu.festivalplum.model.FestivalObject;

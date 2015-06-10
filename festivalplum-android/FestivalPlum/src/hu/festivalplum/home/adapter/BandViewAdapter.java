@@ -15,12 +15,10 @@ import android.widget.SectionIndexer;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import hu.festivalplum.R;
 import hu.festivalplum.model.BandObject;
-import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.Utils;
 
 /**

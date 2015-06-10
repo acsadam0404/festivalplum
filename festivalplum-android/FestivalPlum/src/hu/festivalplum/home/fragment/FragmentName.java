@@ -1,34 +1,26 @@
 package hu.festivalplum.home.fragment;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
-import android.widget.EditText;
-import android.widget.ExpandableListView;
 import android.widget.GridView;
-import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.Switch;
 
 import java.util.List;
-import java.util.Map;
 
 import hu.festivalplum.FPApplication;
 import hu.festivalplum.R;
 import hu.festivalplum.festival.FestivalActivity;
 import hu.festivalplum.home.HomeActivity;
-import hu.festivalplum.home.adapter.HomeViewAdapter;
 import hu.festivalplum.home.adapter.NameGridViewAdapter;
 import hu.festivalplum.home.adapter.NameViewAdapter;
-import hu.festivalplum.model.BandObject;
 import hu.festivalplum.model.HomeObject;
 import hu.festivalplum.utils.SideBar;
 
@@ -76,22 +68,6 @@ public class FragmentName extends MyFragment {
             list = (GridView) contentView.findViewById(R.id.myGridView);
             nameViewAdapter = new NameGridViewAdapter(context, homeData, priority.isChecked());
         }
-
-        ImageButton listButton = (ImageButton) contentView.findViewById(R.id.imageListButton);
-        listButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((HomeActivity)context).reload(true, priority.isChecked());
-            }
-        });
-
-        ImageButton gridButton = (ImageButton) contentView.findViewById(R.id.imageGridButton);
-        gridButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ((HomeActivity)context).reload(false, priority.isChecked());
-            }
-        });
 
         list.setAdapter(nameViewAdapter);
         SideBar indexBar = (SideBar) contentView.findViewById(R.id.sideBar);
