@@ -1,6 +1,7 @@
 package crud.vaadin.window;
 
 import com.vaadin.server.Sizeable.Unit;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.FormLayout;
 import com.vaadin.ui.GridLayout;
@@ -20,12 +21,14 @@ abstract class BaseWindow extends Window{
 	protected Button deleteButton;
 	
 
-	protected BaseWindow(String title, float width) {
+	protected BaseWindow(String title) {
 		super(title);
-		setWidth(width, Unit.PIXELS);
 		//setHeight(height, Unit.PIXELS);
-		setHeight(100, Unit.PERCENTAGE);
+		setWidth(95, Unit.PERCENTAGE);
+		setHeight(95, Unit.PERCENTAGE);
 		setModal(true);
+		setResizable(false);
+		setDraggable(false);
 		mainLayout = new VerticalLayout();
 		mainLayout.setMargin(true);
 		setContent(mainLayout);
@@ -51,6 +54,7 @@ abstract class BaseWindow extends Window{
 		grid.addComponent(form);
 		grid.addComponent(form2);
 		mainLayout.addComponent(grid);
+		mainLayout.setComponentAlignment(grid, Alignment.MIDDLE_CENTER);
 	}
 	
 	protected void initButton(){
@@ -77,6 +81,7 @@ abstract class BaseWindow extends Window{
 		buttonContainer.addComponent(deleteButton);
 		
 		mainLayout.addComponent(buttonContainer);
+		mainLayout.setComponentAlignment(buttonContainer, Alignment.MIDDLE_CENTER);
 	}
 	
 	abstract protected void save();

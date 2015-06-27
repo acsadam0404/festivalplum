@@ -9,13 +9,16 @@ import java.util.TimeZone;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.event.Action;
 import com.vaadin.event.ItemClickEvent;
 import com.vaadin.event.ItemClickEvent.ItemClickListener;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener.ViewChangeEvent;
+import com.vaadin.server.Sizeable.Unit;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.AbstractSelect.ItemCaptionMode;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Calendar;
 import com.vaadin.ui.ComboBox;
@@ -38,14 +41,19 @@ import com.vaadin.ui.components.calendar.event.CalendarEvent;
 import com.vaadin.ui.themes.ValoTheme;
 
 import crud.backend.entity.Band;
+import crud.backend.entity.Concert;
 import crud.backend.entity.Festival;
+import crud.backend.entity.ParseCache;
+import crud.backend.entity.ParseUtils;
 import crud.vaadin.LanguageEnum;
 import crud.vaadin.MenuEnum;
+import crud.vaadin.calendar.ComboBoxItem;
 import crud.vaadin.calendar.ConcertCalendar;
 import crud.vaadin.calendar.ConcertEvent;
 import crud.vaadin.component.BandListComp;
 import crud.vaadin.component.FestivalListComp;
 import crud.vaadin.window.BandWindow;
+import crud.vaadin.window.ConcertWindow;
 import crud.vaadin.window.FestivalWindow;
 
 public class MainView extends VerticalLayout implements View {
@@ -77,6 +85,7 @@ public class MainView extends VerticalLayout implements View {
 		ComboBox combo = new ComboBox("");
 		combo.addItems(LanguageEnum.values());
 		combo.setValue(lang);
+		combo.setNullSelectionAllowed(false);
 		combo.addValueChangeListener(new ValueChangeListener() {
 			@Override
 			public void valueChange(ValueChangeEvent event) {
@@ -226,10 +235,108 @@ public class MainView extends VerticalLayout implements View {
 		content.setExpandRatio(data, 1.0f);
 	}
 	
-	private void loadConcert(){
+	public void loadConcert(final String eventId, final String stageId){
 		menu = MenuEnum.CONCERT;
     	content.removeAllComponents();
-    	new ConcertCalendar(content, lang);
+    	
+    	ParseCache parseCache = new ParseCache(lang);
+    	
+    	concertFilter(parseCache, eventId, stageId);
+    	
+    	Button add = new Button("Hozzáad");
+    	add.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ConcertWindow concertWindow = new ConcertWindow("Koncert", new Date(), new Date(), parseCache, new Concert(), lang);
+				concertWindow.addCloseListener(new CloseListener() {
+					
+					@Override
+					public void windowClose(CloseEvent e) {
+						loadConcert(eventId, stageId);
+						
+					}
+				});
+				UI.getCurrent().addWindow(concertWindow);
+			}
+		});
+		content.addComponent(add);
+		
+    	new ConcertCalendar(content, lang, parseCache, eventId, stageId, this);
+	}
+	
+	private ComboBox stageCombo;
+	private ComboBox eventCombo;
+	private void concertFilter(final ParseCache parseCache, String eventId, String stageId){
+		
+		Button filterButton;
+		HorizontalLayout filterLayout = new HorizontalLayout();
+		filterLayout.setSpacing(true);
+		
+		eventCombo = new ComboBox("Esemény");
+		eventCombo.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		eventCombo.setItemCaptionPropertyId("description");
+		eventCombo.setWidth(600, Unit.PIXELS);
+		filterLayout.addComponent(eventCombo);
+		
+		stageCombo = new ComboBox("Színpad");
+		stageCombo.setItemCaptionMode(ItemCaptionMode.PROPERTY);
+		stageCombo.setItemCaptionPropertyId("description");
+		stageCombo.setWidth(600, Unit.PIXELS);
+		filterLayout.addComponent(stageCombo);
+		
+		filterButton = new Button("Keresés");
+		filterLayout.addComponent(filterButton);
+		filterLayout.setComponentAlignment(filterButton, Alignment.BOTTOM_LEFT);
+		
+		filterButton.addClickListener(new ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				loadConcert(eventCombo.getValue() != null ? ((ComboBoxItem)eventCombo.getValue()).getId() : null, stageCombo.getValue() != null ? ((ComboBoxItem)stageCombo.getValue()).getId() : null);
+			}
+		});
+		
+		BeanItemContainer<ComboBoxItem> eventItems = new BeanItemContainer<ComboBoxItem>(ComboBoxItem.class, parseCache.getEventItemList());
+		eventCombo.setContainerDataSource(eventItems);
+		
+		BeanItemContainer<ComboBoxItem> stageItems = new BeanItemContainer<ComboBoxItem>(ComboBoxItem.class, parseCache.getStageItemList());
+		stageCombo.setContainerDataSource(stageItems);
+		
+		if(eventId != null){
+			eventCombo.select(parseCache.getSelectedEvent(eventId));
+		}
+		eventCombo.addValueChangeListener(new ValueChangeListener() {
+			@Override
+			public void valueChange(ValueChangeEvent event) {
+				if(eventCombo.getValue() != null ){
+					reloadStageCombo(((ComboBoxItem)eventCombo.getValue()).getId(), parseCache);
+				}else{
+					reloadStageCombo(null, parseCache);
+				}
+			}
+		});
+		if(stageId != null)
+			stageCombo.select(parseCache.getSelectedStage(stageId));
+		
+		content.addComponent(filterLayout);
+		
+	}
+	
+	
+	private void reloadStageCombo(String eventId, ParseCache parseCache){
+		BeanItemContainer<ComboBoxItem> stageItems;
+		if(eventId != null){
+			stageItems = new BeanItemContainer<ComboBoxItem>(ComboBoxItem.class, ParseUtils.getStageList(parseCache.getEventMap().get(eventId), parseCache.getStageMap(), lang));
+		}else{
+			stageItems = new BeanItemContainer<ComboBoxItem>(ComboBoxItem.class, parseCache.getStageItemList());
+		}
+		stageCombo.setContainerDataSource(stageItems);
+		
+	}
+	
+	public void loadConcert(){
+		loadConcert(null, null);
 	}
 
 }

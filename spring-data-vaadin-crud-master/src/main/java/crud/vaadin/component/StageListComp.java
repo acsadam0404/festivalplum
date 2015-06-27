@@ -7,8 +7,10 @@ import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 
@@ -26,6 +28,7 @@ public class StageListComp  extends CustomComponent {
 
 	private Component build() {
 		table = new Table();
+		table.setEditable(true);
 		table.setSizeFull();
 		table.setContainerDataSource(new BeanItemContainer(Stage.class));
 		table.setVisibleColumns("name");
@@ -35,8 +38,8 @@ public class StageListComp  extends CustomComponent {
 		@Override 
 		public Object generateCell(final Table source, final Object itemId, Object columnId) {
 		 
-			Button button = new Button("Törlés");
-		    button.addClickListener(new ClickListener() {
+			Button deleteButton = new Button("Törlés");
+			deleteButton.addClickListener(new ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					
@@ -46,10 +49,27 @@ public class StageListComp  extends CustomComponent {
 					source.getContainerDataSource().removeItem(itemId);
 				}
 			});
-		 
-		    return button;
+		    
+		    Button saveButton = new Button("Mentés");
+		    saveButton.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					
+					BeanItem<Stage> item = (BeanItem) source.getContainerDataSource().getItem(itemId);
+			    	Stage stage = item.getBean();
+			    	stage.saveName();
+				}
+			});
+		    
+		    HorizontalLayout actionLayout = new HorizontalLayout();
+		    actionLayout.addComponent(saveButton);
+		    actionLayout.addComponent(deleteButton);
+		    actionLayout.setComponentAlignment(saveButton, Alignment.TOP_LEFT);
+		    actionLayout.setComponentAlignment(saveButton, Alignment.TOP_RIGHT);
+		    return actionLayout;
 		  }
 		});
+
 
 		return table;
 	}

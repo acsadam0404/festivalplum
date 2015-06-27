@@ -75,20 +75,54 @@ public class Concert {
 		this.concert = concert;
 	}
 	
+	public static List<Concert> findByEventAndStage(String eventId, String stageId){
+		ParseQuery<ParseObject> eventQuery = ParseQuery.getQuery("Event");
+		eventQuery.whereEqualTo("objectId", eventId);
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+		query.whereMatchesQuery("event", eventQuery);
+		
+		List<Concert> subList = find(query);
+		List<Concert> returnList = new LinkedList<Concert>();
+		for (Concert c : subList){
+			if(stageId.equals(c.getStageId())){
+				returnList.add(c);
+			}
+		}
+		
+		
+		return returnList;
+	}
+	
+	public static List<Concert> findByEvent(String eventId){
+		ParseQuery<ParseObject> eventQuery = ParseQuery.getQuery("Event");
+		eventQuery.whereEqualTo("objectId", eventId);
+		
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+		query.whereMatchesQuery("event", eventQuery);
+		return find(query);
+	}
 
 	public static List<Concert> findAll() {
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+		return find(query);
+	}
+	
+	public static List<Concert> find(ParseQuery<ParseObject> query) {
 		ParseCache parseCache = new ParseCache(ParseCache.BAND);
 		List<Concert> concertList = new LinkedList<Concert>();
-		ParseQuery<ParseObject> query = ParseQuery.getQuery("Concert");
+		
         try {
             List<ParseObject> result = query.find();
             for(int i = 0; i < result.size(); i++) {
                 ParseObject concertParseObject = result.get(i);
                 
-                Concert concert = new Concert();
-                concert.setConcert(concertParseObject);
-                concert.setBandName(parseCache.getBandMap().get(concertParseObject.getParseObject("band").getObjectId()).getString("name"));
-                concertList.add(concert);
+                if(parseCache.getBandMap().get(concertParseObject.getParseObject("band").getObjectId()) != null){
+	                Concert concert = new Concert();
+	                concert.setConcert(concertParseObject);
+	                concert.setBandName(parseCache.getBandMap().get(concertParseObject.getParseObject("band").getObjectId()).getString("name"));
+	                concertList.add(concert);
+                }
             }
         }catch(ParseException e){
         	e.printStackTrace();
@@ -97,7 +131,12 @@ public class Concert {
 	}
 	
 	public void save(){
-		concert.saveInBackground();
+		try {
+			concert.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public void delete(){

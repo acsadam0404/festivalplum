@@ -65,6 +65,27 @@ public class Message {
 		return message;
 	}
 	
+	public static Message findByKeyFirstLanguage(String key, LanguageEnum lang){
+		Message message = new Message();
+		ParseQuery<ParseObject> query = ParseQuery.getQuery("Message");
+		query.whereEqualTo("key", key);
+        try {
+            List<ParseObject> result = query.find();
+            if(result != null){
+            	ParseObject messageParseObject = result.get(0);
+            	message.create(key, lang);
+            	message.setValue(messageParseObject.getString("value"));
+            	
+            }else{
+            	message.create(key, lang);
+            }
+
+        }catch(ParseException e){
+        	e.printStackTrace();
+        }
+		return message;
+	}
+	
 	public void create(String key, LanguageEnum lang){
 		setMessage(new ParseObject("Message"));
 		setKey(key);

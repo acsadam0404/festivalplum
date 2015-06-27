@@ -125,6 +125,7 @@ public class Band {
 	public static List<Band> findAll(LanguageEnum lang) {
 		List<Band> bandList = new LinkedList<Band>();
 		ParseQuery<ParseObject> query = ParseQuery.getQuery("Band");
+		query.orderByAscending("name");
         try {
             List<ParseObject> result = query.find();
             for(int i = 0; i < result.size(); i++) {

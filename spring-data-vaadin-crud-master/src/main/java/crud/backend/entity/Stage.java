@@ -1,5 +1,6 @@
 package crud.backend.entity;
 
+import org.parse4j.ParseException;
 import org.parse4j.ParseObject;
 
 public class Stage {
@@ -33,6 +34,10 @@ public class Stage {
 	public void delete(){
 		nameValue.delete(getNameKey());
 		stage.deleteInBackground();
+	}
+	
+	public void saveName(){
+		nameValue.save();
 	}
 
 }

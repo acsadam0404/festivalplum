@@ -70,7 +70,7 @@ public class FestivalWindow extends BaseWindow {
 	//private TextField map;
 	
 	public FestivalWindow(String title, boolean exist, LanguageEnum lang){
-		super(title, 800);
+		super(title);
 		this.exist = exist;
 		if(!exist){
 			festival = new Festival();
@@ -111,6 +111,7 @@ public class FestivalWindow extends BaseWindow {
 		FileUpload fileUpload = new FileUpload();
 		horizontalLayout.addComponent(fileUpload);
 		mainLayout.addComponent(horizontalLayout);
+		mainLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 	}
 	
 	private Plupload createUpload(Label infoLabel, final String uploadText) {
@@ -242,6 +243,7 @@ public class FestivalWindow extends BaseWindow {
 		form2.addComponent(priority);
 		
 		name = new TextField("Név");
+		name.setWidth(600, Unit.PIXELS);
 		form.addComponent(name);
 		
 //		phone = new TextField("Telefon");
@@ -260,13 +262,13 @@ public class FestivalWindow extends BaseWindow {
 		form2.addComponent(address);
 		
 		postcode = new TextField("Irányítószám");
-		form.addComponent(postcode);
+		form2.addComponent(postcode);
 		
 //		email = new TextField("Email");
 //		form2.addComponent(email);
 		
 		startDate = new DateField("Kezdődik");
-		form2.addComponent(startDate);
+		form.addComponent(startDate);
 		
 		endDate = new DateField("Vége");
 		form.addComponent(endDate);

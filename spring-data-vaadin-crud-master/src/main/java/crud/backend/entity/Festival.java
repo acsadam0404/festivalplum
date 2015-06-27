@@ -1,11 +1,16 @@
 package crud.backend.entity;
 
 import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
+import org.mockito.internal.listeners.CollectCreatedMocks;
 import org.parse4j.ParseException;
 import org.parse4j.ParseFile;
 import org.parse4j.ParseObject;
@@ -224,6 +229,12 @@ public class Festival {
 			s.setNameMessage(Message.findByKeyAndLanguage(s.getNameKey(), lang));
 			if(s.getName() != null && !"".equals(s.getName())){
 				list.add(s);
+			}else{
+				s.setNameMessage(Message.findByKeyFirstLanguage(s.getNameKey(), lang));
+				if(s.getName() != null && !"".equals(s.getName())){
+					s.setName(lang + "? (" + s.getName() + ")");
+					list.add(s);
+				}
 			}
 		}
 		return list;
@@ -313,19 +324,42 @@ public class Festival {
 		}
         sw.stop();
         System.out.println(sw.prettyPrint());
+        
+        List<String> tmpList = new LinkedList<String>();
+        Map<String, Festival> festivalMap = new LinkedHashMap<String, Festival>();
+        for(Festival f : festivalList){
+        	tmpList.add(f.getName());
+        	festivalMap.put(f.getName(), f);
+        }
+        Collections.sort(tmpList);
+        festivalList = new LinkedList<Festival>();
+        for(String key : tmpList){
+        	festivalList.add(festivalMap.get(key));
+        }
+        
+        
 		return festivalList;
 	}
 	
 	public void save(){
 		descriptionValue.save();
-		place.saveInBackground(new SaveCallback() {
-			@Override
-			public void done(ParseException parseException) {
-				event.put("place", place);
-				event.saveInBackground();
-				
-			}
-		});
+		try {
+			place.save();
+			event.put("place", place);
+			event.save();
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+//		place.saveInBackground(new SaveCallback() {
+//			@Override
+//			public void done(ParseException parseException) {
+//				event.put("place", place);
+//				event.saveInBackground();
+//				
+//			}
+//		});
 	}
 	
 	public void delete(){

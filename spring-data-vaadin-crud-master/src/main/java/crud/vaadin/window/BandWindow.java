@@ -36,7 +36,7 @@ public class BandWindow extends BaseWindow {
 	private CKEditorTextField description;
 
 	public BandWindow(String title, boolean exist, LanguageEnum lang) {
-		super(title, 800);
+		super(title);
 		this.exist = exist;
 		if(!exist){
 			band = new Band();
@@ -68,12 +68,15 @@ public class BandWindow extends BaseWindow {
 	protected void buildForm() {
 		
 		name = new TextField("Név");
+		name.setWidth(600, Unit.PIXELS);
 		form.addComponent(name);
 		
 		nationality = new TextField("Nemzetiség");
+		nationality.setWidth(100, Unit.PIXELS);
 		form.addComponent(nationality);
 		
 		style = new TextField("Stílus");
+		style.setWidth(400, Unit.PIXELS);
 		form.addComponent(style);
 		
 	}
@@ -107,6 +110,7 @@ public class BandWindow extends BaseWindow {
 		FileUpload fileUpload = new FileUpload();
 		horizontalLayout.addComponent(fileUpload);
 		mainLayout.addComponent(horizontalLayout);
+		mainLayout.setComponentAlignment(horizontalLayout, Alignment.MIDDLE_CENTER);
 	}
 	
 	private void saveDoc(PluploadFile file) {

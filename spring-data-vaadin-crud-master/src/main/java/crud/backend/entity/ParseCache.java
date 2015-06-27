@@ -35,8 +35,9 @@ public class ParseCache {
 	public ParseCache(LanguageEnum language) {
 		this.language = language;
 		findInBackgroundAll(BAND);
-		findInBackgroundAll(STAGE);
-		findInBackgroundAll(EVENT);
+		findAll(STAGE);
+		findAll(PLACE);
+		findAll(EVENT);
 	}
 	
 	public ParseCache(String parseTable) {
@@ -88,7 +89,8 @@ public class ParseCache {
 			eventItemList = new LinkedList<ComboBoxItem>();
 			for(ParseObject o : list){
 				eventMap.put(o.getObjectId(), o);
-				eventItemList.add(new ComboBoxItem(o.getObjectId(), o.getString("name")));
+				ParseObject p = placeMap.get(o.getParseObject("place").getObjectId());
+				eventItemList.add(new ComboBoxItem(o.getObjectId(), p.getString("name")));
 			}
 			break;
 		case PLACE:
