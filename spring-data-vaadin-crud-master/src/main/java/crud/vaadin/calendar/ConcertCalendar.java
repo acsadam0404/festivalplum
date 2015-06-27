@@ -39,6 +39,7 @@ public class ConcertCalendar {
 		this.lang = lang;
 		this.layout = layout;
 		this.parseCache = parseCache;
+	    layout.setSizeFull();
 		init(eventId, stageId, view);
 	}
 	

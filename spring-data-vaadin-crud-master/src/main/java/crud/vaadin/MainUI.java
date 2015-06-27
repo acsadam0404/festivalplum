@@ -31,7 +31,7 @@ public class MainUI extends UI {
 		l.setSpacing(true);
 		l.setMargin(true);
 		Panel mainPanel = new Panel(l);
-		
+		mainPanel.setSizeFull();
 		setContent(mainPanel);
 		navigator = new Navigator(this, mainPanel);
 		navigator.addView(MAIN, new MainView());

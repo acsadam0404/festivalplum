@@ -260,9 +260,13 @@ public class MainView extends VerticalLayout implements View {
 				UI.getCurrent().addWindow(concertWindow);
 			}
 		});
+
 		content.addComponent(add);
+		VerticalLayout calendarLayout = new VerticalLayout();
+		content.addComponent(calendarLayout);
+		content.setExpandRatio(calendarLayout, 1.0f);
 		
-    	new ConcertCalendar(content, lang, parseCache, eventId, stageId, this);
+    	new ConcertCalendar(calendarLayout, lang, parseCache, eventId, stageId, this);
 	}
 	
 	private ComboBox stageCombo;
